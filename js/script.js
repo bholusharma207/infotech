@@ -139,14 +139,14 @@ const TRUST_IMAGE_MANIFEST = {
     "../our%20project%20image/whatsapp-image-2025-08-30-at-19.16.50_edef0e3f-d95ZeW4j69F2MxGj.jpg"
   ],
   "computer-lab": [
-    "../Computer%20Lab/WhatsApp%20Image%202026-07-23%20at%2011.59.38%20(1).jpeg",
-    "../Computer%20Lab/WhatsApp%20Image%202026-07-23%20at%2011.59.38%20(2).jpeg",
-    "../Computer%20Lab/WhatsApp%20Image%202026-07-23%20at%2011.59.39%20(1).jpeg",
-    "../Computer%20Lab/WhatsApp%20Image%202026-07-23%20at%2011.59.40%20(1).jpeg",
-    "../Computer%20Lab/WhatsApp%20Image%202026-07-23%20at%2011.59.40%20(2).jpeg",
-    "../Computer%20Lab/WhatsApp%20Image%202026-07-23%20at%2011.59.40.jpeg",
-    "../Computer%20Lab/WhatsApp%20Image%202026-07-23%20at%2011.59.41%20(1).jpeg",
-    "../Computer%20Lab/WhatsApp%20Image%202026-07-23%20at%2011.59.42.jpeg"
+    "../css/Computer%20Lab/WhatsApp%20Image%202026-07-23%20at%2011.59.38%20(1).jpeg",
+    "../css/Computer%20Lab/WhatsApp%20Image%202026-07-23%20at%2011.59.38%20(2).jpeg",
+    "../css/Computer%20Lab/WhatsApp%20Image%202026-07-23%20at%2011.59.39%20(1).jpeg",
+    "../css/Computer%20Lab/WhatsApp%20Image%202026-07-23%20at%2011.59.40%20(1).jpeg",
+    "../css/Computer%20Lab/WhatsApp%20Image%202026-07-23%20at%2011.59.40%20(2).jpeg",
+    "../css/Computer%20Lab/WhatsApp%20Image%202026-07-23%20at%2011.59.40.jpeg",
+    "../css/Computer%20Lab/WhatsApp%20Image%202026-07-23%20at%2011.59.41%20(1).jpeg",
+    "../css/Computer%20Lab/WhatsApp%20Image%202026-07-23%20at%2011.59.42.jpeg"
   ],
   "hardware-lab": [
     "../Hardware%20&%20Networking%20Lab/WhatsApp%20Image%202026-07-23%20at%2009.35.00.jpeg",

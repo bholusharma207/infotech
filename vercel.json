@@ -1,4 +1,19 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/about", "destination": "/pages/about.html" },
+    { "source": "/companies", "destination": "/pages/companies.html" },
+    { "source": "/certificate", "destination": "/pages/certificate.html" },
+    { "source": "/gallery", "destination": "/pages/gallery.html" },
+    { "source": "/success", "destination": "/pages/success.html" },
+    { "source": "/contact", "destination": "/pages/contact.html" },
+    { "source": "/trust", "destination": "/pages/trust.html" },
+    { "source": "/team", "destination": "/pages/team.html" },
+    { "source": "/donation", "destination": "/pages/donation.html" },
+    { "source": "/courses", "destination": "/pages/courses.html" },
+    { "source": "/certificate-portal", "destination": "/pages/certificate-portal.html" },
+    { "source": "/for-companies", "destination": "/pages/for-companies.html" },
+    { "source": "/visual-highlights", "destination": "/pages/visual-highlights.html" }
+  ]
 }
