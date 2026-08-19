@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet The Team - Pointer Educational Trust</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* Meet The Team Custom Styling */
+        .team-hero-section {
+            position: relative;
+            padding: 130px 0 60px;
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+            color: #FFFFFF;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .team-hero-card {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: var(--radius);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .team-hero-logo {
+            max-width: 140px;
+            height: auto;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.3));
+        }
+
+        .team-hero-title {
+            color: #FFFFFF;
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 0.3rem;
+        }
+
+        .team-hero-subtitle {
+            color: var(--secondary);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .team-main-heading {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #22C55E;
+            margin-bottom: 1rem;
+        }
+
+        .team-intro-text {
+            color: #E2E8F0;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Leadership Profile Section */
+        .leadership-section {
+            padding: 5rem 0;
+        }
+
+        .leadership-row {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 3.5rem;
+            align-items: center;
+            margin-bottom: 4.5rem;
+            background: #FFFFFF;
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .leadership-row:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-5px);
+        }
+
+        .leadership-row.reverse {
+            grid-template-columns: 1.4fr 1fr;
+        }
+
+        .leadership-img-wrapper {
+            position: relative;
+            text-align: center;
+            width: 100%;
+        }
+
+        .leadership-img {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            border-radius: 120px 120px 0 120px;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+        }
+
+        .leadership-row.reverse .leadership-img {
+            border-radius: 120px 120px 120px 0;
+        }
+
+        .leadership-img:hover {
+            transform: scale(1.02);
+        }
+
+        .leadership-badge {
+            background: #F1F5F9;
+            color: #1E3A8A;
+            font-size: 1.15rem;
+            font-weight: 700;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: block;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .leadership-role {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #22C55E;
+            margin-bottom: 1.2rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .leadership-bio {
+            color: #4B5563;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .leadership-bio p {
+            margin-bottom: 1.2rem;
+            font-style: italic;
+        }
+
+        .leadership-bio p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Team Members Grid */
+        .members-section {
+            padding: 4rem 0;
+            background: rgba(248, 250, 252, 0.7);
+        }
+
+        .members-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: stretch;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .member-card {
+            flex: 1 1 200px;
+            max-width: 230px;
+            background: #FFFFFF;
+            border-radius: var(--radius);
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.35s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .member-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.12);
+            border-color: rgba(37, 99, 235, 0.2);
+        }
+
+        .member-img-box {
+            width: 100%;
+            height: 260px;
+            overflow: hidden;
+            border-radius: 120px 120px 0 120px;
+            margin-bottom: 1.2rem;
+            background: #E2E8F0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .member-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .member-card:hover .member-img-box img {
+            transform: scale(1.05);
+        }
+
+        .member-svg-avatar {
+            width: 100%;
+            height: 100%;
+            background: #CBD5E1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748B;
+            font-size: 5rem;
+        }
+
+        .member-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #22C55E;
+            margin-bottom: 0.3rem;
+        }
+
+        .member-role {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #22C55E;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 991px) {
+
+            .leadership-row,
+            .leadership-row.reverse {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .leadership-row.reverse .leadership-img-wrapper {
+                order: -1;
+            }
+
+            .members-grid {
+                justify-content: center;
+            }
+
+            .member-card {
+                flex: 0 1 calc(50% - 1.5rem);
+                max-width: 260px;
+            }
+
+            .leadership-img {
+                height: 320px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .members-grid {
+                justify-content: center;
+            }
+
+            .member-card {
+                flex: 1 1 100%;
+                max-width: 320px;
+            }
+
+            .team-hero-title {
+                font-size: 2.2rem;
+            }
+
+            .team-main-heading {
+                font-size: 2rem;
+            }
+
+            .leadership-img {
+                height: 280px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <!-- Logo -->
+        <a href="../index.html" class="logo">
+            <img src="../logoofITpointer.png" alt="Pointer IT Infotech Organization" class="logo-img">
+        </a>
+
+        <!-- Nav Links -->
+        <ul class="nav-links" id="navLinks">
+            <!-- Home with dropdown -->
+            <li class="nav-item has-dropdown">
+                <a href="../index.html" class="nav-link">Home <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+                <ul class="dropdown">
+                    <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+                    <li><a href="companies.html"><i class="fa-solid fa-building"></i> For Companies</a></li>
+                    <li><a href="../index.html#certificate"><i class="fa-solid fa-certificate"></i> Certificate
+                            Portal</a></li>
+                    <li><a href="../index.html#gallery"><i class="fa-solid fa-images"></i> Visual Highlights</a></li>
+                </ul>
+            </li>
+            <li class="nav-item"><a href="success.html" class="nav-link">Student Success</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contact Us</a></li>
+            <!-- Trust with dropdown -->
+            <li class="nav-item has-dropdown">
+                <a href="trust.html" class="nav-link active" style="color: var(--primary);">Pointer Educational Trust <i
+                        class="fa-solid fa-chevron-down nav-arrow"></i></a>
+                <ul class="dropdown">
+                    <li><a href="team.html" class="nav-link active" style="color: var(--primary);"><i
+                                class="fa-solid fa-users"></i> Meet The Team</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="nav-actions">
+            <a href="tel:+918874522557" class="btn-header-phone"><i class="fa-solid fa-phone"></i> +91 8874522557</a>
+            <a href="donation.html" class="btn-donate">Donate</a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="team-hero-section">
+        <div class="trust-hero-bg-glow"></div>
+        <div class="container">
+            <div class="team-hero-card fade-up">
+                <img src="../logoofITpointer.png" alt="Pointer Educational Trust Logo" class="team-hero-logo">
+                <h1 class="team-hero-title">Pointer Educational Trust</h1>
+                <div class="team-hero-subtitle">-Way to Brighter Future</div>
+                <h2 class="team-main-heading">Our Team</h2>
+                <p class="team-intro-text">
+                    At Pointer Educational Trust consists of passionate professionals and industry experts dedicated to
+                    empowering students with real-world skills. They bring practical knowledge, mentorship, and support,
+                    creating a learning environment where students can confidently pursue meaningful careers—all within
+                    their own communities. Together, we're committed to building brighter futures through accessible,
+                    quality education.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- LEADERSHIP SECTION -->
+    <section class="leadership-section">
+        <div class="container">
+
+            <!-- Section 1: Mr. Ramesh Chandra Maurya (Image Left, Text Right) -->
+            <div class="leadership-row fade-up">
+                <div class="leadership-img-wrapper">
+                    <img src="../Mr.%20Ramesh%20Chandra%20Maurya.avif" alt="Mr. Ramesh Chandra Maurya"
+                        class="leadership-img">
+                    <span class="leadership-badge">Mr. Ramesh Chandra Maurya</span>
+                </div>
+                <div class="leadership-content">
+                    <h2 class="leadership-role">Director of Education and Faculty / Trustee President</h2>
+                    <div class="leadership-bio">
+                        <p>
+                            Mr. Ramesh Chandra Maurya, a distinguished educator, has dedicated his life to nurturing and
+                            shaping young minds with unwavering commitment and care. With decades of teaching
+                            experience, he has mentored countless students, guiding them toward success while instilling
+                            values that inspire lifelong learning and social responsibility.
+                        </p>
+                        <p>
+                            His experiences in teaching and his passion for serving society inspired him to establish
+                            the <strong>Pointer Educational Trust</strong>. As the Founder and Trustee of the trust, he
+                            has expanded his mission beyond the classroom to serve underprivileged communities.
+                            Leveraging his extensive expertise in education, he works tirelessly to ensure that quality
+                            education and opportunities reach those in need. Driven by a profound sense of
+                            responsibility and a vision to empower individuals, strengthen communities, and foster a
+                            culture of learning and growth, his efforts stand as a testament to his unwavering
+                            dedication. By combining professional acumen with a passion for social welfare, he continues
+                            to make a transformative impact, contributing to the creation of a more educated, equitable,
+                            and progressive society.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Mr. Digvijay Maurya (Text Left, Image Right) -->
+            <div class="leadership-row reverse fade-up">
+                <div class="leadership-content">
+                    <h2 class="leadership-role">Managing Director / Vice President</h2>
+                    <div class="leadership-bio">
+                        <p>
+                            Digvijay Maurya has always been passionate about helping others. From a young age, he
+                            actively contributed to various NGOs, working across different sectors to support community
+                            welfare. Despite facing financial challenges in his education, he received invaluable
+                            support from Asha Trust Mumbai, which enabled him to continue his studies. This experience
+                            deeply inspired him to give back to society. After working with the trust for several years,
+                            he resolved to establish his own educational trust to support others facing similar
+                            struggles.
+                        </p>
+                        <p>
+                            After completing his education, Digvijay gained valuable experience in the corporate sector.
+                            Driven by a desire to make a meaningful impact, he joined and took a leadership role at
+                            <strong>Pointer Educational Trust</strong>. His mission is to empower individuals by sharing
+                            his knowledge and skills, helping them build a better and more sustainable future.
+                        </p>
+                    </div>
+                </div>
+                <div class="leadership-img-wrapper">
+                    <img src="../DigvijayMaurya.png" alt="Mr. Digvijay Maurya" class="leadership-img">
+                    <span class="leadership-badge">Mr. Digvijay Maurya</span>
+                </div>
+            </div>
+
+            <!-- Section 3: Mr. Vikas Kumar (Image Left, Text Right) -->
+            <div class="leadership-row fade-up">
+                <div class="leadership-img-wrapper">
+                    <img src="../mr.%20Vikash%20kumar.avif" alt="Mr. Vikas Kumar" class="leadership-img">
+                    <span class="leadership-badge">Mr. Vikas Kumar</span>
+                </div>
+                <div class="leadership-content">
+                    <h2 class="leadership-role">Treasurer / Secretary</h2>
+                    <div class="leadership-bio">
+                        <p>
+                            Vikash Kumar, a <u>B.Sc.</u> graduate from Kanpur University, faced early challenges in his
+                            career but overcame them by pursuing a diploma in Computer Hardware and Networking. This
+                            opened the door to his first job, marking a pivotal moment in his career. Inspired by his
+                            journey, Vikash decided to help others facing similar struggles and founded <strong>"Pointer
+                                IT Infotech Organization"</strong> to empower individuals and create job opportunities.
+                        </p>
+                        <p>
+                            His mission is to reach as many people as possible and help them build better futures. By
+                            collaborating with <strong>Pointer Educational Trust</strong>, he aims to expand his efforts
+                            and positively impact even more lives. His journey is a testament to the transformative
+                            power of patience, education, and empowerment. Through his work, he continues to guide
+                            others toward success and a secure future.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- TEAM MEMBERS GRID -->
+    <section class="members-section">
+        <div class="container">
+            <h2 class="section-title fade-up">Team Members</h2>
+            <div class="members-grid">
+
+                <!-- Member 1: Mr. Ashish Shukla -->
+                <div class="member-card fade-up">
+                    <div class="member-img-box">
+                        <img src="../Mr.%20Ashish%20Shukla%20finance%20and%20legal%20advisor.avif"
+                            alt="Mr. Ashish Shukla">
+                    </div>
+                    <h3 class="member-name">Mr. Ashish Shukla</h3>
+                    <p class="member-role">Finance & Legal Advisor</p>
+                </div>
+
+                <!-- Member 2: Mr. Satyam Prajapati -->
+                <div class="member-card fade-up" style="transition-delay: 0.1s;">
+                    <div class="member-img-box">
+                        <img src="../Mr.%20Satyam%20Prajapati%20Project%20manager.avif" alt="Mr. Satyam Prajapati">
+                    </div>
+                    <h3 class="member-name">Mr. Satyam Prajapati</h3>
+                    <p class="member-role">Project Manager</p>
+                </div>
+
+                <!-- Member 3: Nagendra Sir -->
+                <div class="member-card fade-up" style="transition-delay: 0.15s;">
+                    <div class="member-img-box">
+                        <img src="../NagendraSir.jpg" alt="Nagendra Sir">
+                    </div>
+                    <h3 class="member-name">Nagendra Sir</h3>
+                    <p class="member-role">Project Manager<span
+                            style="display: block; font-size: 0.85rem; font-weight: 600; color: #16A34A; margin-top: 3px;">(Janghai
+                            Branch)</span></p>
+                </div>
+
+                <!-- Member 4: Mr. Anuj Maurya -->
+                <div class="member-card fade-up" style="transition-delay: 0.2s;">
+                    <div class="member-img-box">
+                        <div class="member-svg-avatar">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                    </div>
+                    <h3 class="member-name">Mr. Anuj Maurya</h3>
+                    <p class="member-role">Operation Executive</p>
+                </div>
+
+                <!-- Member 5: Ms. Neha Maurya -->
+                <div class="member-card fade-up" style="transition-delay: 0.3s;">
+                    <div class="member-img-box">
+                        <img src="../Ms.%20Neha%20Maurya.avif" alt="Ms. Neha Maurya">
+                    </div>
+                    <h3 class="member-name">Ms. Neha Maurya</h3>
+                    <p class="member-role">PR & Social Media Manager</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- INFORMATION CARDS (REGISTERED OFFICE, REGISTRATION DETAILS, CONTACTS, DONATION ACCOUNT DETAILS) -->
+    <section class="trust-section">
+        <div class="container">
+            <div class="trust-info-grid">
+
+                <!-- Registered Office -->
+                <div class="trust-info-card fade-up">
+                    <div class="trust-info-card-header">
+                        <div class="trust-info-icon"><i class="fa-solid fa-location-dot"></i></div>
+                        <h3 class="trust-info-title">Registered Office</h3>
+                    </div>
+                    <div class="trust-info-body">
+                        <p><strong>Village - Pataiya, Janghai Bazar, Handia, Prayagraj, Uttar Pradesh – 212401</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Registration Details -->
+                <div class="trust-info-card fade-up" style="transition-delay: 0.1s;">
+                    <div class="trust-info-card-header">
+                        <div class="trust-info-icon"><i class="fa-solid fa-file-contract"></i></div>
+                        <h3 class="trust-info-title">Registration Details</h3>
+                    </div>
+                    <div class="trust-info-body">
+                        <p>
+                            <strong>Pointer Educational Trust</strong> is registered with the Office of Sub-Registrar,
+                            Handia, Prayagraj, under Registration Number <strong>94/24</strong> dated <strong>21/11/2024
+                                (PAN No: AAFTP9901N)</strong>. It is also registered under Section
+                            <strong>12A(a)</strong> and <strong>80G</strong> of the <strong>Income Tax Act,
+                                1961</strong>, with Registration Number <strong>AAFTP9901NF20241</strong>. Additionally,
+                            the Trust is registered with DARPAN under Registration Number
+                            <strong>4/45/377-398/94</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Contacts -->
+                <div class="trust-info-card fade-up" style="transition-delay: 0.2s;">
+                    <div class="trust-info-card-header">
+                        <div class="trust-info-icon"><i class="fa-solid fa-phone"></i></div>
+                        <h3 class="trust-info-title">Contacts</h3>
+                    </div>
+                    <div class="trust-info-body">
+                        <ul class="trust-bank-list">
+                            <li><i class="fa-solid fa-phone"></i> <strong>+91-8356061681</strong></li>
+                            <li><i class="fa-solid fa-phone"></i> <strong>+91 8601561992</strong></li>
+                            <li><i class="fa-solid fa-phone"></i> <strong>+91 8874522557</strong></li>
+                            <li><i class="fa-solid fa-envelope"></i> <strong>Email Id- pointer.edu24@gmail.com</strong>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Bank Details for Contributions -->
+                <div class="trust-info-card fade-up"
+                    style="transition-delay: 0.3s; border-color: rgba(34, 197, 94, 0.4);">
+                    <div class="trust-info-card-header">
+                        <div class="trust-info-icon"
+                            style="background: rgba(34, 197, 94, 0.1); color: var(--secondary);"><i
+                                class="fa-solid fa-building-columns"></i></div>
+                        <h3 class="trust-info-title" style="color: var(--secondary);">Bank Details for Contributions
+                        </h3>
+                    </div>
+                    <div class="trust-info-body">
+                        <p style="margin-bottom: 1rem;">Your generous contribution can make a difference! Please use the
+                            following details to donate:</p>
+                        <ul class="trust-bank-list">
+                            <li><i class="fa-solid fa-user-check" style="color: var(--secondary);"></i>
+                                <span><strong>Beneficiary Name:</strong> Pointer Educational Trust</span>
+                            </li>
+                            <li><i class="fa-solid fa-building-columns" style="color: var(--secondary);"></i>
+                                <span><strong>Bank Name:</strong> HDFC Bank</span>
+                            </li>
+                            <li><i class="fa-solid fa-code-branch" style="color: var(--secondary);"></i>
+                                <span><strong>Branch:</strong> Handia, Allahabad</span>
+                            </li>
+                            <li><i class="fa-solid fa-credit-card" style="color: var(--secondary);"></i>
+                                <span><strong>Account Number:</strong> 50200107187982</span>
+                            </li>
+                            <li><i class="fa-solid fa-hashtag" style="color: var(--secondary);"></i> <span><strong>IFSC
+                                        Code:</strong> HDFC0004241</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (Rendered via reusable js/footer.js) -->
+    <footer></footer>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/footer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Companies - Pointer IT Infotech</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* Modern Page-Specific Styling for For Companies */
+        .page-header-companies {
+            padding: 140px 0 60px;
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header-companies::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.12) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .section-padding {
+            padding: 5rem 0;
+        }
+
+        .section-alt {
+            background: #F8FAFC;
+        }
+
+        /* Hero / Section 1 */
+        .hero-title-main {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #00c853;
+            margin-bottom: 0.5rem;
+            line-height: 1.15;
+        }
+
+        .hero-subtitle-green {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00c853;
+            margin-bottom: 1.5rem;
+        }
+
+        .company-hero-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .handshake-img-wrapper {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .handshake-img-wrapper:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.18);
+        }
+
+        .handshake-img-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        /* Section 2: How It Works */
+        .how-works-heading {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #00c853;
+            margin-bottom: 2rem;
+        }
+
+        .step-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            background: white;
+            padding: 1.5rem 1.75rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .step-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(34, 197, 94, 0.1);
+            border-color: rgba(34, 197, 94, 0.2);
+        }
+
+        .step-number {
+            width: 42px;
+            height: 42px;
+            min-width: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00c853, #00e676);
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 15px rgba(0, 200, 83, 0.3);
+            margin-top: 2px;
+        }
+
+        .step-text {
+            font-size: 1.02rem;
+            color: #334155;
+            line-height: 1.7;
+        }
+
+        .step-text strong {
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        /* Section 3: Get Started Today */
+        .get-started-heading {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #00c853;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-box {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            margin: 1.5rem 0;
+        }
+
+        .contact-box-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            color: #1e293b;
+        }
+
+        .contact-box-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .contact-box-item i {
+            color: #00c853;
+            font-size: 1.2rem;
+            width: 24px;
+        }
+
+        /* Request A Call Button */
+        .btn-request-call {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1rem 2.5rem;
+            background: #00c853;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(0, 200, 83, 0.35);
+            transition: all 0.3s ease;
+            margin-top: 1.5rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-request-call:hover {
+            background: #00e676;
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(0, 200, 83, 0.45);
+            color: white;
+        }
+
+        /* Section 4: Our Students Work At */
+        .students-work-section {
+            background: #0F172A;
+            color: white;
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .students-work-heading {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: white;
+            text-align: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .students-work-subtitle {
+            text-align: center;
+            color: #94A3B8;
+            max-width: 750px;
+            margin: 0 auto 3.5rem;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .company-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.5rem;
+        }
+
+        .company-card {
+            background: #ffffff;
+            border-radius: 20px;
+            height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.25rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .company-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0, 200, 83, 0.2);
+            border-color: #00c853;
+        }
+
+        .logo-svg {
+            max-width: 85%;
+            max-height: 55px;
+            width: auto;
+            height: auto;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1024px) {
+            .company-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .company-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .hero-title-main {
+                font-size: 2.4rem;
+            }
+
+            .hero-subtitle-green {
+                font-size: 1.6rem;
+            }
+
+            .how-works-heading,
+            .get-started-heading,
+            .students-work-heading {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .company-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .company-card {
+                height: 95px;
+                padding: 0.75rem;
+            }
+
+            .btn-request-call {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <!-- Logo -->
+        <a href="../index.html" class="logo">
+            <img src="../logoofITpointer.png" alt="Pointer IT Infotech Organization" class="logo-img">
+        </a>
+
+        <!-- Nav Links -->
+        <ul class="nav-links" id="navLinks">
+            <!-- Home with dropdown -->
+            <li class="nav-item has-dropdown">
+                <a href="../index.html" class="nav-link">Home <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+                <ul class="dropdown">
+                    <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+                    <li><a href="companies.html" class="nav-link active" style="color: var(--primary);"><i
+                                class="fa-solid fa-building"></i> For Companies</a></li>
+                    <li><a href="certificate.html"><i class="fa-solid fa-certificate"></i> Certificate Portal</a></li>
+                    <li><a href="gallery.html"><i class="fa-solid fa-images"></i> Visual Highlights</a></li>
+                </ul>
+            </li>
+            <li class="nav-item"><a href="success.html" class="nav-link">Student Success</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contact Us</a></li>
+            <!-- Trust with dropdown -->
+            <li class="nav-item has-dropdown">
+                <a href="trust.html" class="nav-link">Pointer Educational Trust <i
+                        class="fa-solid fa-chevron-down nav-arrow"></i></a>
+                <ul class="dropdown">
+                    <li><a href="trust.html#team"><i class="fa-solid fa-users"></i> Meet The Team</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="nav-actions">
+            <a href="tel:+918874522557" class="btn-header-phone"><i class="fa-solid fa-phone"></i> +91 8874522557</a>
+            <a href="donation.html" class="btn-donate">Donate</a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- SECTION 1: HERO / PARTNER WITH US -->
+    <section class="section-padding" style="padding-top: 130px; background: #ffffff;">
+        <div class="container">
+            <h1 class="hero-title-main fade-up">Partner With Us</h1>
+            <div class="grid grid-2 fade-up" style="align-items: center; gap: 3.5rem; margin-top: 1.5rem;">
+                <div>
+                    <h2 class="hero-subtitle-green" style="font-size: 2.2rem; font-weight: 800; color: #00c853; margin-bottom: 1.25rem;">Hire Our Graduates</h2>
+                    <p style="color: #334155; font-size: 1.08rem; line-height: 1.85; margin-bottom: 0;">
+                        <strong style="color: #2563EB; font-weight: 700;">At Pointer IT Infotech Organization</strong>, we are dedicated to bridging the gap between education and employment. Our training programs equip students with the skills and knowledge needed to excel in the IT industry. We invite employers to partner with us in providing job opportunities for our graduates. Here’s how you can benefit from collaborating with us.
+                    </p>
+                </div>
+                <div>
+                    <div class="handshake-img-wrapper">
+                        <img src="../images/corporate_handshake.png" loading="lazy"
+                            alt="Business Partnership Handshake Illustration">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: HOW IT WORKS -->
+    <section class="section-padding section-alt">
+        <div class="container">
+            <div class="grid grid-2 fade-up" style="align-items: center; gap: 4rem;">
+                <div>
+                    <div class="handshake-img-wrapper">
+                        <img src="../images/recruitment_illustration.png" loading="lazy"
+                            alt="Professional Recruitment & Hiring Process Illustration">
+                    </div>
+                </div>
+                <div>
+                    <h2 class="how-works-heading" style="font-size: 2.2rem; font-weight: 800; color: #00c853; margin-bottom: 1.5rem;">How It Works</h2>
+                    <div class="step-list">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-text" style="color: #334155; font-size: 1.02rem; line-height: 1.75;">
+                                <strong style="color: #0f172a; font-weight: 700;">Connect with Us:</strong> Reach out to discuss your hiring needs and the types of roles you’re looking to fill.
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-text" style="color: #334155; font-size: 1.02rem; line-height: 1.75;">
+                                <strong style="color: #0f172a; font-weight: 700;">Candidate Matching:</strong> We will match qualified graduates with your job openings based on the skills and competencies you require.
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-text" style="color: #334155; font-size: 1.02rem; line-height: 1.75;">
+                                <strong style="color: #0f172a; font-weight: 700;">Interview Process:</strong> Conduct interviews with our recommended candidates, with our support throughout the process.
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-text" style="color: #334155; font-size: 1.02rem; line-height: 1.75;">
+                                <strong style="color: #0f172a; font-weight: 700;">Hire and Onboard:</strong> Once you find the right fit, we assist with the onboarding process to ensure a successful start for your new employee.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: GET STARTED TODAY -->
+    <section class="section-padding" style="background: #ffffff;">
+        <div class="container">
+            <div class="grid grid-2 fade-up" style="align-items: center; gap: 4rem;">
+                <div>
+                    <h2 class="get-started-heading" style="font-size: 2.2rem; font-weight: 800; color: #00c853; margin-bottom: 1.25rem;">Get Started Today</h2>
+                    <p style="color: #334155; font-size: 1.08rem; line-height: 1.85; margin-bottom: 1.25rem;">
+                        <strong style="color: #2563EB; font-weight: 700;">If you are interested</strong> in partnering with Pointer IT Infotech Organization to hire skilled graduates, please contact us:
+                    </p>
+
+                    <div class="contact-box">
+                        <div class="contact-box-item">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span><strong>Email:</strong> <a href="mailto:handia@pointeritinfo.org"
+                                    style="color: inherit; text-decoration: underline;">handia@pointeritinfo.org</a></span>
+                        </div>
+                        <div class="contact-box-item">
+                            <i class="fa-solid fa-phone"></i>
+                            <span><strong>Phone:</strong> <a href="tel:+917208738300"
+                                    style="color: inherit; text-decoration: none;">+91-7208738300</a> / <a
+                                    href="tel:+918874522557"
+                                    style="color: inherit; text-decoration: none;">8874522557</a></span>
+                        </div>
+                        <div class="contact-box-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span><strong>Location:</strong> Handia Station Road, Near BSNL Tower, Prayagraj, Uttar
+                                Pradesh – 221503</span>
+                        </div>
+                    </div>
+
+                    <p style="color: #4b5563; font-size: 1.05rem; line-height: 1.8; margin-bottom: 1rem;">
+                        Join us in shaping the future of the IT workforce by providing valuable job opportunities to our
+                        graduates! Join us in shaping
+                    </p>
+
+                    <p style="color: #4b5563; font-size: 1.05rem; line-height: 1.8; margin-bottom: 1.5rem;">
+                        If you’d like to leave us a message, simply click the button below and fill out the form, and we
+                        will get back to you shortly.
+                    </p>
+
+                    <a href="tel:7208738300" class="btn-request-call">
+                        <i class="fa-solid fa-phone"></i> Request A Call
+                    </a>
+                </div>
+
+                <div style="text-align: center;">
+                    <div class="handshake-img-wrapper" style="max-width: 480px; margin: 0 auto;">
+                        <img src="../images/customer_support_illustration.png" loading="lazy"
+                            alt="Professional Customer Support Illustration">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3.5: CAREER GROWTH PROGRESSION ROADMAP GRAPH -->
+    <section class="career-roadmap-section">
+        <div class="container fade-up">
+            <div class="career-roadmap-header">
+                <div class="career-roadmap-tag">
+                    <i class="fa-solid fa-chart-line"></i> Career Trajectory
+                </div>
+                <h2 class="career-roadmap-title">
+                    Your IT Career Growth <span>Progression Pathway</span>
+                </h2>
+                <p class="career-roadmap-subtitle">
+                    Transforming students into industry leaders. See how your career dynamically elevates from an entry-level Support Engineer to General Manager of IT &amp; Infrastructure.
+                </p>
+            </div>
+
+            <div class="roadmap-container-wrapper">
+                <div class="roadmap-timeline-track">
+
+                    <!-- STEP 1: Level 0 -->
+                    <div class="roadmap-step-item pos-bottom">
+                        <div class="roadmap-node-dot"></div>
+                        <div class="roadmap-card">
+                            <span class="roadmap-level-badge">Level 0</span>
+                            <div class="roadmap-icon-box">
+                                <i class="fa-solid fa-headset"></i>
+                            </div>
+                            <h4 class="roadmap-role-title">Level 0: Support Engineer</h4>
+                            <p class="roadmap-role-desc">Technical Troubleshooting &amp; Helpdesk Basics</p>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: Level 1 -->
+                    <div class="roadmap-step-item pos-top">
+                        <div class="roadmap-node-dot"></div>
+                        <div class="roadmap-card">
+                            <span class="roadmap-level-badge">Level 1</span>
+                            <div class="roadmap-icon-box">
+                                <i class="fa-solid fa-laptop-code"></i>
+                            </div>
+                            <h4 class="roadmap-role-title">Level 1: Support Engineer</h4>
+                            <p class="roadmap-role-desc">OS Maintenance &amp; L1 Desktop Support</p>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: Support Engineer (L2) -->
+                    <div class="roadmap-step-item pos-bottom">
+                        <div class="roadmap-node-dot"></div>
+                        <div class="roadmap-card">
+                            <span class="roadmap-level-badge">Level 2</span>
+                            <div class="roadmap-icon-box">
+                                <i class="fa-solid fa-microchip"></i>
+                            </div>
+                            <h4 class="roadmap-role-title">Support Engineer (L2)</h4>
+                            <p class="roadmap-role-desc">Server Administration &amp; Active Directory</p>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4: Network Administrator -->
+                    <div class="roadmap-step-item pos-top">
+                        <div class="roadmap-node-dot"></div>
+                        <div class="roadmap-card">
+                            <span class="roadmap-level-badge">Level 3</span>
+                            <div class="roadmap-icon-box">
+                                <i class="fa-solid fa-network-wired"></i>
+                            </div>
+                            <h4 class="roadmap-role-title">Network Administrator</h4>
+                            <p class="roadmap-role-desc">Cisco Routing, Switches &amp; Security</p>
+                        </div>
+                    </div>
+
+                    <!-- STEP 5: Senior Analyst -->
+                    <div class="roadmap-step-item pos-bottom">
+                        <div class="roadmap-node-dot"></div>
+                        <div class="roadmap-card">
+                            <span class="roadmap-level-badge">Level 4</span>
+                            <div class="roadmap-icon-box">
+                                <i class="fa-solid fa-user-shield"></i>
+                            </div>
+                            <h4 class="roadmap-role-title">Senior Analyst</h4>
+                            <p class="roadmap-role-desc">Cloud Infrastructure &amp; Security Audits</p>
+                        </div>
+                    </div>
+
+                    <!-- STEP 6: I.T. Manager -->
+                    <div class="roadmap-step-item pos-top">
+                        <div class="roadmap-node-dot"></div>
+                        <div class="roadmap-card">
+                            <span class="roadmap-level-badge">Level 5</span>
+                            <div class="roadmap-icon-box">
+                                <i class="fa-solid fa-user-tie"></i>
+                            </div>
+                            <h4 class="roadmap-role-title">I.T. Manager</h4>
+                            <p class="roadmap-role-desc">IT Operations &amp; Team Leadership</p>
+                        </div>
+                    </div>
+
+                    <!-- STEP 7: General Manager -->
+                    <div class="roadmap-step-item pos-bottom">
+                        <div class="roadmap-node-dot"></div>
+                        <div class="roadmap-card">
+                            <span class="roadmap-level-badge">Level 6</span>
+                            <div class="roadmap-icon-box">
+                                <i class="fa-solid fa-briefcase"></i>
+                            </div>
+                            <h4 class="roadmap-role-title">General Manager I.T. &amp; IMS</h4>
+                            <p class="roadmap-role-desc">Enterprise Governance &amp; Executive Leadership</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4 (REPLACING COLLABORATION PARTNERS): OUR STUDENTS WORK AT -->
+    <section class="students-work-section">
+        <div class="container fade-up">
+            <h2 class="students-work-heading">Our Alumni Have Built Careers At</h2>
+            <p class="students-work-subtitle">
+                We are proud to see our students working with reputed companies across India, reflecting the quality of
+                our training and career-focused education.
+            </p>
+
+            <div class="company-grid">
+                <!-- 1. IndiGo -->
+                <div class="company-card" title="IndiGo">
+                    <svg class="logo-svg" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+                        <g transform="translate(10, 10)">
+                            <!-- IndiGo aircraft wing dots pattern -->
+                            <circle cx="12" cy="10" r="3.5" fill="#001B54" />
+                            <circle cx="22" cy="16" r="3" fill="#001B54" />
+                            <circle cx="30" cy="24" r="2.5" fill="#001B54" />
+                            <circle cx="18" cy="22" r="3" fill="#001B54" />
+                            <circle cx="26" cy="30" r="2.5" fill="#001B54" />
+                            <circle cx="10" cy="32" r="3.5" fill="#001B54" />
+                            <!-- Wordmark -->
+                            <text x="42" y="30" font-family="'Poppins', sans-serif" font-weight="800" font-size="28"
+                                fill="#001B54" letter-spacing="-0.5">IndiGo</text>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- 2. HCL -->
+                <div class="company-card" title="HCL">
+                    <svg class="logo-svg" viewBox="0 0 160 60" xmlns="http://www.w3.org/2000/svg">
+                        <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle"
+                            font-family="'Poppins', sans-serif" font-weight="900" font-style="italic" font-size="38"
+                            fill="#0066B3" letter-spacing="1">HCL</text>
+                    </svg>
+                </div>
+
+                <!-- 3. Tata -->
+                <div class="company-card" title="Tata">
+                    <svg class="logo-svg" viewBox="0 0 180 60" xmlns="http://www.w3.org/2000/svg">
+                        <g transform="translate(15, 12)">
+                            <!-- TATA Emblem -->
+                            <path d="M 12,5 C 2,15 2,25 12,35 C 22,25 22,15 12,5 Z M 7,12 L 17,12 M 12,12 L 12,28"
+                                stroke="#003366" stroke-width="2.5" fill="none" stroke-linecap="round" />
+                            <text x="45" y="27" font-family="'Poppins', sans-serif" font-weight="800" font-size="26"
+                                fill="#003366" letter-spacing="4">TATA</text>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- 4. HP -->
+                <div class="company-card" title="HP">
+                    <svg class="logo-svg" viewBox="0 0 160 60" xmlns="http://www.w3.org/2000/svg">
+                        <g transform="translate(55, 5)">
+                            <circle cx="25" cy="25" r="23" fill="#0096D6" />
+                            <text x="25" y="34" text-anchor="middle" font-family="'Poppins', sans-serif"
+                                font-weight="800" font-style="italic" font-size="28" fill="#FFFFFF">hp</text>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- 5. Wipro -->
+                <div class="company-card" title="Wipro">
+                    <svg class="logo-svg" viewBox="0 0 180 60" xmlns="http://www.w3.org/2000/svg">
+                        <g transform="translate(10, 10)">
+                            <!-- Wipro Multi-color flower dots -->
+                            <circle cx="15" cy="12" r="3.5" fill="#7B2CBF" />
+                            <circle cx="24" cy="15" r="3.5" fill="#00A896" />
+                            <circle cx="27" cy="24" r="3.5" fill="#F48C06" />
+                            <circle cx="21" cy="31" r="3.5" fill="#D90429" />
+                            <circle cx="12" cy="28" r="3.5" fill="#023E8A" />
+                            <!-- Wordmark -->
+                            <text x="38" y="29" font-family="'Poppins', sans-serif" font-weight="700" font-size="26"
+                                fill="#1E293B" letter-spacing="-0.5">wipro</text>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- 6. CVC -->
+                <div class="company-card" title="CVC">
+                    <svg class="logo-svg" viewBox="0 0 160 60" xmlns="http://www.w3.org/2000/svg">
+                        <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle"
+                            font-family="'Poppins', sans-serif" font-weight="900" font-size="34" fill="#002B49"
+                            letter-spacing="3">CVC</text>
+                    </svg>
+                </div>
+
+                <!-- 7. PW -->
+                <div class="company-card" title="PW">
+                    <svg class="logo-svg" viewBox="0 0 160 60" xmlns="http://www.w3.org/2000/svg">
+                        <g transform="translate(35, 10)">
+                            <rect x="0" y="0" width="40" height="40" rx="10" fill="#5A4BDA" />
+                            <text x="20" y="27" text-anchor="middle" font-family="'Poppins', sans-serif"
+                                font-weight="800" font-size="20" fill="#FFFFFF">PW</text>
+                            <text x="50" y="27" font-family="'Poppins', sans-serif" font-weight="700" font-size="18"
+                                fill="#1E293B">Physics Wallah</text>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- 8. AGS -->
+                <div class="company-card" title="AGS">
+                    <svg class="logo-svg" viewBox="0 0 160 60" xmlns="http://www.w3.org/2000/svg">
+                        <g transform="translate(15, 12)">
+                            <path d="M 5,28 L 15,6 L 25,28 Z" fill="#00529B" />
+                            <text x="32" y="27" font-family="'Poppins', sans-serif" font-weight="900" font-size="28"
+                                fill="#00529B" letter-spacing="1">AGS</text>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- 9. Tech Mahindra -->
+                <div class="company-card" title="Tech Mahindra">
+                    <svg class="logo-svg" viewBox="0 0 220 60" xmlns="http://www.w3.org/2000/svg">
+                        <g transform="translate(10, 15)">
+                            <text x="0" y="22" font-family="'Poppins', sans-serif" font-weight="800" font-size="18"
+                                fill="#E31837">Tech</text>
+                            <text x="52" y="22" font-family="'Poppins', sans-serif" font-weight="600" font-size="18"
+                                fill="#334155">Mahindra</text>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- 10. Quess -->
+                <div class="company-card" title="Quess">
+                    <svg class="logo-svg" viewBox="0 0 170 60" xmlns="http://www.w3.org/2000/svg">
+                        <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle"
+                            font-family="'Poppins', sans-serif" font-weight="900" font-size="28" fill="#008080"
+                            letter-spacing="2">QUESS</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (Rendered via reusable js/footer.js) -->
+    <footer></footer>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/footer.js"></script>
+</body>
+
+</html>

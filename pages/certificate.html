@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Portal - Pointer IT Infotech</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* Certificate Portal Styling */
+        .cert-hero-section {
+            padding: 140px 0 80px;
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cert-hero-section::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            left: -30%;
+            width: 160%;
+            height: 160%;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 200, 83, 0.12) 0%, rgba(37, 99, 235, 0.12) 40%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cert-hero-heading {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #00c853;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .cert-hero-text {
+            font-size: 1.15rem;
+            color: #E2E8F0;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.8;
+            font-weight: 400;
+        }
+
+        .cert-hero-text p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Download CTA Button */
+        .btn-download-cert {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.85rem;
+            padding: 1.1rem 2.8rem;
+            background: linear-gradient(135deg, #00c853 0%, #00e676 100%);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 12px 30px rgba(0, 200, 83, 0.38);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-download-cert::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.6s ease-out;
+        }
+
+        .btn-download-cert:active::after {
+            transform: translate(-50%, -50%) scale(1);
+            transition: 0s;
+        }
+
+        .btn-download-cert:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 40px rgba(0, 200, 83, 0.5);
+            color: white;
+        }
+
+        .cert-hero-badge-img {
+            max-width: 420px;
+            width: 100%;
+            height: auto;
+            border-radius: 24px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
+            animation: floating 5s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Certificate Viewer Section */
+        .viewer-section {
+            padding: 6rem 0 8rem;
+            background: #F8FAFC;
+            position: relative;
+        }
+
+        .viewer-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 3.5rem 3rem;
+            max-width: 650px;
+            margin: 0 auto;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .viewer-card:hover {
+            box-shadow: 0 25px 60px rgba(37, 99, 235, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .viewer-logo-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            text-decoration: none;
+        }
+
+        .viewer-heading {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #0F172A;
+            margin-bottom: 2rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .viewer-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .input-group-custom {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-group-custom i {
+            position: absolute;
+            left: 1.25rem;
+            color: #00c853;
+            font-size: 1.2rem;
+            pointer-events: none;
+            transition: color 0.3s ease;
+        }
+
+        .input-field-custom {
+            width: 100%;
+            padding: 1.1rem 1.2rem 1.1rem 3.2rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
+            border-radius: 50px;
+            border: 2px solid #E2E8F0;
+            background: #FFFFFF;
+            color: #0F172A;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+
+        .input-field-custom:focus {
+            border-color: #00c853;
+            box-shadow: 0 0 0 4px rgba(0, 200, 83, 0.15);
+        }
+
+        .btn-view-cert {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1.05rem 2.2rem;
+            background: linear-gradient(135deg, #0D6EFD 0%, #2563EB 100%);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(13, 110, 253, 0.3);
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-view-cert:hover {
+            background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(13, 110, 253, 0.4);
+            color: white;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 768px) {
+            .cert-hero-heading {
+                font-size: 2.5rem;
+            }
+            .cert-hero-text {
+                font-size: 1.02rem;
+            }
+            .btn-download-cert {
+                font-size: 1.05rem;
+                padding: 1rem 2rem;
+                width: 100%;
+                text-align: center;
+            }
+            .viewer-card {
+                padding: 2.5rem 1.5rem;
+                border-radius: 20px;
+            }
+            .viewer-heading {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <!-- Logo -->
+        <a href="../index.html" class="logo">
+            <span class="logo-icon">
+                <span class="logo-p">P</span>
+            </span>
+            <span class="logo-text">Pointer IT <span>Infotech Organization</span></span>
+        </a>
+
+        <!-- Nav Links -->
+        <ul class="nav-links" id="navLinks">
+            <!-- Home with dropdown -->
+            <li class="nav-item has-dropdown">
+                <a href="../index.html" class="nav-link">Home <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+                <ul class="dropdown">
+                    <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+                    <li><a href="companies.html"><i class="fa-solid fa-building"></i> For Companies</a></li>
+                    <li><a href="certificate.html" class="nav-link active" style="color: var(--primary);"><i class="fa-solid fa-certificate"></i> Certificate Portal</a></li>
+                    <li><a href="../index.html#gallery"><i class="fa-solid fa-images"></i> Visual Highlights</a></li>
+                </ul>
+            </li>
+            <li class="nav-item"><a href="success.html" class="nav-link">Student Success</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contact Us</a></li>
+            <!-- Trust with dropdown -->
+            <li class="nav-item has-dropdown">
+                <a href="trust.html" class="nav-link">Pointer Educational Trust <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+                <ul class="dropdown">
+                    <li><a href="trust.html#team"><i class="fa-solid fa-users"></i> Meet The Team</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="nav-actions">
+            <a href="donation.html" class="btn-donate">Donate</a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="cert-hero-section">
+        <div class="container">
+            <div class="fade-up">
+                <h1 class="cert-hero-heading">Certification</h1>
+                
+                <div class="cert-hero-text">
+                    <p>Welcome to the official certificate download portal of Pointer IT Infotech Organization.</p>
+                    <p>Students who have successfully completed their training or course can securely download their verified digital certificate from here.</p>
+                </div>
+
+                <div style="text-align: center; margin-bottom: 3.5rem;">
+                    <a href="https://certificates.pointeritinfo.org" target="_blank" rel="noopener noreferrer" class="btn-download-cert">
+                        <i class="fa-solid fa-circle-down"></i> Click Here to Download your certificate
+                    </a>
+                </div>
+            </div>
+
+            <div class="fade-up" style="text-align: center; transition-delay: 0.2s;">
+                <img src="../images/certificate_illustration.png" loading="lazy" alt="Digital Certificate Illustration" class="cert-hero-badge-img">
+            </div>
+        </div>
+    </section>
+
+    <!-- CERTIFICATE VIEWER DESIGN SECTION -->
+    <section class="viewer-section">
+        <div class="container">
+            <div class="viewer-card fade-up">
+                <!-- Logo Top -->
+                <div class="viewer-logo-header">
+                    <span class="logo-icon">
+                        <span class="logo-p">P</span>
+                    </span>
+                    <span class="logo-text" style="text-align: left;">Pointer IT <span style="display: block; font-size: 0.75rem; color: #F7941D;">Infotech Organization</span></span>
+                </div>
+
+                <h2 class="viewer-heading">View Your Certificate</h2>
+
+                <form class="viewer-form" action="https://certificates.pointeritinfo.org" method="GET" target="_blank" rel="noopener noreferrer" onsubmit="handleCertView(event)">
+                    <div class="input-group-custom">
+                        <i class="fa-solid fa-id-card"></i>
+                        <input type="text" id="studentIdInput" name="student_id" class="input-field-custom" placeholder="Enter Your Student ID" required>
+                    </div>
+
+                    <button type="submit" class="btn-view-cert">
+                        <i class="fa-solid fa-certificate"></i> View Certificate
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (Rendered via reusable js/footer.js) -->
+    <footer></footer>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/footer.js"></script>
+    <script>
+        function handleCertView(event) {
+            event.preventDefault();
+            const idInput = document.getElementById('studentIdInput');
+            const studentId = idInput.value.trim();
+            if (studentId) {
+                window.open(`https://certificates.pointeritinfo.org?id=${encodeURIComponent(studentId)}`, '_blank');
+            } else {
+                window.open('https://certificates.pointeritinfo.org', '_blank');
+            }
+        }
+    </script>
+</body>
+</html>

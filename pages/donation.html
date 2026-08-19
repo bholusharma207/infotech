@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make a Donation - Pointer Educational Trust</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* Donation Page Custom Styling */
+        .donation-hero {
+            padding: 140px 0 60px;
+            background: linear-gradient(135deg, rgba(241, 245, 249, 0.9) 0%, rgba(236, 253, 245, 0.8) 50%, rgba(239, 246, 255, 0.9) 100%);
+            text-align: center;
+        }
+
+        .donation-hero-card {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #FFFFFF;
+            padding: 3rem 2.5rem;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .donation-logo {
+            max-width: 140px;
+            height: auto;
+            margin-bottom: 1rem;
+        }
+
+        .donation-trust-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #1E3A8A;
+            margin-bottom: 0.2rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .donation-trust-subtitle {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #22C55E;
+            margin-bottom: 1.5rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .donation-hero-desc {
+            font-size: 1.15rem;
+            color: #475569;
+            line-height: 1.7;
+            max-width: 750px;
+            margin: 0 auto;
+            font-weight: 500;
+        }
+
+        /* Donation Section Two-Column Layout */
+        .donation-section {
+            padding: 4rem 0;
+            background: #F8FAFC;
+        }
+
+        .donation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            align-items: stretch;
+        }
+
+        .donation-card {
+            background: #FFFFFF;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .donation-card:hover {
+            box-shadow: 0 20px 40px rgba(34, 197, 94, 0.08);
+            border-color: rgba(34, 197, 94, 0.2);
+        }
+
+        .card-heading {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #22C55E;
+            margin-bottom: 1.5rem;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        /* How You Can Help Options List */
+        .help-options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .help-option-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.2rem;
+            border-radius: 16px;
+            background: #F8FAFC;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            transition: all 0.25s ease;
+        }
+
+        .help-option-item:hover {
+            background: #FFFFFF;
+            border-color: rgba(34, 197, 94, 0.3);
+            box-shadow: 0 8px 20px rgba(34, 197, 94, 0.06);
+            transform: translateX(4px);
+        }
+
+        .help-option-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            background: rgba(34, 197, 94, 0.12);
+            color: #22C55E;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .help-option-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1E293B;
+            margin-bottom: 0.25rem;
+        }
+
+        .help-option-desc {
+            font-size: 0.95rem;
+            color: #64748B;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* QR Code Container Styling */
+        .qr-card-content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-image-wrapper {
+            padding: 12px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #22C55E 0%, #0D6EFD 100%);
+            box-shadow: 0 12px 30px rgba(34, 197, 94, 0.2);
+            margin: 1.5rem 0;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .qr-image-wrapper:hover {
+            transform: scale(1.03);
+        }
+
+        .qr-image {
+            width: 240px;
+            height: 240px;
+            object-fit: contain;
+            border-radius: 12px;
+            background: #FFFFFF;
+            display: block;
+        }
+
+        .upi-box {
+            background: #F1F5F9;
+            padding: 0.75rem 1.5rem;
+            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            border: 1px solid #E2E8F0;
+            margin-top: 1rem;
+        }
+
+        .upi-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1E3A8A;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-copy {
+            background: #22C55E;
+            color: #FFFFFF;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-copy:hover {
+            background: #16A34A;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+
+        /* Bank Details Rows */
+        .bank-details-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .bank-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.1rem 1.4rem;
+            border-radius: 14px;
+            background: #F8FAFC;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .bank-row-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #64748B;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            min-width: 140px;
+        }
+
+        .bank-row-value {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #1E293B;
+            flex-grow: 1;
+        }
+
+        /* Badges styling */
+        .tax-badges-flex {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .tax-badge {
+            background: rgba(34, 197, 94, 0.1);
+            color: #16A34A;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tax-badge.blue {
+            background: rgba(13, 110, 253, 0.1);
+            color: #0D6EFD;
+            border-color: rgba(13, 110, 253, 0.3);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 991px) {
+            .donation-grid {
+                grid-template-columns: 1fr;
+            }
+            .donation-trust-title {
+                font-size: 2.2rem;
+            }
+            .bank-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            .bank-row-value {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <!-- Logo -->
+        <a href="../index.html" class="logo">
+            <img src="../logoofITpointer.png" alt="Pointer IT Infotech Organization" class="logo-img">
+        </a>
+
+        <!-- Nav Links -->
+        <ul class="nav-links" id="navLinks">
+            <!-- Home with dropdown -->
+            <li class="nav-item has-dropdown">
+                <a href="../index.html" class="nav-link">Home <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+                <ul class="dropdown">
+                    <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+                    <li><a href="companies.html"><i class="fa-solid fa-building"></i> For Companies</a></li>
+                    <li><a href="../index.html#certificate"><i class="fa-solid fa-certificate"></i> Certificate Portal</a></li>
+                    <li><a href="../index.html#gallery"><i class="fa-solid fa-images"></i> Visual Highlights</a></li>
+                </ul>
+            </li>
+            <li class="nav-item"><a href="success.html" class="nav-link">Student Success</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contact Us</a></li>
+            <!-- Trust with dropdown -->
+            <li class="nav-item has-dropdown">
+                <a href="trust.html" class="nav-link">Pointer Educational Trust <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+                <ul class="dropdown">
+                    <li><a href="team.html"><i class="fa-solid fa-users"></i> Meet The Team</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="nav-actions">
+            <a href="tel:+918874522557" class="btn-header-phone"><i class="fa-solid fa-phone"></i> +91 8874522557</a>
+            <a href="donation.html" class="btn-donate" style="background: var(--primary);">Donate</a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="donation-hero">
+        <div class="container">
+            <div class="donation-hero-card fade-up">
+                <img src="../trust_logo.png" alt="Pointer Educational Trust Logo" class="donation-logo">
+                <h1 class="donation-trust-title">Pointer Educational Trust</h1>
+                <div class="donation-trust-subtitle">-Way to Brighter Future</div>
+                <p class="donation-hero-desc">
+                    Support education. Empower lives. Every contribution creates opportunities for students.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- DONATION SECTION (TWO-COLUMN RESPONSIVE LAYOUT) -->
+    <section class="donation-section">
+        <div class="container">
+            <div class="donation-grid">
+                
+                <!-- LEFT CARD: MAKE A DIFFERENCE TODAY -->
+                <div class="donation-card fade-up">
+                    <div>
+                        <h2 class="card-heading"><i class="fa-solid fa-hand-holding-heart"></i> Make a Difference Today</h2>
+                        <div class="help-options-list">
+                            
+                            <!-- Option 1: One-Time Donation -->
+                            <div class="help-option-item">
+                                <div class="help-option-icon"><i class="fa-solid fa-gift"></i></div>
+                                <div>
+                                    <h4 class="help-option-title">One-Time Donation</h4>
+                                    <p class="help-option-desc">Support a project or initiative directly to help students in need.</p>
+                                </div>
+                            </div>
+
+                            <!-- Option 2: Monthly Contribution -->
+                            <div class="help-option-item">
+                                <div class="help-option-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                                <div>
+                                    <h4 class="help-option-title">Monthly Contribution</h4>
+                                    <p class="help-option-desc">Help us sustain our educational and skill programs regularly.</p>
+                                </div>
+                            </div>
+
+                            <!-- Option 3: In-Kind Support -->
+                            <div class="help-option-item">
+                                <div class="help-option-icon"><i class="fa-solid fa-laptop-code"></i></div>
+                                <div>
+                                    <h4 class="help-option-title">In-Kind Support</h4>
+                                    <p class="help-option-desc">Donate books, computers, furniture, or other training resources.</p>
+                                </div>
+                            </div>
+
+                            <!-- Option 4: CSR Partnership -->
+                            <div class="help-option-item">
+                                <div class="help-option-icon"><i class="fa-solid fa-building-flag"></i></div>
+                                <div>
+                                    <h4 class="help-option-title">CSR Partnership</h4>
+                                    <p class="help-option-desc">Corporates can support our educational mission under their CSR mandate.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT CARD: SCAN & DONATE (QR CODE) -->
+                <div class="donation-card fade-up" style="transition-delay: 0.1s;">
+                    <div class="qr-card-content">
+                        <h2 class="card-heading"><i class="fa-solid fa-qrcode"></i> Scan &amp; Donate</h2>
+                        <p style="color: #64748B; font-size: 1rem; margin-bottom: 0.5rem;">Open any UPI app &amp; scan the QR code below to donate instantly</p>
+                        
+                        <div class="qr-image-wrapper">
+                            <img src="../QR%20scanner.avif" alt="Pointer Educational Trust QR Code" class="qr-image">
+                        </div>
+
+                        <p style="font-weight: 600; color: #1E293B; margin-bottom: 0.5rem;">Or use UPI ID:</p>
+                        <div class="upi-box">
+                            <span class="upi-text" id="upiIdText">8356061681@ybl</span>
+                            <button class="btn-copy" onclick="copyText('8356061681@ybl', this)">
+                                <i class="fa-solid fa-copy"></i> Copy UPI
+                            </button>
+                        </div>
+
+                        <div class="tax-badges-flex" style="justify-content: center; margin-top: 1.5rem;">
+                            <span class="tax-badge"><i class="fa-solid fa-shield-halved"></i> Secured UPI Payment</span>
+                            <span class="tax-badge blue"><i class="fa-solid fa-file-invoice-dollar"></i> 80G Tax Exempt</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- BANK DETAILS SECTION -->
+    <section class="donation-section" style="padding-top: 0;">
+        <div class="container">
+            <div class="donation-card fade-up">
+                <h2 class="card-heading"><i class="fa-solid fa-building-columns"></i> Bank Details</h2>
+                <p style="color: #64748B; font-size: 1.05rem; margin-bottom: 1.5rem;">
+                    Your generous contribution can make a difference! Please use the following official bank details to transfer funds directly:
+                </p>
+
+                <div class="bank-details-grid">
+                    <!-- Row 1: Beneficiary Name -->
+                    <div class="bank-row">
+                        <span class="bank-row-label">Beneficiary Name</span>
+                        <span class="bank-row-value" id="val-beneficiary">Pointer Educational Trust</span>
+                        <button class="btn-copy" onclick="copyText('Pointer Educational Trust', this)">
+                            <i class="fa-solid fa-copy"></i> Copy
+                        </button>
+                    </div>
+
+                    <!-- Row 2: Bank Name -->
+                    <div class="bank-row">
+                        <span class="bank-row-label">Bank Name</span>
+                        <span class="bank-row-value" id="val-bank">HDFC Bank</span>
+                        <button class="btn-copy" onclick="copyText('HDFC Bank', this)">
+                            <i class="fa-solid fa-copy"></i> Copy
+                        </button>
+                    </div>
+
+                    <!-- Row 3: Branch -->
+                    <div class="bank-row">
+                        <span class="bank-row-label">Branch</span>
+                        <span class="bank-row-value" id="val-branch">Handia, Prayagraj</span>
+                        <button class="btn-copy" onclick="copyText('Handia, Prayagraj', this)">
+                            <i class="fa-solid fa-copy"></i> Copy
+                        </button>
+                    </div>
+
+                    <!-- Row 4: Account Number -->
+                    <div class="bank-row">
+                        <span class="bank-row-label">Account Number</span>
+                        <span class="bank-row-value" id="val-acc">50200107187982</span>
+                        <button class="btn-copy" onclick="copyText('50200107187982', this)">
+                            <i class="fa-solid fa-copy"></i> Copy
+                        </button>
+                    </div>
+
+                    <!-- Row 5: IFSC Code -->
+                    <div class="bank-row">
+                        <span class="bank-row-label">IFSC Code</span>
+                        <span class="bank-row-value" id="val-ifsc">HDFC0004241</span>
+                        <button class="btn-copy" onclick="copyText('HDFC0004241', this)">
+                            <i class="fa-solid fa-copy"></i> Copy
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LEGAL INFORMATION SECTION -->
+    <section class="donation-section" style="padding-top: 0;">
+        <div class="container">
+            <div class="donation-card fade-up">
+                <h2 class="card-heading"><i class="fa-solid fa-award"></i> Registration &amp; Tax Benefits</h2>
+                
+                <p style="color: #475569; font-size: 1.05rem; line-height: 1.8; margin-bottom: 1.2rem;">
+                    All donations made to <strong>Pointer Educational Trust</strong> are eligible for tax exemption under <strong>Section 80G</strong> of the Income Tax Act, 1961. The Trust is also registered under <strong>Section 12A(a)</strong>, ensuring full compliance with Income Tax regulations. Additionally, Pointer Educational Trust is certified and eligible to receive <strong>Corporate Social Responsibility (CSR)</strong> funds from companies. Donors will receive official receipts, 80G certificates, and CSR utilization reports for complete transparency and accountability.
+                </p>
+
+                <p style="color: #475569; font-size: 1.05rem; line-height: 1.8; margin-bottom: 1.5rem;">
+                    Pointer Educational Trust is registered with the Office of Sub-Registrar, Handia, Prayagraj, under Registration Number <strong>94/24</strong> dated <strong>21st November 2024</strong>, with PAN number <strong>AAFTP9901N</strong>. The Trust is also registered under Section 12A(a) and 80G of the Income Tax Act, 1961, bearing Registration Number <strong>AAFTP9901NF20241</strong>, which enables donors to claim tax exemptions. Additionally, Pointer Educational Trust is registered with the DARPAN portal under Registration Number <strong>4/45/377-398/94</strong>, and holds a valid CSR certificate with Registration Number <strong>CSR00096839</strong>, making it eligible to receive corporate social responsibility (CSR) funding.
+                </p>
+
+                <div class="tax-badges-flex">
+                    <span class="tax-badge"><i class="fa-solid fa-check-circle"></i> 12A Registered (AAFTP9901NF20241)</span>
+                    <span class="tax-badge blue"><i class="fa-solid fa-check-circle"></i> 80G Approved (AAFTP9901NF20241)</span>
+                    <span class="tax-badge"><i class="fa-solid fa-check-circle"></i> CSR Eligible (CSR00096839)</span>
+                    <span class="tax-badge blue"><i class="fa-solid fa-check-circle"></i> DARPAN Registered (4/45/377-398/94)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REGISTERED OFFICE & CONTACTS SECTION -->
+    <section class="donation-section" style="padding-top: 0;">
+        <div class="container">
+            <div class="donation-card fade-up">
+                <h2 class="card-heading"><i class="fa-solid fa-location-dot"></i> Registered Office</h2>
+                
+                <div style="background: #F8FAFC; padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(0,0,0,0.05); margin-bottom: 1.5rem;">
+                    <p style="font-size: 1.1rem; font-weight: 700; color: #1E293B; margin-bottom: 0;">
+                        Village - Pataiya, Janghai Bazar, Handia, Prayagraj, Uttar Pradesh – 212401
+                    </p>
+                </div>
+
+                <h3 style="font-size: 1.3rem; font-weight: 700; color: #1E3A8A; margin-bottom: 1rem; font-family: 'Poppins', sans-serif;">Contacts &amp; Communication</h3>
+
+                <ul class="trust-bank-list" style="margin-bottom: 0;">
+                    <li><i class="fa-solid fa-phone"></i> <strong>Contacts No:</strong> +91-8356061681 +91 8601561992 +91 8874522557</li>
+                    <li><i class="fa-solid fa-envelope"></i> <strong>Email Id-</strong> pointer.edu24@gmail.com</li>
+                    <li><i class="fa-solid fa-qrcode"></i> <strong>UPI ID:</strong> 8356061681@ybl</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (Rendered via reusable js/footer.js) -->
+    <footer></footer>
+
+    <!-- Copy Helper Script -->
+    <script>
+        function copyText(textToCopy, btnElement) {
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalHTML = btnElement.innerHTML;
+                btnElement.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+                btnElement.style.background = '#16A34A';
+                setTimeout(() => {
+                    btnElement.innerHTML = originalHTML;
+                    btnElement.style.background = '#22C55E';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+    </script>
+    <script src="../js/script.js"></script>
+    <script src="../js/footer.js"></script>
+</body>
+
+</html>

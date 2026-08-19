@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Success - Pointer IT Infotech</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* Student Success Page Custom Styling */
+        .page-header-success {
+            padding: 140px 0 60px;
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header-success::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            left: -30%;
+            width: 160%;
+            height: 160%;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 200, 83, 0.12) 0%, rgba(37, 99, 235, 0.12) 40%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .success-hero-heading {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #00c853;
+            margin-bottom: 1rem;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.15;
+        }
+
+        .success-hero-subtitle {
+            font-size: 1.2rem;
+            color: #E2E8F0;
+            max-width: 750px;
+            margin: 0 auto;
+            line-height: 1.8;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        /* Success Cards Section */
+        .success-grid-section {
+            padding: 5rem 0 7rem;
+            background: #F8FAFC;
+        }
+
+        /* Responsive Grid: 3 Desktop, 2 Tablet, 1 Mobile */
+        .student-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .student-success-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 2.25rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .student-success-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 45px rgba(34, 197, 94, 0.15);
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+
+        .student-img-wrapper {
+            width: 140px;
+            height: 140px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            border: 3px solid #00c853;
+            transition: transform 0.4s ease;
+            flex-shrink: 0;
+        }
+
+        .student-success-card:hover .student-img-wrapper {
+            transform: scale(1.06);
+        }
+
+        .student-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .student-name-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #00c853;
+            margin-bottom: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .quote-icon-small {
+            font-size: 1.25rem;
+            color: rgba(37, 99, 235, 0.25);
+            margin-bottom: 0.5rem;
+        }
+
+        .student-message-text {
+            color: #4B5563;
+            font-size: 0.98rem;
+            line-height: 1.75;
+            margin-bottom: 1.75rem;
+            flex-grow: 1;
+            font-style: italic;
+        }
+
+        .card-brand-footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            width: 100%;
+        }
+
+        .card-brand-footer span {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #0D6EFD;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .card-brand-footer span em {
+            color: #F7941D;
+            font-style: normal;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1024px) {
+            .student-cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .success-hero-heading {
+                font-size: 2.5rem;
+            }
+            .success-hero-subtitle {
+                font-size: 1.05rem;
+            }
+            .student-cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <!-- Logo -->
+        <a href="../index.html" class="logo">
+            <img src="../logoofITpointer.png" alt="Pointer IT Infotech Organization" class="logo-img">
+        </a>
+
+        <!-- Nav Links -->
+        <ul class="nav-links" id="navLinks">
+            <!-- Home with dropdown -->
+            <li class="nav-item has-dropdown">
+                <a href="../index.html" class="nav-link">Home <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+                <ul class="dropdown">
+                    <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+                    <li><a href="companies.html"><i class="fa-solid fa-building"></i> For Companies</a></li>
+                    <li><a href="certificate.html"><i class="fa-solid fa-certificate"></i> Certificate Portal</a></li>
+                    <li><a href="gallery.html"><i class="fa-solid fa-images"></i> Visual Highlights</a></li>
+                </ul>
+            </li>
+            <li class="nav-item"><a href="success.html" class="nav-link active" style="color: var(--primary);">Student Success</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contact Us</a></li>
+            <!-- Trust with dropdown -->
+            <li class="nav-item has-dropdown">
+                <a href="trust.html" class="nav-link">Pointer Educational Trust <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+                <ul class="dropdown">
+                    <li><a href="team.html"><i class="fa-solid fa-users"></i> Meet The Team</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="nav-actions">
+            <a href="tel:+918874522557" class="btn-header-phone"><i class="fa-solid fa-phone"></i> +91 8874522557</a>
+            <a href="donation.html" class="btn-donate">Donate</a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- PAGE HERO SECTION -->
+    <section class="page-header-success">
+        <div class="container fade-up">
+            <h1 class="success-hero-heading">Student Success</h1>
+            <p class="success-hero-subtitle">
+                "Our students are our greatest success. Their achievements inspire future learners to build successful careers."
+            </p>
+        </div>
+    </section>
+
+    <!-- STUDENT SUCCESS SHOWCASE GRID -->
+    <section class="success-grid-section">
+        <div class="container">
+            <div class="student-cards-grid fade-up">
+
+                <!-- 1. Mr. Aman Maury -->
+                <div class="student-success-card">
+                    <div class="student-img-wrapper">
+                        <img src="../Mr.Amanmauryinspiringstories.png" loading="lazy" alt="Mr. Aman Maury">
+                    </div>
+                    <h3 class="student-name-title">Mr. Aman Maury</h3>
+                    <i class="fa-solid fa-quote-left quote-icon-small"></i>
+                    <p class="student-message-text">
+                        "Pointer IT Infotech didn't just give me skills—it gave me a new life. I'll always be grateful for the guidance and support I received here."
+                    </p>
+                    <div class="card-brand-footer">
+                        <span class="logo-icon" style="width: 22px; height: 22px; font-size: 0.75rem;">
+                            <span class="logo-p">P</span>
+                        </span>
+                        <span>Pointer IT <em>Infotech Organization</em></span>
+                    </div>
+                </div>
+
+                <!-- 2. Mr. Arpit Kumar Maurya -->
+                <div class="student-success-card">
+                    <div class="student-img-wrapper">
+                        <img src="../Mr.Arpitkumarmaurya.png" loading="lazy" alt="Mr. Arpit Kumar Maurya">
+                    </div>
+                    <h3 class="student-name-title">Mr. Arpit Kumar Maurya</h3>
+                    <i class="fa-solid fa-quote-left quote-icon-small"></i>
+                    <p class="student-message-text">
+                        "Pointer IT Infotech gave me the technical foundation and the confidence to enter the IT industry. I am proud to call myself a Network Engineer today, thanks to the support I received here."
+                    </p>
+                    <div class="card-brand-footer">
+                        <span class="logo-icon" style="width: 22px; height: 22px; font-size: 0.75rem;">
+                            <span class="logo-p">P</span>
+                        </span>
+                        <span>Pointer IT <em>Infotech Organization</em></span>
+                    </div>
+                </div>
+
+                <!-- 3. Mr. Santosh Kumar -->
+                <div class="student-success-card">
+                    <div class="student-img-wrapper">
+                        <img src="../Mr.santoshkumar.avif" loading="lazy" alt="Mr. Santosh Kumar">
+                    </div>
+                    <h3 class="student-name-title">Mr. Santosh Kumar</h3>
+                    <i class="fa-solid fa-quote-left quote-icon-small"></i>
+                    <p class="student-message-text">
+                        "Even though I wasn't a student of Pointer IT Infotech, they helped me like I was one. I'm truly thankful for their support in starting my career."
+                    </p>
+                    <div class="card-brand-footer">
+                        <span class="logo-icon" style="width: 22px; height: 22px; font-size: 0.75rem;">
+                            <span class="logo-p">P</span>
+                        </span>
+                        <span>Pointer IT <em>Infotech Organization</em></span>
+                    </div>
+                </div>
+
+                <!-- 4. Mr. Shivam Maurya -->
+                <div class="student-success-card">
+                    <div class="student-img-wrapper">
+                        <img src="../Mr.ShivamMauryainspiringstories.png" loading="lazy" alt="Mr. Shivam Maurya">
+                    </div>
+                    <h3 class="student-name-title">Mr. Shivam Maurya</h3>
+                    <i class="fa-solid fa-quote-left quote-icon-small"></i>
+                    <p class="student-message-text">
+                        "Pointer IT Infotech shaped my future. Every lesson I learned here helped me prepare for the real world."
+                    </p>
+                    <div class="card-brand-footer">
+                        <span class="logo-icon" style="width: 22px; height: 22px; font-size: 0.75rem;">
+                            <span class="logo-p">P</span>
+                        </span>
+                        <span>Pointer IT <em>Infotech Organization</em></span>
+                    </div>
+                </div>
+
+                <!-- 5. Mr. Sachin Kushwaha -->
+                <div class="student-success-card">
+                    <div class="student-img-wrapper">
+                        <img src="../Mr.Sachinkushwahainspiringstories.png" loading="lazy" alt="Mr. Sachin Kushwaha">
+                    </div>
+                    <h3 class="student-name-title">Mr. Sachin Kushwaha</h3>
+                    <i class="fa-solid fa-quote-left quote-icon-small"></i>
+                    <p class="student-message-text">
+                        "Pointer IT Infotech was a turning point in my life. The training and support I received here changed everything for me."
+                    </p>
+                    <div class="card-brand-footer">
+                        <span class="logo-icon" style="width: 22px; height: 22px; font-size: 0.75rem;">
+                            <span class="logo-p">P</span>
+                        </span>
+                        <span>Pointer IT <em>Infotech Organization</em></span>
+                    </div>
+                </div>
+
+                <!-- 6. Mr. Kishan Maurya -->
+                <div class="student-success-card">
+                    <div class="student-img-wrapper">
+                        <img src="../Mr.kishanmaurya.png" loading="lazy" alt="Mr. Kishan Maurya">
+                    </div>
+                    <h3 class="student-name-title">Mr. Kishan Maurya</h3>
+                    <i class="fa-solid fa-quote-left quote-icon-small"></i>
+                    <p class="student-message-text">
+                        "The hands-on practical training and faculty support at Pointer IT Infotech gave me the skills and confidence to excel in my IT career."
+                    </p>
+                    <div class="card-brand-footer">
+                        <span class="logo-icon" style="width: 22px; height: 22px; font-size: 0.75rem;">
+                            <span class="logo-p">P</span>
+                        </span>
+                        <span>Pointer IT <em>Infotech Organization</em></span>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (Rendered via reusable js/footer.js) -->
+    <footer></footer>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Highlights - Pointer IT Infotech</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* Modern Page Styling for Visual Highlights */
+        .page-header-gallery {
+            padding: 140px 0 60px;
+            background: #ffffff;
+            text-align: center;
+        }
+
+        .gallery-heading-main {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: #1e3a8a;
+            margin-bottom: 1.25rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .gallery-subtitle-main {
+            font-size: 1.15rem;
+            color: #00c853;
+            max-width: 850px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+            font-weight: 600;
+        }
+
+        /* Responsive Grid: 4 cols Desktop, 3 cols Tablet, 2 cols Mobile */
+        .masonry-gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            padding-bottom: 4rem;
+        }
+
+        .gallery-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #ffffff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            aspect-ratio: 4 / 3;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.2) 60%, transparent 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(34, 197, 94, 0.18);
+        }
+
+        .gallery-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .gallery-card:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-card-title {
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .gallery-card-icon {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            color: #0F172A;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-card:hover .gallery-card-icon {
+            transform: scale(1);
+            background: #00c853;
+            color: white;
+        }
+
+        /* Lightbox Modal */
+        .lightbox-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.94);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.35s ease;
+        }
+
+        .lightbox-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 75vh;
+            border-radius: 16px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+            object-fit: contain;
+        }
+
+        .lightbox-caption {
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 1.25rem;
+            text-align: center;
+        }
+
+        .lightbox-btn {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox-btn:hover {
+            background: #00c853;
+            border-color: #00c853;
+            transform: scale(1.1);
+        }
+
+        .lightbox-close { top: -60px; right: 0; }
+        .lightbox-prev { left: -70px; top: 50%; transform: translateY(-50%); }
+        .lightbox-next { right: -70px; top: 50%; transform: translateY(-50%); }
+
+        /* Placement Section Styling */
+        .placement-section-dark {
+            background: #0F172A;
+            color: white;
+            padding: 6rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .placement-section-dark::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 200, 83, 0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .placement-heading {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: white;
+            line-height: 1.25;
+            margin-bottom: 1.5rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .placement-text {
+            color: #CBD5E1;
+            font-size: 1.1rem;
+            line-height: 1.85;
+            margin-bottom: 2rem;
+        }
+
+        .placement-img-wrapper {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .placement-img-wrapper:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 30px 60px rgba(0, 200, 83, 0.25);
+        }
+
+        .placement-img-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1024px) {
+            .masonry-gallery {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .lightbox-prev { left: 10px; }
+            .lightbox-next { right: 10px; }
+        }
+
+        @media (max-width: 768px) {
+            .masonry-gallery {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            .gallery-heading-main {
+                font-size: 2.4rem;
+            }
+            .placement-heading {
+                font-size: 2.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .masonry-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .lightbox-btn {
+                width: 42px;
+                height: 42px;
+                font-size: 1rem;
+            }
+            .lightbox-close { top: -45px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <!-- Logo -->
+        <a href="../index.html" class="logo">
+            <img src="../logoofITpointer.png" alt="Pointer IT Infotech Organization" class="logo-img">
+        </a>
+
+        <!-- Nav Links -->
+        <ul class="nav-links" id="navLinks">
+            <!-- Home with dropdown -->
+            <li class="nav-item has-dropdown">
+                <a href="../index.html" class="nav-link">Home <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+                <ul class="dropdown">
+                    <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+                    <li><a href="companies.html"><i class="fa-solid fa-building"></i> For Companies</a></li>
+                    <li><a href="certificate.html"><i class="fa-solid fa-certificate"></i> Certificate Portal</a></li>
+                    <li><a href="gallery.html" class="nav-link active" style="color: var(--primary);"><i class="fa-solid fa-images"></i> Visual Highlights</a></li>
+                </ul>
+            </li>
+            <li class="nav-item"><a href="success.html" class="nav-link">Student Success</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contact Us</a></li>
+            <!-- Trust with dropdown -->
+            <li class="nav-item has-dropdown">
+                <a href="trust.html" class="nav-link">Pointer Educational Trust <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+                <ul class="dropdown">
+                    <li><a href="trust.html#team"><i class="fa-solid fa-users"></i> Meet The Team</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="nav-actions">
+            <a href="donation.html" class="btn-donate">Donate</a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- MEDIA GALLERY SECTION -->
+    <section class="page-header-gallery">
+        <div class="container">
+            <h1 class="gallery-heading-main fade-up">Media Gallery</h1>
+            <p class="gallery-subtitle-main fade-up">
+                Take a look inside our classroom at Pointer IT Infotech! Experience hands-on learning in Computer Hardware & Networking, Computer Applications, and Skill Development Courses—where students build real-world expertise for today’s digital world.
+            </p>
+
+            <div class="masonry-gallery fade-up">
+                <!-- 1. Classroom -->
+                <div class="gallery-card" onclick="openLightbox(0)">
+                    <img src="../gallaryimage.png" loading="lazy" alt="Classroom">
+                    <div class="gallery-card-icon"><i class="fa-solid fa-expand"></i></div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-card-title">Classroom</div>
+                    </div>
+                </div>
+
+                <!-- 2. Computer Lab -->
+                <div class="gallery-card" onclick="openLightbox(1)">
+                    <img src="../gallaryimage1.png" loading="lazy" alt="Computer Lab">
+                    <div class="gallery-card-icon"><i class="fa-solid fa-expand"></i></div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-card-title">Computer Lab</div>
+                    </div>
+                </div>
+
+                <!-- 3. Students Learning -->
+                <div class="gallery-card" onclick="openLightbox(2)">
+                    <img src="../gallaryimage2.png" loading="lazy" alt="Students Learning">
+                    <div class="gallery-card-icon"><i class="fa-solid fa-expand"></i></div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-card-title">Students Learning</div>
+                    </div>
+                </div>
+
+                <!-- 4. Hardware Practical -->
+                <div class="gallery-card" onclick="openLightbox(3)">
+                    <img src="../gallaryimage4.png" loading="lazy" alt="Hardware Practical">
+                    <div class="gallery-card-icon"><i class="fa-solid fa-expand"></i></div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-card-title">Hardware Practical</div>
+                    </div>
+                </div>
+
+                <!-- 5. Networking Practical -->
+                <div class="gallery-card" onclick="openLightbox(4)">
+                    <img src="../gallaryimage5.png" loading="lazy" alt="Networking Practical">
+                    <div class="gallery-card-icon"><i class="fa-solid fa-expand"></i></div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-card-title">Networking Practical</div>
+                    </div>
+                </div>
+
+                <!-- 6. Smart Class -->
+                <div class="gallery-card" onclick="openLightbox(5)">
+                    <img src="../gallaryimage6.png" loading="lazy" alt="Smart Class">
+                    <div class="gallery-card-icon"><i class="fa-solid fa-expand"></i></div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-card-title">Smart Class</div>
+                    </div>
+                </div>
+
+                <!-- 7. Students Working -->
+                <div class="gallery-card" onclick="openLightbox(6)">
+                    <img src="../gallaryimage7.png" loading="lazy" alt="Students Working">
+                    <div class="gallery-card-icon"><i class="fa-solid fa-expand"></i></div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-card-title">Students Working</div>
+                    </div>
+                </div>
+
+                <!-- 8. Live Projects -->
+                <div class="gallery-card" onclick="openLightbox(7)">
+                    <img src="../gallaryimage8.png" loading="lazy" alt="Live Projects">
+                    <div class="gallery-card-icon"><i class="fa-solid fa-expand"></i></div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-card-title">Live Projects</div>
+                    </div>
+                </div>
+
+                <!-- 9. Classroom Activities -->
+                <div class="gallery-card" onclick="openLightbox(8)">
+                    <img src="../gallaryimage9.png" loading="lazy" alt="Classroom Activities">
+                    <div class="gallery-card-icon"><i class="fa-solid fa-expand"></i></div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-card-title">Classroom Activities</div>
+                    </div>
+                </div>
+
+                <!-- 10. Faculty Demonstration -->
+                <div class="gallery-card" onclick="openLightbox(9)">
+                    <img src="../gallaryimage10.png" loading="lazy" alt="Faculty Demonstration">
+                    <div class="gallery-card-icon"><i class="fa-solid fa-expand"></i></div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-card-title">Faculty Demonstration</div>
+                    </div>
+                </div>
+
+                <!-- 11. Practical Sessions -->
+                <div class="gallery-card" onclick="openLightbox(10)">
+                    <img src="../gallaryimage11.png" loading="lazy" alt="Practical Sessions">
+                    <div class="gallery-card-icon"><i class="fa-solid fa-expand"></i></div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-card-title">Practical Sessions</div>
+                    </div>
+                </div>
+
+                <!-- 12. Skill Development -->
+                <div class="gallery-card" onclick="openLightbox(11)">
+                    <img src="../gallaryimage12.png" loading="lazy" alt="Skill Development">
+                    <div class="gallery-card-icon"><i class="fa-solid fa-expand"></i></div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-card-title">Skill Development</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIGHTBOX MODAL -->
+    <div class="lightbox-modal" id="lightboxModal" onclick="closeLightboxOnBg(event)">
+        <div class="lightbox-content">
+            <button class="lightbox-btn lightbox-close" onclick="closeLightbox()"><i class="fa-solid fa-xmark"></i></button>
+            <button class="lightbox-btn lightbox-prev" onclick="prevLightboxImage()"><i class="fa-solid fa-chevron-left"></i></button>
+            <img src="" id="lightboxImg" class="lightbox-img" alt="Enlarged View">
+            <div id="lightboxCaption" class="lightbox-caption"></div>
+            <button class="lightbox-btn lightbox-next" onclick="nextLightboxImage()"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <!-- PLACEMENT SECTION -->
+    <section class="placement-section-dark">
+        <div class="container">
+            <div class="grid grid-2 fade-up" style="align-items: center; gap: 4rem;">
+                <div>
+                    <h2 class="placement-heading">Guaranteed 100% job Placement Assistance.</h2>
+                    <p class="placement-text">
+                        We guarantee job placement for every graduate through our strong network of leading IT companies. Our personalized assistance includes support for finding job openings, resume crafting, and mock interview preparation. We also provide ongoing support after graduation to help you navigate the job market successfully.
+                    </p>
+                </div>
+                <div>
+                    <div class="placement-img-wrapper">
+                        <img src="../images/job_placement_illustration.png" loading="lazy" alt="Guaranteed Job Placement Assistance Illustration">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (Rendered via reusable js/footer.js) -->
+    <footer></footer>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/footer.js"></script>
+    <script>
+        // Lightbox Gallery Data
+        const galleryItems = [
+            { src: "../gallaryimage.png", title: "Classroom" },
+            { src: "../gallaryimage1.png", title: "Computer Lab" },
+            { src: "../gallaryimage2.png", title: "Students Learning" },
+            { src: "../gallaryimage4.png", title: "Hardware Practical" },
+            { src: "../gallaryimage5.png", title: "Networking Practical" },
+            { src: "../gallaryimage6.png", title: "Smart Class" },
+            { src: "../gallaryimage7.png", title: "Students Working" },
+            { src: "../gallaryimage8.png", title: "Live Projects" },
+            { src: "../gallaryimage9.png", title: "Classroom Activities" },
+            { src: "../gallaryimage10.png", title: "Faculty Demonstration" },
+            { src: "../gallaryimage11.png", title: "Practical Sessions" },
+            { src: "../gallaryimage12.png", title: "Skill Development" }
+        ];
+
+        let currentIndex = 0;
+        const modal = document.getElementById('lightboxModal');
+        const img = document.getElementById('lightboxImg');
+        const caption = document.getElementById('lightboxCaption');
+
+        function openLightbox(index) {
+            currentIndex = index;
+            updateLightboxContent();
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function closeLightboxOnBg(e) {
+            if (e.target === modal) {
+                closeLightbox();
+            }
+        }
+
+        function updateLightboxContent() {
+            img.src = galleryItems[currentIndex].src;
+            caption.textContent = galleryItems[currentIndex].title;
+        }
+
+        function nextLightboxImage() {
+            currentIndex = (currentIndex + 1) % galleryItems.length;
+            updateLightboxContent();
+        }
+
+        function prevLightboxImage() {
+            currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+            updateLightboxContent();
+        }
+
+        // Keyboard & Touch Navigation
+        document.addEventListener('keydown', (e) => {
+            if (!modal.classList.contains('active')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowRight') nextLightboxImage();
+            if (e.key === 'ArrowLeft') prevLightboxImage();
+        });
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        modal.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+
+        modal.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) nextLightboxImage();
+            if (touchEndX > touchStartX + 50) prevLightboxImage();
+        }
+    </script>
+</body>
+</html>

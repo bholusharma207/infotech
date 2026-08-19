@@ -1,0 +1,12 @@
+{
+  "name": "pointer-it-infotech",
+  "version": "1.0.0",
+  "description": "Pointer IT Infotech Organization Website",
+  "main": "index.html",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

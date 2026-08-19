@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Pointer IT Infotech</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .trust-section {
+            padding: 5rem 0;
+            background: white;
+        }
+        .trust-section:nth-of-type(even) {
+            background: var(--bg);
+        }
+        .about-img, .founder-img, .cofounder-img {
+            width: 100%;
+            max-width: 450px;
+            height: auto;
+            object-fit: cover;
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .about-img {
+            border-radius: 30px;
+        }
+        .about-img:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+        .founder-img {
+            border-radius: 120px 120px 0 120px;
+        }
+        .founder-img:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+        .cofounder-img {
+            border-radius: 120px 120px 120px 0;
+        }
+        .cofounder-img:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        /* Mission & Vision styling */
+        .mission-vision-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+        }
+        .mv-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        .mv-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(34, 197, 94, 0.1);
+            border-color: rgba(34, 197, 94, 0.2);
+        }
+        .mv-heading {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #22C55E;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Team styling */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .team-card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(13, 110, 253, 0.1);
+            border-color: rgba(13, 110, 253, 0.15);
+        }
+        .team-card-img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 25px;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-soft);
+        }
+        .team-card-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0D6EFD;
+            margin-bottom: 0.5rem;
+        }
+        .team-card-role {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        
+        @media (max-width: 991px) {
+            .mission-vision-grid {
+                grid-template-columns: 1fr;
+            }
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 576px) {
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <!-- Logo -->
+        <a href="../index.html" class="logo">
+            <img src="../logoofITpointer.png" alt="Pointer IT Infotech Organization" class="logo-img">
+        </a>
+
+        <!-- Nav Links -->
+        <ul class="nav-links" id="navLinks">
+            <!-- Home with dropdown -->
+            <li class="nav-item has-dropdown">
+                <a href="../index.html" class="nav-link">Home <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+                <ul class="dropdown">
+                    <li><a href="about.html" class="nav-link active" style="color: var(--primary);"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+                    <li><a href="companies.html"><i class="fa-solid fa-building"></i> For Companies</a></li>
+                    <li><a href="certificate.html"><i class="fa-solid fa-certificate"></i> Certificate Portal</a></li>
+                    <li><a href="gallery.html"><i class="fa-solid fa-images"></i> Visual Highlights</a></li>
+                </ul>
+            </li>
+            <li class="nav-item"><a href="success.html" class="nav-link">Student Success</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contact Us</a></li>
+            <!-- Trust with dropdown -->
+            <li class="nav-item has-dropdown">
+                <a href="trust.html" class="nav-link">Pointer Educational Trust <i class="fa-solid fa-chevron-down nav-arrow"></i></a>
+                <ul class="dropdown">
+                    <li><a href="team.html"><i class="fa-solid fa-users"></i> Meet The Team</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="nav-actions">
+            <a href="tel:+918874522557" class="btn-header-phone"><i class="fa-solid fa-phone"></i> +91 8874522557</a>
+            <a href="donation.html" class="btn-donate">Donate</a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div style="padding: 150px 0 50px; background: var(--dark); color: white; text-align: center;">
+        <h1 style="color: white; font-size: 3.5rem; margin-bottom: 1rem;">About <span class="text-gradient">Us</span></h1>
+        <p style="color: #cbd5e1; font-size: 1.2rem; max-width: 600px; margin: 0 auto;">Pointer IT Infotech Organization - Your Path To Success</p>
+    </div>
+
+    <!-- About Us Section -->
+    <section id="about" class="trust-section" style="padding: 5rem 0; background: #ffffff;">
+        <div class="container grid grid-2" style="align-items: center; gap: 4rem;">
+            <div class="fade-up">
+                <h2 style="font-size: 2.8rem; font-weight: 800; margin-bottom: 1.5rem; color: #00c853; font-family: 'Poppins', sans-serif;">About us</h2>
+                <p style="color: #334155; font-size: 1.1rem; line-height: 1.85; margin-bottom: 0; font-family: 'Inter', sans-serif;">
+                    <strong style="color: #2563EB; font-weight: 700;">At Pointer IT Infotech Organization</strong>, we are dedicated to empowering unemployed youth by bridging the gap between education and employment. Our comprehensive training programs are tailored to meet current job market demands, ensuring students are both job-ready and industry-ready through practical and theoretical learning. Beyond training, we focus on job placement, leveraging our strong network of industry partners to connect graduates with diverse career opportunities, helping them confidently launch their careers.
+                </p>
+            </div>
+            <div class="fade-up" style="text-align: center; transition-delay: 0.2s;">
+                <img src="../aboutus.png" loading="lazy" alt="About us image" class="about-img" style="border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.08);">
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision Section -->
+    <section id="mission-vision" class="trust-section" style="padding: 5rem 0; background: #F8FAFC;">
+        <div class="container">
+            <div class="mission-vision-grid">
+                <!-- Our Mission -->
+                <div class="mv-card fade-up">
+                    <h2 class="mv-heading" style="font-size: 2rem; font-weight: 800; color: #00c853; margin-bottom: 1.25rem;">Our Mission</h2>
+                    <p style="color: #334155; font-size: 1.05rem; line-height: 1.85; margin-bottom: 0;">
+                        <strong style="color: #2563EB; font-weight: 700;">Our mission</strong> is to empower individuals with the skills and confidence they need to thrive in their careers. We offer comprehensive training programs tailored to meet the demands of the IT industry, ensuring that our participants are well-prepared for the workforce. Beyond just training, we go a step further by guaranteeing job placements for our graduates, helping them secure a stable and promising future.
+                    </p>
+                </div>
+                <!-- Our Vision -->
+                <div class="mv-card fade-up" style="transition-delay: 0.2s;">
+                    <h2 class="mv-heading" style="font-size: 2rem; font-weight: 800; color: #00c853; margin-bottom: 1.25rem;">Our Vision</h2>
+                    <p style="color: #334155; font-size: 1.05rem; line-height: 1.85; margin-bottom: 0;">
+                        <strong style="color: #2563EB; font-weight: 700;">Our vision</strong> at Pointer IT Infotech Organization is to empower unemployed youth by providing them with the skills and opportunities needed to succeed in the IT industry. We aim to bridge the digital divide by offering comprehensive education, hands-on training, and career support, ensuring every individual has the tools to thrive in the global economy. Through our commitment to lifelong learning and job placement, we strive to create a future where technology and opportunity are accessible to all.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Founder Section -->
+    <section id="founder" class="trust-section">
+        <div class="container grid grid-2" style="align-items: center; gap: 4rem;">
+            <div class="fade-up" style="text-align: center;">
+                <img src="../VikasKumar.jpg" loading="lazy" alt="Mr. Vikas Kumar" class="founder-img">
+            </div>
+            <div class="fade-up" style="transition-delay: 0.2s;">
+                <h2 style="font-size: 2.2rem; color: #22C55E; font-weight: 700; margin-bottom: 0.25rem;">Mr. Vikas Kumar</h2>
+                <h3 style="font-size: 1.2rem; color: #22C55E; font-weight: 600; margin-bottom: 1.5rem;">(Founder And Academic Head)</h3>
+                <p style="color: #4b5563; font-size: 1.05rem; line-height: 1.8; margin-bottom: 1.5rem;">
+                    Vikash Kumar, originally from Uttar Pradesh, earned his B.Sc. from Kanpur University. Facing early career challenges, he pursued a Diploma in Computer Hardware & Networking, which helped him secure his first job.
+                </p>
+                <p style="color: #4b5563; font-size: 1.05rem; line-height: 1.8; margin-bottom: 0;">
+                    After gaining two years of industry experience, he founded Pointer IT Infotech Organization to empower individuals and support those facing unemployment challenges, helping them build.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Co-Founder Section -->
+    <section id="cofounder" class="trust-section">
+        <div class="container grid grid-2" style="align-items: center; gap: 4rem;">
+            <div class="fade-up">
+                <h2 style="font-size: 2.2rem; color: #22C55E; font-weight: 700; margin-bottom: 0.25rem;">Mr. Digvijay Maurya</h2>
+                <h3 style="font-size: 1.2rem; color: #22C55E; font-weight: 600; margin-bottom: 1.5rem;">(Co-Founder and Project Manager)</h3>
+                <p style="color: #4b5563; font-size: 1.05rem; line-height: 1.8; margin-bottom: 0;">
+                    Digvijay Maurya has always been passionate about helping others and contributed to various initiatives from a young age. After completing his education and gaining valuable corporate experience, he co-founded this organization to empower others by sharing his knowledge and skills for a better future.
+                </p>
+            </div>
+            <div class="fade-up" style="text-align: center; transition-delay: 0.2s;">
+                <img src="../DigvijayMaurya.png" loading="lazy" alt="Mr. Digvijay Maurya" class="cofounder-img">
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Team Section -->
+    <section id="team" class="trust-section">
+        <div class="container">
+            <div class="fade-up" style="text-align: center; max-width: 800px; margin: 0 auto 3rem;">
+                <h2 style="font-size: 2.5rem; color: #22C55E; font-weight: 700; margin-bottom: 1.5rem;">Our Team</h2>
+                <p style="color: #4b5563; font-size: 1.05rem; line-height: 1.8; margin-bottom: 0;">
+                    Our team consists of passionate professionals and educators dedicated to mentoring, guiding, and equipping our students with the skills needed for successful careers in every industry.
+                </p>
+            </div>
+            <div class="team-grid">
+                <!-- Team Member 1 -->
+                <div class="team-card fade-up">
+                    <img src="../Mr.Virendrakumarmaurya.png" loading="lazy" alt="Mr. Virendra Kumar Maurya" class="team-card-img">
+                    <h4 class="team-card-name">Mr. Virendra Kumar Maurya</h4>
+                    <p class="team-card-role">IT Trainer & Administrator Support</p>
+                </div>
+                <!-- Team Member 2 -->
+                <div class="team-card fade-up" style="transition-delay: 0.1s;">
+                    <img src="../amansharma.png.jpeg" loading="lazy" alt="Mr. Aman Sharma" class="team-card-img">
+                    <h4 class="team-card-name">Mr. Aman Sharma</h4>
+                    <p class="team-card-role">Web Designer</p>
+                </div>
+                <!-- Team Member 3 -->
+                <div class="team-card fade-up" style="transition-delay: 0.2s;">
+                    <img src="../Mr.Satishkumar.png" loading="lazy" alt="Mr. Satish Kumar" class="team-card-img">
+                    <h4 class="team-card-name">Mr. Satish Kumar</h4>
+                    <p class="team-card-role">Sr. Advisor IT</p>
+                </div>
+                <!-- Team Member 4 -->
+                <div class="team-card fade-up" style="transition-delay: 0.3s;">
+                    <img src="../Mr.DeepakkumarMaurya.png" loading="lazy" alt="Mr. Deepak Kumar Maurya" class="team-card-img">
+                    <h4 class="team-card-name">Mr. Deepak Kumar Maurya</h4>
+                    <p class="team-card-role">Senior Project Manager – Handia Branch</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (Rendered via reusable js/footer.js) -->
+    <footer></footer>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/footer.js"></script>
+</body>
+</html>
