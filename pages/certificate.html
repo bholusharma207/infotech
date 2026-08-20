@@ -392,6 +392,9 @@
             .result-actions {
                 flex-direction: column;
             }
+            #pdfPreviewFrame {
+                height: 380px !important;
+            }
         }
     </style>
 </head>
@@ -536,6 +539,11 @@
                             <i class="fa-solid fa-download"></i> Download PDF
                         </a>
                     </div>
+
+                    <div id="pdfPreviewContainer" style="margin-top: 2rem; display: none;">
+                        <span class="result-label" style="display: block; margin-bottom: 0.5rem; text-align: left;">Certificate Preview</span>
+                        <iframe id="pdfPreviewFrame" src="" style="width: 100%; height: 500px; border-radius: 12px; border: 1px solid #E2E8F0;" allow="autoplay"></iframe>
+                    </div>
                 </div>
             </div>
         </div>
@@ -568,6 +576,11 @@
             errorContainer.style.display = 'none';
             loadingContainer.style.display = 'flex';
 
+            const previewContainer = document.getElementById('pdfPreviewContainer');
+            const previewFrame = document.getElementById('pdfPreviewFrame');
+            if (previewContainer) previewContainer.style.display = 'none';
+            if (previewFrame) previewFrame.src = '';
+
             if (!window.supabaseClient) {
                 loadingContainer.style.display = 'none';
                 errorContainer.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Portal setup in progress. Please configure Supabase.';
@@ -592,7 +605,7 @@
                 const match = (data && data.length > 0) ? data.find(c => c.student_id.trim() === studentId && c.certificate_id.trim() === certId) : null;
 
                 if (!match) {
-                    errorContainer.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Certificate not found. Please check your Certificate ID and Student ID.';
+                    errorContainer.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Certificate not found. Please check your Certificate ID and Student ID and try again.';
                     errorContainer.style.display = 'flex';
                     return;
                 }
@@ -637,8 +650,14 @@
                     viewBtn.href = publicUrl;
                     downloadBtn.href = publicUrl;
                     downloadBtn.setAttribute('download', `${cert.certificate_id}.pdf`);
+
+                    // Show PDF preview
+                    if (previewFrame) previewFrame.src = publicUrl;
+                    if (previewContainer) previewContainer.style.display = 'block';
                 } else {
                     actions.style.display = 'none';
+                    if (previewContainer) previewContainer.style.display = 'none';
+                    if (previewFrame) previewFrame.src = '';
                 }
 
                 resultsContainer.style.display = 'block';
