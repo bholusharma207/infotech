@@ -522,6 +522,68 @@
                 grid-column: span 1;
             }
         }
+
+        /* Edit Certificate Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.open {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: modalSlideIn 0.3s ease;
+            box-sizing: border-box;
+            color: var(--text-main);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+        .modal-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        .modal-close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .modal-close-btn:hover {
+            color: #EF4444;
+        }
+        @keyframes modalSlideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -1159,6 +1221,7 @@
                             <td><span class="status-badge ${is_active ? 'badge-active' : 'badge-revoked'}">${c.status}</span></td>
                             <td>
                                 <a href="${publicUrl}" target="_blank" class="btn-table-action" title="View PDF"><i class="fa-solid fa-eye"></i></a>
+                                <button class="btn-table-action" title="Edit Certificate" onclick="openEditCertificateModal('${c.id}', '${c.certificate_id}', '${c.course.replace(/'/g, "\\'")}', '${c.issue_date}', '${c.status}', '${c.certificate_file_path}')"><i class="fa-solid fa-pen-to-square"></i></button>
                                 ${statusBtn}
                                 ${isSuper ? `<button class="btn-table-action delete" title="Delete Certificate" onclick="deleteCertificate('${c.certificate_id}', '${c.certificate_file_path}')"><i class="fa-solid fa-trash"></i></button>` : ''}
                             </td>
@@ -1608,11 +1671,165 @@
             }
         }
 
+        // ==========================================
+        // EDIT / UPDATE CERTIFICATE LOGIC
+        // ==========================================
+
+        function openEditCertificateModal(id, certId, course, issueDate, status, filePath) {
+            hideAlert();
+            document.getElementById('editRowId').value = id;
+            document.getElementById('editCertID').value = certId;
+            document.getElementById('editCertCourse').value = course;
+            
+            // Format date to YYYY-MM-DD for date input
+            let formattedDate = '';
+            if (issueDate) {
+                const dateObj = new Date(issueDate);
+                if (!isNaN(dateObj.getTime())) {
+                    formattedDate = dateObj.toISOString().split('T')[0];
+                }
+            }
+            document.getElementById('editCertIssueDate').value = formattedDate;
+            document.getElementById('editCertStatus').value = status;
+            document.getElementById('editCertOldFilePath').value = filePath;
+            document.getElementById('editCertFile').value = '';
+
+            const modal = document.getElementById('editCertModal');
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('open'), 10);
+        }
+
+        function closeEditCertModal() {
+            const modal = document.getElementById('editCertModal');
+            modal.classList.remove('open');
+            setTimeout(() => modal.style.display = 'none', 300);
+        }
+
+        async function handleUpdateCertificate(event) {
+            event.preventDefault();
+            hideAlert();
+
+            const id = document.getElementById('editRowId').value;
+            const certId = document.getElementById('editCertID').value;
+            const course = document.getElementById('editCertCourse').value.trim();
+            const issueDate = document.getElementById('editCertIssueDate').value;
+            const status = document.getElementById('editCertStatus').value;
+            const oldFilePath = document.getElementById('editCertOldFilePath').value;
+            const pdfFile = document.getElementById('editCertFile').files[0];
+
+            const btn = document.getElementById('updateCertBtn');
+            const spinner = document.getElementById('updateCertSpinner');
+            const icon = document.getElementById('updateCertIcon');
+
+            btn.disabled = true;
+            spinner.style.display = 'inline-block';
+            icon.style.display = 'none';
+
+            try {
+                let filePath = oldFilePath;
+
+                // If replacing the PDF
+                if (pdfFile) {
+                    const fileExt = pdfFile.name.split('.').pop();
+                    const storagePath = `${certId}_${Date.now()}.${fileExt}`;
+
+                    // Upload new PDF to Supabase Storage
+                    const { data: uploadData, error: uploadErr } = await window.supabaseClient.storage
+                        .from('certificates')
+                        .upload(storagePath, pdfFile, {
+                            cacheControl: '3600',
+                            upsert: false
+                        });
+
+                    if (uploadErr) throw uploadErr;
+
+                    // Update local filePath variable
+                    filePath = storagePath;
+
+                    // Optionally remove the old file to clean up storage
+                    if (oldFilePath) {
+                        await window.supabaseClient.storage.from('certificates').remove([oldFilePath]);
+                    }
+                }
+
+                // Update database
+                const { error } = await window.supabaseClient
+                    .from('certificates')
+                    .update({
+                        course: course,
+                        issue_date: issueDate,
+                        status: status,
+                        certificate_file_path: filePath,
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq('id', id);
+
+                if (error) throw error;
+
+                showDashboardAlert(`Certificate "${certId}" successfully updated!`);
+                closeEditCertModal();
+                await loadCertificates();
+            } catch (err) {
+                console.error(err);
+                showDashboardAlert(`Error updating certificate: ${err.message}`, 'error');
+            } finally {
+                btn.disabled = false;
+                spinner.style.display = 'none';
+                icon.style.display = 'inline-block';
+            }
+        }
+
         async function handleLogout() {
             if (!window.supabaseClient) return;
             await window.supabaseClient.auth.signOut();
             window.location.href = '/admin/login';
         }
     </script>
+
+    <!-- Edit Certificate Modal Overlay -->
+    <div id="editCertModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Edit / Update Certificate</h3>
+                <button class="modal-close-btn" onclick="closeEditCertModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="editCertForm" onsubmit="handleUpdateCertificate(event)">
+                <input type="hidden" id="editRowId">
+                <input type="hidden" id="editCertOldFilePath">
+                <div class="form-grid" style="grid-template-columns: 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                    <div class="dashboard-form-group">
+                        <label for="editCertID">Certificate ID (Read-only)</label>
+                        <input type="text" id="editCertID" class="form-input" readonly style="background: rgba(255, 255, 255, 0.05); color: var(--text-muted);">
+                    </div>
+                    <div class="dashboard-form-group">
+                        <label for="editCertCourse">Course / Program *</label>
+                        <input type="text" id="editCertCourse" class="form-input" required>
+                    </div>
+                    <div class="dashboard-form-group">
+                        <label for="editCertIssueDate">Issue Date *</label>
+                        <input type="date" id="editCertIssueDate" class="form-input" required>
+                    </div>
+                    <div class="dashboard-form-group">
+                        <label for="editCertStatus">Status *</label>
+                        <select id="editCertStatus" class="form-input" required>
+                            <option value="ACTIVE">ACTIVE</option>
+                            <option value="REVOKED">REVOKED</option>
+                        </select>
+                    </div>
+                    <div class="dashboard-form-group">
+                        <label for="editCertFile">Replace PDF File (Optional)</label>
+                        <input type="file" id="editCertFile" class="form-input" accept="application/pdf">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                    <button type="button" class="form-btn" style="background: #475569; box-shadow: none;" onclick="closeEditCertModal()">Cancel</button>
+                    <button type="submit" class="form-btn" id="updateCertBtn">
+                        <span class="spinner" id="updateCertSpinner" style="display: none; width: 14px; height: 14px; border: 2px solid rgba(255, 255, 255, 0.2); border-left-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 5px;"></span>
+                        <i class="fa-solid fa-floppy-disk" id="updateCertIcon"></i> Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

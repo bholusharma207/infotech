@@ -477,13 +477,17 @@
                 <h2 class="viewer-heading">Verify Certificate</h2>
 
                 <form class="viewer-form" onsubmit="handleCertView(event)">
-                    <div class="input-group-custom">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <input type="text" id="certSearchInput" class="input-field-custom" placeholder="Enter Certificate ID or Student ID" required>
+                    <div class="input-group-custom" style="margin-bottom: 1.25rem;">
+                        <i class="fa-solid fa-certificate"></i>
+                        <input type="text" id="certIdInput" class="input-field-custom" placeholder="Enter Certificate ID" required>
+                    </div>
+                    <div class="input-group-custom" style="margin-bottom: 1.25rem;">
+                        <i class="fa-solid fa-id-card"></i>
+                        <input type="text" id="studentIdInput" class="input-field-custom" placeholder="Enter Student ID" required>
                     </div>
 
                     <button type="submit" class="btn-view-cert">
-                        <i class="fa-solid fa-certificate"></i> Search Certificate
+                        <i class="fa-solid fa-magnifying-glass"></i> VERIFY / SEARCH CERTIFICATE
                     </button>
                 </form>
 
@@ -548,9 +552,12 @@
     <script>
         async function handleCertView(event) {
             event.preventDefault();
-            const searchInput = document.getElementById('certSearchInput');
-            const query = searchInput.value.trim();
-            if (!query) return;
+            const certIdInput = document.getElementById('certIdInput');
+            const studentIdInput = document.getElementById('studentIdInput');
+            const certId = certIdInput.value.trim();
+            const studentId = studentIdInput.value.trim();
+            
+            if (!certId || !studentId) return;
 
             const resultsContainer = document.getElementById('searchResults');
             const errorContainer = document.getElementById('searchError');
@@ -569,8 +576,8 @@
             }
 
             try {
-                // Call Supabase RPC verify_certificate
-                const { data, error } = await window.supabaseClient.rpc('verify_certificate', { p_search_query: query });
+                // Call Supabase RPC verify_certificate using certId as the search query
+                const { data, error } = await window.supabaseClient.rpc('verify_certificate', { p_search_query: certId });
 
                 loadingContainer.style.display = 'none';
 
@@ -581,14 +588,17 @@
                     return;
                 }
 
-                if (!data || data.length === 0) {
-                    errorContainer.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Certificate not found. Please verify your Certificate ID.';
+                // If not found, OR if student_id does not match the input
+                const match = (data && data.length > 0) ? data.find(c => c.student_id.trim() === studentId && c.certificate_id.trim() === certId) : null;
+
+                if (!match) {
+                    errorContainer.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Certificate not found. Please check your Certificate ID and Student ID.';
                     errorContainer.style.display = 'flex';
                     return;
                 }
 
-                // Found certificate (can be multiple but we display the first match)
-                const cert = data[0];
+                // Found certificate (valid match)
+                const cert = match;
                 
                 // Populate fields
                 document.getElementById('resStudentName').innerText = cert.student_name;
@@ -640,12 +650,21 @@
             }
         }
 
-        // Auto-fill from URL param ?id=xxx
+        // Auto-fill from URL param ?id=xxx or ?student_id=xxx
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const id = urlParams.get('id');
+            const id = urlParams.get('id') || urlParams.get('certificate_id');
+            const studentId = urlParams.get('student_id');
+            
             if (id) {
-                document.getElementById('certSearchInput').value = id;
+                document.getElementById('certIdInput').value = id;
+            }
+            if (studentId) {
+                document.getElementById('studentIdInput').value = studentId;
+            }
+            
+            // If both are present, auto submit
+            if (id && studentId) {
                 const form = document.querySelector('.viewer-form');
                 if (form) {
                     const event = new Event('submit', { cancelable: true });

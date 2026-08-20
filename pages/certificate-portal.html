@@ -303,7 +303,7 @@
                 </div>
 
                 <div style="text-align: center; margin-bottom: 3.5rem;">
-                    <a href="https://certificates.pointeritinfo.org" target="_blank" rel="noopener noreferrer" class="btn-download-cert">
+                    <a href="/certificate" target="_blank" rel="noopener noreferrer" class="btn-download-cert">
                         <i class="fa-solid fa-circle-down"></i> Click Here to Download your certificate
                     </a>
                 </div>
@@ -329,7 +329,7 @@
 
                 <h2 class="viewer-heading">View Your Certificate</h2>
 
-                <form class="viewer-form" action="https://certificates.pointeritinfo.org" method="GET" target="_blank" rel="noopener noreferrer" onsubmit="handleCertView(event)">
+                <form class="viewer-form" onsubmit="handleCertView(event)">
                     <div class="input-group-custom">
                         <i class="fa-solid fa-id-card"></i>
                         <input type="text" id="studentIdInput" name="student_id" class="input-field-custom" placeholder="Enter Your Student ID" required>
@@ -354,9 +354,9 @@
             const idInput = document.getElementById('studentIdInput');
             const studentId = idInput.value.trim();
             if (studentId) {
-                window.open(`https://certificates.pointeritinfo.org?id=${encodeURIComponent(studentId)}`, '_blank');
+                window.open(`/certificate?student_id=${encodeURIComponent(studentId)}`, '_blank');
             } else {
-                window.open('https://certificates.pointeritinfo.org', '_blank');
+                window.open('/certificate', '_blank');
             }
         }
     </script>
