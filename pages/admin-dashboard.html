@@ -965,12 +965,12 @@
 
             currentAdmin = session.user;
 
-            // Fetch profile and check roles
+            // Fetch profile and check roles - query by email (primary key) not id
             try {
                 const { data: profile, error } = await window.supabaseClient
                     .from('admin_profiles')
                     .select('*')
-                    .eq('id', currentAdmin.id)
+                    .eq('email', currentAdmin.email)
                     .maybeSingle();
 
                 if (error || !profile || profile.status !== 'ACTIVE') {

@@ -441,11 +441,13 @@
 
         async function checkRoleAndRedirect(user) {
             try {
-                // Query admin profile details
+                // Query admin profile by email (primary key of admin_profiles).
+                // Using email is more reliable than id, which may be NULL
+                // if the admin_profiles row was inserted before the auth user was linked.
                 const { data: profile, error } = await window.supabaseClient
                     .from('admin_profiles')
                     .select('role, status')
-                    .eq('id', user.id)
+                    .eq('email', user.email)
                     .maybeSingle();
 
                 if (error) {
