@@ -9,15 +9,13 @@
       }
     }
   ],
-  "cleanUrls": true,
-  "trailingSlash": false,
   "routes": [
-    { "handle": "filesystem" },
     { "src": "/about", "dest": "/pages/about.html" },
     { "src": "/admin/login", "dest": "/pages/admin-login.html" },
     { "src": "/admin/dashboard", "dest": "/pages/admin-dashboard.html" },
     { "src": "/companies", "dest": "/pages/companies.html" },
     { "src": "/certificate", "dest": "/pages/certificate.html" },
+    { "src": "/certificate-portal", "dest": "/pages/certificate-portal.html" },
     { "src": "/gallery", "dest": "/pages/gallery.html" },
     { "src": "/success", "dest": "/pages/success.html" },
     { "src": "/contact", "dest": "/pages/contact.html" },
@@ -25,8 +23,8 @@
     { "src": "/team", "dest": "/pages/team.html" },
     { "src": "/donation", "dest": "/pages/donation.html" },
     { "src": "/courses", "dest": "/pages/courses.html" },
-    { "src": "/certificate-portal", "dest": "/pages/certificate-portal.html" },
     { "src": "/for-companies", "dest": "/pages/for-companies.html" },
-    { "src": "/visual-highlights", "dest": "/pages/visual-highlights.html" }
+    { "src": "/visual-highlights", "dest": "/pages/visual-highlights.html" },
+    { "handle": "filesystem" }
   ]
 }
