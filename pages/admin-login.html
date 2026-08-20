@@ -452,7 +452,7 @@
 
                 if (error) {
                     console.error('Profile fetch error:', error);
-                    showAlert('Error validating credentials. Please try again.');
+                    showAlert('Error validating credentials: ' + (error.message || 'Unknown error') + ' (Code: ' + (error.code || 'None') + ')');
                     await window.supabaseClient.auth.signOut();
                     return;
                 }
