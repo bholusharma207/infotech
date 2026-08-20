@@ -1311,6 +1311,122 @@ footer {
   }
 }
 
+/* ==========================================
+   NARROWLY-SCOPED RESPONSIVE OVERRIDES
+   (Ensures perfect mobile/tablet fitting without altering locked desktop styles)
+   ========================================== */
 
+@media (max-width: 1024px) {
+  html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+}
 
+@media (max-width: 900px) {
+  nav {
+    padding: 0 4% !important;
+  }
+}
 
+@media (max-width: 768px) {
+  /* Navbar Actions shrink */
+  .btn-header-phone {
+    padding: 0.5rem 0.6rem !important;
+    font-size: 0 !important;
+  }
+  .btn-header-phone i {
+    font-size: 1rem !important;
+    margin: 0 !important;
+  }
+  .btn-donate {
+    padding: 0.45rem 0.8rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  /* Hero Section responsive sizing overrides */
+  .hero {
+    min-height: auto !important;
+    padding: 120px 0 60px !important;
+  }
+  .hero h1 {
+    font-size: 2.8rem !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+  }
+  .hero p {
+    font-size: 1.1rem !important;
+    text-align: center !important;
+  }
+  .hero-content {
+    padding-right: 0 !important;
+    text-align: center !important;
+  }
+  .hero-btns {
+    justify-content: center !important;
+  }
+
+  /* Circular floating images overlay container on index.html */
+  div[style*="height: 350px"] {
+    height: 280px !important;
+    margin-top: 2rem !important;
+  }
+  div[style*="height: 350px"] img:nth-child(1) {
+    width: 130px !important;
+    height: 130px !important;
+  }
+  div[style*="height: 350px"] img:nth-child(2) {
+    width: 180px !important;
+    height: 180px !important;
+  }
+  div[style*="height: 350px"] img:nth-child(3) {
+    width: 110px !important;
+    height: 110px !important;
+  }
+
+  /* Pages Headers text-size overrides */
+  div[style*="padding: 150px 0 50px"] {
+    padding: 110px 0 30px !important;
+  }
+  div[style*="padding: 150px 0 50px"] h1 {
+    font-size: 2.2rem !important;
+  }
+  div[style*="padding: 150px 0 50px"] p {
+    font-size: 1rem !important;
+    padding: 0 15px !important;
+  }
+
+  /* Dynamic inline text-size headers scaling down on mobile */
+  h2[style*="font-size: 2.8rem"] {
+    font-size: 2rem !important;
+  }
+  h2[style*="font-size: 2.2rem"] {
+    font-size: 1.8rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Navbar spacing adjustments */
+  .btn-donate {
+    display: none !important; /* Hide donate button on small mobile header to avoid overlap */
+  }
+  .logo-img {
+    height: 36px !important;
+  }
+  .mobile-menu-btn span {
+    width: 20px !important;
+  }
+
+  /* Hero Section h1 font-size scaling down */
+  .hero h1 {
+    font-size: 2.1rem !important;
+  }
+  .hero-form {
+    padding: 1.5rem !important;
+  }
+
+  /* Grid layouts columns override */
+  .grid-3, .grid-4 {
+    grid-template-columns: 1fr !important;
+  }
+}
