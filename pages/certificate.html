@@ -485,8 +485,8 @@
                         <input type="text" id="certIdInput" class="input-field-custom" placeholder="Enter Certificate ID" required>
                     </div>
                     <div class="input-group-custom" style="margin-bottom: 1.25rem;">
-                        <i class="fa-solid fa-id-card"></i>
-                        <input type="text" id="studentIdInput" class="input-field-custom" placeholder="Enter Student ID" required>
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="studentNameInput" class="input-field-custom" placeholder="Enter Student Name" required>
                     </div>
 
                     <button type="submit" class="btn-view-cert">
@@ -561,11 +561,11 @@
         async function handleCertView(event) {
             event.preventDefault();
             const certIdInput = document.getElementById('certIdInput');
-            const studentIdInput = document.getElementById('studentIdInput');
+            const studentNameInput = document.getElementById('studentNameInput');
             const certId = certIdInput.value.trim();
-            const studentId = studentIdInput.value.trim();
+            const studentName = studentNameInput.value.trim();
             
-            if (!certId || !studentId) return;
+            if (!certId || !studentName) return;
 
             const resultsContainer = document.getElementById('searchResults');
             const errorContainer = document.getElementById('searchError');
@@ -601,11 +601,11 @@
                     return;
                 }
 
-                // If not found, OR if student_id does not match the input
-                const match = (data && data.length > 0) ? data.find(c => c.student_id.trim() === studentId && c.certificate_id.trim() === certId) : null;
+                // If not found, OR if student_name does not match the input
+                const match = (data && data.length > 0) ? data.find(c => c.student_name.trim().toLowerCase() === studentName.toLowerCase() && c.certificate_id.trim() === certId) : null;
 
                 if (!match) {
-                    errorContainer.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Certificate not found. Please check your Certificate ID and Student ID and try again.';
+                    errorContainer.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Certificate not found. Please check your Certificate Number and Student Name.';
                     errorContainer.style.display = 'flex';
                     return;
                 }
@@ -669,21 +669,21 @@
             }
         }
 
-        // Auto-fill from URL param ?id=xxx or ?student_id=xxx
+        // Auto-fill from URL param ?id=xxx or ?student_name=xxx
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const id = urlParams.get('id') || urlParams.get('certificate_id');
-            const studentId = urlParams.get('student_id');
+            const studentName = urlParams.get('student_name');
             
             if (id) {
                 document.getElementById('certIdInput').value = id;
             }
-            if (studentId) {
-                document.getElementById('studentIdInput').value = studentId;
+            if (studentName) {
+                document.getElementById('studentNameInput').value = studentName;
             }
             
             // If both are present, auto submit
-            if (id && studentId) {
+            if (id && studentName) {
                 const form = document.querySelector('.viewer-form');
                 if (form) {
                     const event = new Event('submit', { cancelable: true });

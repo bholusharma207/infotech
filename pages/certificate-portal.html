@@ -330,13 +330,17 @@
                 <h2 class="viewer-heading">View Your Certificate</h2>
 
                 <form class="viewer-form" onsubmit="handleCertView(event)">
-                    <div class="input-group-custom">
-                        <i class="fa-solid fa-id-card"></i>
-                        <input type="text" id="studentIdInput" name="student_id" class="input-field-custom" placeholder="Enter Your Student ID" required>
+                    <div class="input-group-custom" style="margin-bottom: 1.25rem;">
+                        <i class="fa-solid fa-certificate"></i>
+                        <input type="text" id="certIdInput" class="input-field-custom" placeholder="Enter Certificate ID" required>
+                    </div>
+                    <div class="input-group-custom" style="margin-bottom: 1.25rem;">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="studentNameInput" class="input-field-custom" placeholder="Enter Student Name" required>
                     </div>
 
                     <button type="submit" class="btn-view-cert">
-                        <i class="fa-solid fa-certificate"></i> View Certificate
+                        <i class="fa-solid fa-magnifying-glass"></i> VERIFY CERTIFICATE
                     </button>
                 </form>
             </div>
@@ -351,10 +355,12 @@
     <script>
         function handleCertView(event) {
             event.preventDefault();
-            const idInput = document.getElementById('studentIdInput');
-            const studentId = idInput.value.trim();
-            if (studentId) {
-                window.open(`/certificate?student_id=${encodeURIComponent(studentId)}`, '_blank');
+            const certIdInput = document.getElementById('certIdInput');
+            const studentNameInput = document.getElementById('studentNameInput');
+            const certId = certIdInput.value.trim();
+            const studentName = studentNameInput.value.trim();
+            if (certId && studentName) {
+                window.open(`/certificate?id=${encodeURIComponent(certId)}&student_name=${encodeURIComponent(studentName)}`, '_blank');
             } else {
                 window.open('/certificate', '_blank');
             }
