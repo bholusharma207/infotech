@@ -13,6 +13,8 @@
   "trailingSlash": false,
   "rewrites": [
     { "source": "/about", "destination": "/pages/about.html" },
+    { "source": "/admin/login", "destination": "/pages/admin-login.html" },
+    { "source": "/admin/dashboard", "destination": "/pages/admin-dashboard.html" },
     { "source": "/companies", "destination": "/pages/companies.html" },
     { "source": "/certificate", "destination": "/pages/certificate.html" },
     { "source": "/gallery", "destination": "/pages/gallery.html" },

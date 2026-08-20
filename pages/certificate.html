@@ -224,7 +224,147 @@
             color: white;
         }
 
-        /* Responsive Breakpoints */
+        /* Result container styling */
+        .search-results-container {
+            margin-top: 2rem;
+            display: none;
+            text-align: left;
+            border-top: 1px solid #E2E8F0;
+            padding-top: 2rem;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        .result-details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+        
+        .result-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        
+        .result-label {
+            font-size: 0.85rem;
+            color: #64748B;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .result-value {
+            font-size: 1.05rem;
+            color: #0F172A;
+            font-weight: 600;
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.35rem 0.85rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            width: fit-content;
+        }
+        
+        .status-active {
+            background-color: rgba(34, 197, 94, 0.15);
+            color: #16A34A;
+        }
+        
+        .status-revoked {
+            background-color: rgba(239, 68, 68, 0.15);
+            color: #DC2626;
+        }
+        
+        .result-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn-action-view, .btn-action-download {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.85rem 1.5rem;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .btn-action-view {
+            background: #2563EB;
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+        .btn-action-view:hover {
+            background: #1D4ED8;
+            transform: translateY(-2px);
+            color: white;
+        }
+        
+        .btn-action-download {
+            background: #10B981;
+            color: white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+        .btn-action-download:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        .search-error-msg {
+            color: #DC2626;
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            font-weight: 500;
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .search-loading {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+        
+        .spinner {
+            width: 32px;
+            height: 32px;
+            border: 4px solid rgba(0, 200, 83, 0.1);
+            border-left-color: #00c853;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @media (max-width: 768px) {
             .cert-hero-heading {
                 font-size: 2.5rem;
@@ -244,6 +384,13 @@
             }
             .viewer-heading {
                 font-size: 1.8rem;
+            }
+            .result-details-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .result-actions {
+                flex-direction: column;
             }
         }
     </style>
@@ -327,18 +474,65 @@
                     <span class="logo-text" style="text-align: left;">Pointer IT <span style="display: block; font-size: 0.75rem; color: #F7941D;">Infotech Organization</span></span>
                 </div>
 
-                <h2 class="viewer-heading">View Your Certificate</h2>
+                <h2 class="viewer-heading">Verify Certificate</h2>
 
-                <form class="viewer-form" action="https://certificates.pointeritinfo.org" method="GET" target="_blank" rel="noopener noreferrer" onsubmit="handleCertView(event)">
+                <form class="viewer-form" onsubmit="handleCertView(event)">
                     <div class="input-group-custom">
-                        <i class="fa-solid fa-id-card"></i>
-                        <input type="text" id="studentIdInput" name="student_id" class="input-field-custom" placeholder="Enter Your Student ID" required>
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="certSearchInput" class="input-field-custom" placeholder="Enter Certificate ID or Student ID" required>
                     </div>
 
                     <button type="submit" class="btn-view-cert">
-                        <i class="fa-solid fa-certificate"></i> View Certificate
+                        <i class="fa-solid fa-certificate"></i> Search Certificate
                     </button>
                 </form>
+
+                <!-- Loading Spinner -->
+                <div id="searchLoading" class="search-loading">
+                    <div class="spinner"></div>
+                </div>
+
+                <!-- Error Message -->
+                <div id="searchError" class="search-error-msg"></div>
+
+                <!-- Search Results Card -->
+                <div id="searchResults" class="search-results-container">
+                    <div class="result-details-grid" style="margin-top: 1rem;">
+                        <div class="result-item">
+                            <span class="result-label">Student Name</span>
+                            <span class="result-value" id="resStudentName">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Student ID</span>
+                            <span class="result-value" id="resStudentID">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Course / Program</span>
+                            <span class="result-value" id="resCourse">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Certificate ID</span>
+                            <span class="result-value" id="resCertID">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Issue Date</span>
+                            <span class="result-value" id="resIssueDate">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Status</span>
+                            <span id="resStatusBadge" class="status-badge">-</span>
+                        </div>
+                    </div>
+
+                    <div class="result-actions" id="resultActions">
+                        <a id="btnViewPdf" href="#" target="_blank" class="btn-action-view">
+                            <i class="fa-solid fa-eye"></i> View Certificate
+                        </a>
+                        <a id="btnDownloadPdf" href="#" target="_blank" class="btn-action-download">
+                            <i class="fa-solid fa-download"></i> Download PDF
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -346,19 +540,119 @@
     <!-- Footer (Rendered via reusable js/footer.js) -->
     <footer></footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/supabase-client.js"></script>
     <script src="../js/script.js"></script>
     <script src="../js/footer.js"></script>
     <script>
-        function handleCertView(event) {
+        async function handleCertView(event) {
             event.preventDefault();
-            const idInput = document.getElementById('studentIdInput');
-            const studentId = idInput.value.trim();
-            if (studentId) {
-                window.open(`https://certificates.pointeritinfo.org?id=${encodeURIComponent(studentId)}`, '_blank');
-            } else {
-                window.open('https://certificates.pointeritinfo.org', '_blank');
+            const searchInput = document.getElementById('certSearchInput');
+            const query = searchInput.value.trim();
+            if (!query) return;
+
+            const resultsContainer = document.getElementById('searchResults');
+            const errorContainer = document.getElementById('searchError');
+            const loadingContainer = document.getElementById('searchLoading');
+
+            // Reset UI
+            resultsContainer.style.display = 'none';
+            errorContainer.style.display = 'none';
+            loadingContainer.style.display = 'flex';
+
+            if (!window.supabaseClient) {
+                loadingContainer.style.display = 'none';
+                errorContainer.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Portal setup in progress. Please configure Supabase.';
+                errorContainer.style.display = 'flex';
+                return;
+            }
+
+            try {
+                // Call Supabase RPC verify_certificate
+                const { data, error } = await window.supabaseClient.rpc('verify_certificate', { p_search_query: query });
+
+                loadingContainer.style.display = 'none';
+
+                if (error) {
+                    console.error('Search error:', error);
+                    errorContainer.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Error querying database. Please try again.';
+                    errorContainer.style.display = 'flex';
+                    return;
+                }
+
+                if (!data || data.length === 0) {
+                    errorContainer.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Certificate not found. Please verify your Certificate ID.';
+                    errorContainer.style.display = 'flex';
+                    return;
+                }
+
+                // Found certificate (can be multiple but we display the first match)
+                const cert = data[0];
+                
+                // Populate fields
+                document.getElementById('resStudentName').innerText = cert.student_name;
+                document.getElementById('resStudentID').innerText = cert.student_id;
+                document.getElementById('resCourse').innerText = cert.course;
+                document.getElementById('resCertID').innerText = cert.certificate_id;
+                
+                // Format Date
+                if (cert.issue_date) {
+                    const dateObj = new Date(cert.issue_date);
+                    document.getElementById('resIssueDate').innerText = dateObj.toLocaleDateString('en-US', {
+                        year: 'numeric', month: 'long', day: 'numeric'
+                    });
+                } else {
+                    document.getElementById('resIssueDate').innerText = 'N/A';
+                }
+
+                const badge = document.getElementById('resStatusBadge');
+                const actions = document.getElementById('resultActions');
+                const viewBtn = document.getElementById('btnViewPdf');
+                const downloadBtn = document.getElementById('btnDownloadPdf');
+
+                const is_active = cert.status.toUpperCase() === 'ACTIVE';
+
+                badge.className = 'status-badge ' + (is_active ? 'status-active' : 'status-revoked');
+                badge.innerHTML = is_active 
+                    ? '<i class="fa-solid fa-circle-check"></i> Active / Verified' 
+                    : '<i class="fa-solid fa-circle-xmark"></i> Revoked';
+
+                if (is_active) {
+                    actions.style.display = 'flex';
+                    // Generate public URL from storage path
+                    const { data: urlData } = window.supabaseClient.storage.from('certificates').getPublicUrl(cert.certificate_file_path);
+                    const publicUrl = urlData?.publicUrl || '';
+                    
+                    viewBtn.href = publicUrl;
+                    downloadBtn.href = publicUrl;
+                    downloadBtn.setAttribute('download', `${cert.certificate_id}.pdf`);
+                } else {
+                    actions.style.display = 'none';
+                }
+
+                resultsContainer.style.display = 'block';
+            } catch (err) {
+                console.error('Fatal Search Error:', err);
+                loadingContainer.style.display = 'none';
+                errorContainer.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> A connection error occurred. Please try again.';
+                errorContainer.style.display = 'flex';
             }
         }
+
+        // Auto-fill from URL param ?id=xxx
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            if (id) {
+                document.getElementById('certSearchInput').value = id;
+                const form = document.querySelector('.viewer-form');
+                if (form) {
+                    const event = new Event('submit', { cancelable: true });
+                    form.dispatchEvent(event);
+                }
+            }
+        });
     </script>
 </body>
 </html>

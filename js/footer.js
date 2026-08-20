@@ -81,7 +81,7 @@
 
         <!-- BOTTOM BAR WITH NON-CLICKABLE TRUST BADGES -->
         <div class="footer-bottom">
-          <div>&copy; 2026 Pointer IT Infotech Organization &amp; Pointer Educational Trust. All Rights Reserved.</div>
+          <div>&copy; 2026 Pointer IT Infotech Organization &amp; Pointer Educational Trust. All Rights Reserved. | <a href="/admin/login" style="color: #94A3B8; text-decoration: none; font-size: 0.85rem; transition: color 0.3s;" onmouseover="this.style.color='#22C55E'" onmouseout="this.style.color='#94A3B8'">Admin Login</a></div>
           <div class="footer-bottom-badges">
             <span class="footer-trust-badge"><i class="fa-solid fa-check"></i> 12A Registered</span>
             <span class="footer-trust-badge"><i class="fa-solid fa-check"></i> 80G Tax Exempt</span>

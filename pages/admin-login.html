@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Pointer IT Infotech</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            color: #F8FAFC;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            margin: 0;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.08) 0%, rgba(37, 99, 235, 0.05) 50%, transparent 80%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+            box-sizing: border-box;
+        }
+
+        .logo-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .logo-box {
+            background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3);
+        }
+
+        .logo-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(135deg, #FFFFFF 0%, #94A3B8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-subtitle {
+            font-size: 0.85rem;
+            color: #22C55E;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: -0.25rem;
+        }
+
+        .login-heading {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #FFFFFF;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #94A3B8;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 1.25rem;
+            color: #64748B;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.95rem 1.25rem 0.95rem 3rem;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #F8FAFC;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .input-field:focus {
+            border-color: #22C55E;
+            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.15);
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        .input-field:focus + i {
+            color: #22C55E;
+        }
+
+        .login-options {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1.5rem;
+        }
+
+        .forgot-link {
+            font-size: 0.85rem;
+            color: #22C55E;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .forgot-link:hover {
+            color: #4ADE80;
+            text-decoration: underline;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(34, 197, 94, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px rgba(34, 197, 94, 0.3);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .alert-box {
+            display: none;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            box-sizing: border-box;
+            width: 100%;
+            animation: slideIn 0.3s ease;
+        }
+
+        .alert-error {
+            background-color: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            color: #FCA5A5;
+        }
+
+        .alert-success {
+            background-color: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.25);
+            color: #86EFAC;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            border-left-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+
+        .back-to-site {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #64748B;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 1;
+        }
+
+        .back-to-site:hover {
+            color: #94A3B8;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Forgot Password overlay view */
+        .forgot-view {
+            display: none;
+        }
+
+        .forgot-active .login-view {
+            display: none;
+        }
+
+        .forgot-active .forgot-view {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container" id="loginCard">
+        <!-- Brand Header -->
+        <div class="logo-header">
+            <div class="logo-box">P</div>
+            <div>
+                <h1 class="logo-title">Pointer IT Infotech</h1>
+                <span class="logo-subtitle">Administration</span>
+            </div>
+        </div>
+
+        <!-- Feedback Alert Panel -->
+        <div id="alertPanel" class="alert-box"></div>
+
+        <!-- LOGIN FORM VIEW -->
+        <div class="login-view">
+            <h2 class="login-heading">Admin Sign In</h2>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="emailInput">Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="emailInput" class="input-field" placeholder="admin@pointeritinfo.org" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="passwordInput">Password</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="passwordInput" class="input-field" placeholder="••••••••••••" required>
+                    </div>
+                </div>
+
+                <div class="login-options">
+                    <a href="#" class="forgot-link" onclick="toggleForgotPassword(true, event)">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn-login" id="loginBtn">
+                    <span class="spinner" id="loginSpinner"></span>
+                    <span id="loginBtnText">Sign In</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- FORGOT PASSWORD FORM VIEW -->
+        <div class="forgot-view">
+            <h2 class="login-heading">Reset Password</h2>
+            <p style="color: #94A3B8; font-size: 0.9rem; text-align: center; line-height: 1.6; margin-bottom: 1.5rem;">
+                Enter your administrative email address below. We'll send you a secure link to reset your password.
+            </p>
+            <form id="forgotForm" onsubmit="handleForgotPassword(event)">
+                <div class="form-group">
+                    <label for="forgotEmailInput">Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="forgotEmailInput" class="input-field" placeholder="admin@pointeritinfo.org" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-login" id="forgotBtn" style="margin-top: 1.5rem;">
+                    <span class="spinner" id="forgotSpinner"></span>
+                    <span id="forgotBtnText">Send Reset Link</span>
+                </button>
+
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <a href="#" class="forgot-link" onclick="toggleForgotPassword(false, event)" style="color: #64748B;">Back to Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <a href="../index.html" class="back-to-site">
+        <i class="fa-solid fa-arrow-left"></i> Back to Main Website
+    </a>
+
+    <!-- Supabase Integration scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/supabase-client.js"></script>
+    <script>
+        // Check if user is already authenticated
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!window.supabaseClient) return;
+            const { data: { session } } = await window.supabaseClient.auth.getSession();
+            if (session) {
+                // If authenticated, check if role allows dashboard redirect
+                checkRoleAndRedirect(session.user);
+            }
+        });
+
+        function showAlert(msg, type = 'error') {
+            const panel = document.getElementById('alertPanel');
+            panel.className = 'alert-box alert-' + type;
+            panel.innerHTML = type === 'error' 
+                ? `<i class="fa-solid fa-circle-exclamation"></i> <span>${msg}</span>`
+                : `<i class="fa-solid fa-circle-check"></i> <span>${msg}</span>`;
+            panel.style.display = 'flex';
+        }
+
+        function hideAlert() {
+            document.getElementById('alertPanel').style.display = 'none';
+        }
+
+        function toggleForgotPassword(active, event) {
+            if (event) event.preventDefault();
+            hideAlert();
+            const card = document.getElementById('loginCard');
+            if (active) {
+                card.classList.add('forgot-active');
+            } else {
+                card.classList.remove('forgot-active');
+            }
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            hideAlert();
+
+            const email = document.getElementById('emailInput').value.trim();
+            const password = document.getElementById('passwordInput').value;
+
+            const btnText = document.getElementById('loginBtnText');
+            const spinner = document.getElementById('loginSpinner');
+            const btn = document.getElementById('loginBtn');
+
+            btn.disabled = true;
+            spinner.style.display = 'inline-block';
+            btnText.innerText = 'Signing In...';
+
+            if (!window.supabaseClient) {
+                showAlert('Supabase client connection not configured.');
+                resetLoadingState();
+                return;
+            }
+
+            try {
+                const { data, error } = await window.supabaseClient.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+                if (error) {
+                    showAlert(error.message);
+                    resetLoadingState();
+                    return;
+                }
+
+                if (data.user) {
+                    await checkRoleAndRedirect(data.user);
+                }
+            } catch (err) {
+                console.error(err);
+                showAlert('A network error occurred. Please try again.');
+                resetLoadingState();
+            }
+
+            function resetLoadingState() {
+                btn.disabled = false;
+                spinner.style.display = 'none';
+                btnText.innerText = 'Sign In';
+            }
+        }
+
+        async function checkRoleAndRedirect(user) {
+            try {
+                // Query admin profile details
+                const { data: profile, error } = await window.supabaseClient
+                    .from('admin_profiles')
+                    .select('role, status')
+                    .eq('id', user.id)
+                    .maybeSingle();
+
+                if (error) {
+                    console.error('Profile fetch error:', error);
+                    showAlert('Error validating credentials. Please try again.');
+                    await window.supabaseClient.auth.signOut();
+                    return;
+                }
+
+                if (!profile) {
+                    showAlert('Access denied. Administrator privileges required.');
+                    await window.supabaseClient.auth.signOut();
+                    return;
+                }
+
+                if (profile.status !== 'ACTIVE') {
+                    showAlert(`Access denied. Your admin account is currently ${profile.status.toLowerCase()}.`);
+                    await window.supabaseClient.auth.signOut();
+                    return;
+                }
+
+                if (profile.role === 'SUPER_ADMIN' || profile.role === 'ADMIN') {
+                    // Successful role validation. Redirect to dashboard
+                    window.location.href = '/admin/dashboard';
+                } else {
+                    showAlert('Access denied. Unauthorized role.');
+                    await window.supabaseClient.auth.signOut();
+                }
+            } catch (err) {
+                console.error('Role check fatal error:', err);
+                showAlert('Internal server error during authorization.');
+                await window.supabaseClient.auth.signOut();
+            }
+        }
+
+        async function handleForgotPassword(event) {
+            event.preventDefault();
+            hideAlert();
+
+            const email = document.getElementById('forgotEmailInput').value.trim();
+            const btnText = document.getElementById('forgotBtnText');
+            const spinner = document.getElementById('forgotSpinner');
+            const btn = document.getElementById('forgotBtn');
+
+            btn.disabled = true;
+            spinner.style.display = 'inline-block';
+            btnText.innerText = 'Sending Link...';
+
+            if (!window.supabaseClient) {
+                showAlert('Supabase client connection not configured.');
+                resetLoadingState();
+                return;
+            }
+
+            try {
+                const { error } = await window.supabaseClient.auth.resetPasswordForEmail(email, {
+                    redirectTo: window.location.origin + '/admin/login'
+                });
+
+                if (error) {
+                    showAlert(error.message);
+                } else {
+                    showAlert('Password reset link sent! Check your email inbox.', 'success');
+                    document.getElementById('forgotEmailInput').value = '';
+                }
+            } catch (err) {
+                console.error(err);
+                showAlert('Failed to request password reset. Try again.');
+            } finally {
+                resetLoadingState();
+            }
+
+            function resetLoadingState() {
+                btn.disabled = false;
+                spinner.style.display = 'none';
+                btnText.innerText = 'Send Reset Link';
+            }
+        }
+    </script>
+</body>
+</html>

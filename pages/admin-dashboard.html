@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Pointer IT Infotech</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        :root {
+            --bg-dark: #0F172A;
+            --bg-card: #1E293B;
+            --primary: #22C55E;
+            --primary-hover: #16A34A;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* Full page loader */
+        #pageLoader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .dashboard-container {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background: rgba(30, 41, 59, 0.9);
+            border-right: 1px solid var(--border);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            box-sizing: border-box;
+            flex-shrink: 0;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: white;
+        }
+
+        .sidebar-logo {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+
+        .sidebar-brand-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .sidebar-brand-text span {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--primary);
+            margin-top: -2px;
+        }
+
+        .admin-profile-badge {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--border);
+            padding: 1rem;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .badge-email {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-main);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .badge-role {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex-grow: 1;
+        }
+
+        .nav-item-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.85rem 1.1rem;
+            background: transparent;
+            border: none;
+            border-radius: 10px;
+            color: var(--text-muted);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item-btn:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-item-btn.active {
+            color: white;
+            background: var(--primary);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+        }
+
+        .nav-item-btn.btn-logout {
+            margin-top: auto;
+            color: #FCA5A5;
+        }
+        .nav-item-btn.btn-logout:hover {
+            background: rgba(239, 68, 68, 0.1);
+            color: #EF4444;
+        }
+
+        /* Main Content Panel */
+        .main-content {
+            flex-grow: 1;
+            padding: 2.5rem;
+            box-sizing: border-box;
+            overflow-y: auto;
+            height: 100vh;
+            position: relative;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+
+        .page-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .tab-content-panel {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content-panel.active {
+            display: block;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .stat-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .stat-title {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            opacity: 0.8;
+        }
+
+        /* Cards and Tables */
+        .content-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        /* Table Styling */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background: rgba(15, 23, 42, 0.4);
+            padding: 1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Forms styling */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .dashboard-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .dashboard-form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .dashboard-form-group label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .form-input {
+            padding: 0.85rem 1rem;
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+        }
+
+        .form-btn {
+            padding: 0.85rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+            transition: all 0.3s ease;
+            align-self: flex-start;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(34, 197, 94, 0.3);
+        }
+
+        .form-btn:disabled {
+            background: var(--text-muted);
+            transform: none;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* Search input bar */
+        .search-bar-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-input {
+            flex-grow: 1;
+            padding: 0.8rem 1.2rem;
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: white;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+        }
+
+        /* Badges */
+        .status-badge {
+            padding: 0.25rem 0.65rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-badge.badge-active {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ADE80;
+        }
+
+        .status-badge.badge-revoked {
+            background: rgba(239, 68, 68, 0.15);
+            color: #FCA5A5;
+        }
+
+        .status-badge.badge-disabled {
+            background: rgba(100, 116, 139, 0.2);
+            color: var(--text-muted);
+        }
+
+        /* Feedback Alerts */
+        .alert-box {
+            display: none;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.85rem 1.25rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .alert-box.error {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            color: #FCA5A5;
+            display: flex;
+        }
+
+        .alert-box.success {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.25);
+            color: #86EFAC;
+            display: flex;
+        }
+
+        /* Actions buttons inside tables */
+        .btn-table-action {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0.25rem;
+            transition: color 0.3s;
+            margin-right: 0.5rem;
+        }
+        .btn-table-action:hover {
+            color: var(--text-main);
+        }
+        .btn-table-action.delete:hover {
+            color: #EF4444;
+        }
+        .btn-table-action.revoke:hover {
+            color: #F59E0B;
+        }
+        .btn-table-action.reactivate:hover {
+            color: #10B981;
+        }
+
+        /* Toggle Menu for Mobile */
+        .mobile-header {
+            display: none;
+            background: rgba(30, 41, 59, 0.9);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 1.5rem;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-toggle-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                height: 100vh;
+                transform: translateX(-100%);
+                box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .mobile-header {
+                display: flex;
+            }
+            .main-content {
+                padding: 1.5rem;
+                height: auto;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .dashboard-form-group.full-width {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Full Page Guard Loader -->
+    <div id="pageLoader">
+        <div class="spinner" style="width: 45px; height: 45px;"></div>
+    </div>
+
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+        <div class="sidebar-brand">
+            <div class="sidebar-logo">P</div>
+            <div class="sidebar-brand-text">Pointer IT <span>Infotech</span></div>
+        </div>
+        <button class="menu-toggle-btn" onclick="toggleMobileMenu()"><i class="fa-solid fa-bars"></i></button>
+    </div>
+
+    <div class="dashboard-container">
+        <!-- Sidebar Menu -->
+        <aside class="sidebar" id="sidebarMenu">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <a href="../index.html" class="sidebar-brand">
+                    <div class="sidebar-logo">P</div>
+                    <div class="sidebar-brand-text">Pointer IT <span>Infotech</span></div>
+                </a>
+                <button class="menu-toggle-btn" style="display: none;" onclick="toggleMobileMenu()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <!-- Profile badge -->
+            <div class="admin-profile-badge">
+                <span class="badge-role" id="adminRoleBadge">ADMIN</span>
+                <span class="badge-email" id="adminEmailBadge">admin@email.com</span>
+            </div>
+
+            <!-- Nav Lists -->
+            <ul class="nav-list">
+                <li><button class="nav-item-btn active" onclick="switchTab('overview', this)"><i class="fa-solid fa-chart-line"></i> Overview</button></li>
+                <li><button class="nav-item-btn" onclick="switchTab('students', this)"><i class="fa-solid fa-user-graduate"></i> Students</button></li>
+                <li><button class="nav-item-btn" onclick="switchTab('certificates', this)"><i class="fa-solid fa-certificate"></i> Certificates</button></li>
+                <li><button class="nav-item-btn" onclick="switchTab('add-student', this)"><i class="fa-solid fa-user-plus"></i> Add Student</button></li>
+                <li><button class="nav-item-btn" onclick="switchTab('add-certificate', this)"><i class="fa-solid fa-file-circle-plus"></i> Add Certificate</button></li>
+                <li id="adminMgmtNavItem" style="display: none;"><button class="nav-item-btn" onclick="switchTab('admin-mgmt', this)"><i class="fa-solid fa-users-gear"></i> Admin Mgmt</button></li>
+                <li><button class="nav-item-btn" onclick="switchTab('settings', this)"><i class="fa-solid fa-sliders"></i> Settings</button></li>
+                <li><button class="nav-item-btn btn-logout" onclick="handleLogout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button></li>
+            </ul>
+        </aside>
+
+        <!-- Main Dashboard View Container -->
+        <main class="main-content">
+            <!-- Alert message block -->
+            <div id="dashboardAlert" class="alert-box" style="display: none;"></div>
+
+            <!-- 1. OVERVIEW TAB -->
+            <section id="tab-overview" class="tab-content-panel active">
+                <div class="page-header">
+                    <h2 class="page-title">Overview Dashboard</h2>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span class="stat-title">Total Students</span>
+                            <span class="stat-value" id="statTotalStudents">0</span>
+                        </div>
+                        <i class="fa-solid fa-user-graduate stat-icon"></i>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span class="stat-title">Total Certificates</span>
+                            <span class="stat-value" id="statTotalCertificates">0</span>
+                        </div>
+                        <i class="fa-solid fa-certificate stat-icon"></i>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span class="stat-title">Active Certificates</span>
+                            <span class="stat-value" id="statActiveCertificates">0</span>
+                        </div>
+                        <i class="fa-solid fa-circle-check stat-icon" style="color: #22C55E;"></i>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span class="stat-title">Revoked Certificates</span>
+                            <span class="stat-value" id="statRevokedCertificates">0</span>
+                        </div>
+                        <i class="fa-solid fa-circle-xmark stat-icon" style="color: #EF4444;"></i>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Recent Certificate Issuances</h3>
+                    </div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Certificate ID</th>
+                                    <th>Student ID</th>
+                                    <th>Course</th>
+                                    <th>Issue Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentCertificatesTable">
+                                <tr>
+                                    <td colspan="5" style="text-align: center; color: var(--text-muted);">No records found</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. STUDENTS TAB -->
+            <section id="tab-students" class="tab-content-panel">
+                <div class="page-header">
+                    <h2 class="page-title">Students Registry</h2>
+                </div>
+
+                <div class="search-bar-container">
+                    <input type="text" id="studentSearchQuery" class="search-input" placeholder="Search by Student ID, Name, or Course..." oninput="debounce(loadStudents, 300)()">
+                </div>
+
+                <div class="content-card">
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Student ID</th>
+                                    <th>Full Name</th>
+                                    <th>Email</th>
+                                    <th>Course / Program</th>
+                                    <th>Batch</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentsTableBody">
+                                <tr>
+                                    <td colspan="6" style="text-align: center; color: var(--text-muted);">No students registered.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. CERTIFICATES TAB -->
+            <section id="tab-certificates" class="tab-content-panel">
+                <div class="page-header">
+                    <h2 class="page-title">Certificates List</h2>
+                </div>
+
+                <div class="search-bar-container">
+                    <input type="text" id="certSearchQuery" class="search-input" placeholder="Search by Certificate ID or Student ID..." oninput="debounce(loadCertificates, 300)()">
+                </div>
+
+                <div class="content-card">
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Certificate ID</th>
+                                    <th>Student ID</th>
+                                    <th>Course</th>
+                                    <th>Issue Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="certificatesTableBody">
+                                <tr>
+                                    <td colspan="6" style="text-align: center; color: var(--text-muted);">No certificates issued.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. ADD STUDENT TAB -->
+            <section id="tab-add-student" class="tab-content-panel">
+                <div class="page-header">
+                    <h2 class="page-title">Register New Student</h2>
+                </div>
+
+                <div class="content-card">
+                    <form id="addStudentForm" onsubmit="handleAddStudent(event)">
+                        <div class="form-grid">
+                            <div class="dashboard-form-group">
+                                <label for="studFullName">Full Name *</label>
+                                <input type="text" id="studFullName" class="form-input" placeholder="Enter Full Name" required>
+                            </div>
+                            <div class="dashboard-form-group">
+                                <label for="studID">Student ID (Unique) *</label>
+                                <input type="text" id="studID" class="form-input" placeholder="e.g. PIT-2026-001" required>
+                            </div>
+                            <div class="dashboard-form-group">
+                                <label for="studEmail">Email Address *</label>
+                                <input type="email" id="studEmail" class="form-input" placeholder="student@email.com" required>
+                            </div>
+                            <div class="dashboard-form-group">
+                                <label for="studCourse">Course / Program *</label>
+                                <input type="text" id="studCourse" class="form-input" placeholder="e.g. ADCA, DCA, Python" required>
+                            </div>
+                            <div class="dashboard-form-group">
+                                <label for="studBatch">Batch *</label>
+                                <input type="text" id="studBatch" class="form-input" placeholder="e.g. Jan 2026 Batch" required>
+                            </div>
+                            <div class="dashboard-form-group">
+                                <label for="studEnrollDate">Enrollment Date *</label>
+                                <input type="date" id="studEnrollDate" class="form-input" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="form-btn" id="addStudentBtn">
+                            <i class="fa-solid fa-user-plus"></i> Register Student
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- 5. ADD CERTIFICATE TAB -->
+            <section id="tab-add-certificate" class="tab-content-panel">
+                <div class="page-header">
+                    <h2 class="page-title">Issue Digital Certificate</h2>
+                </div>
+
+                <div class="content-card">
+                    <form id="addCertificateForm" onsubmit="handleAddCertificate(event)">
+                        <div class="form-grid">
+                            <div class="dashboard-form-group">
+                                <label for="certStudentID">Student ID *</label>
+                                <input type="text" id="certStudentID" class="form-input" placeholder="Enter Student ID (Autofills details)" required onchange="handleStudentLookup()">
+                            </div>
+                            <div class="dashboard-form-group">
+                                <label for="certStudentName">Student Name *</label>
+                                <input type="text" id="certStudentName" class="form-input" placeholder="Verified Name" required readonly>
+                            </div>
+                            <div class="dashboard-form-group">
+                                <label for="certID">Certificate ID (Unique) *</label>
+                                <input type="text" id="certID" class="form-input" placeholder="e.g. CERT-2026-ADCA-001" required>
+                            </div>
+                            <div class="dashboard-form-group">
+                                <label for="certCourse">Course / Program *</label>
+                                <input type="text" id="certCourse" class="form-input" placeholder="Verified Course" required readonly>
+                            </div>
+                            <div class="dashboard-form-group">
+                                <label for="certIssueDate">Issue Date *</label>
+                                <input type="date" id="certIssueDate" class="form-input" required>
+                            </div>
+                            <div class="dashboard-form-group">
+                                <label for="certPdfFile">Certificate PDF *</label>
+                                <input type="file" id="certPdfFile" class="form-input" accept="application/pdf" required>
+                            </div>
+                            <div class="dashboard-form-group">
+                                <label for="certStatus">Status *</label>
+                                <select id="certStatus" class="form-input" required>
+                                    <option value="ACTIVE" selected>ACTIVE</option>
+                                    <option value="REVOKED">REVOKED</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="form-btn" id="addCertificateBtn">
+                            <i class="fa-solid fa-file-circle-plus"></i> Issue Certificate
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- 6. ADMIN MANAGEMENT TAB (Super Admin Only) -->
+            <section id="tab-admin-mgmt" class="tab-content-panel">
+                <div class="page-header">
+                    <h2 class="page-title">Administrator Management</h2>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Add New Administrator</h3>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -0.5rem; margin-bottom: 1.5rem;">
+                        Register the administrator email here first. They must then navigate to the Login page and use "Forgot Password" or standard sign-up to create their credentials.
+                    </p>
+                    <form id="addAdminForm" onsubmit="handleAddAdmin(event)">
+                        <div class="form-grid">
+                            <div class="dashboard-form-group">
+                                <label for="adminEmail">Email Address *</label>
+                                <input type="email" id="adminEmail" class="form-input" placeholder="admin@pointeritinfo.org" required>
+                            </div>
+                            <div class="dashboard-form-group">
+                                <label for="adminRole">Role *</label>
+                                <select id="adminRole" class="form-input" required>
+                                    <option value="ADMIN" selected>ADMIN</option>
+                                    <option value="SUPER_ADMIN">SUPER_ADMIN</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="form-btn" id="addAdminBtn">
+                            <i class="fa-solid fa-user-plus"></i> Pre-Authorize Administrator
+                        </button>
+                    </form>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Registered Administrators</h3>
+                    </div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Created At</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminsTableBody">
+                                <tr>
+                                    <td colspan="5" style="text-align: center; color: var(--text-muted);">No administrators registered.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. SETTINGS TAB -->
+            <section id="tab-settings" class="tab-content-panel">
+                <div class="page-header">
+                    <h2 class="page-title">Account Settings</h2>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Change Administrative Password</h3>
+                    </div>
+                    <form id="changePasswordForm" onsubmit="handleChangePassword(event)">
+                        <div class="form-grid">
+                            <div class="dashboard-form-group" style="grid-column: span 2;">
+                                <label for="newPassword">New Password *</label>
+                                <input type="password" id="newPassword" class="form-input" placeholder="Minimum 6 characters" required minlength="6">
+                            </div>
+                            <div class="dashboard-form-group" style="grid-column: span 2;">
+                                <label for="confirmNewPassword">Confirm New Password *</label>
+                                <input type="password" id="confirmNewPassword" class="form-input" placeholder="Verify password" required minlength="6">
+                            </div>
+                        </div>
+                        <button type="submit" class="form-btn" id="changePassBtn">
+                            <i class="fa-solid fa-lock"></i> Update Password
+                        </button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Supabase Integration Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/supabase-client.js"></script>
+    <script>
+        let currentAdmin = null;
+        let currentAdminProfile = null;
+
+        // AUTH SECURITY GUARD
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!window.supabaseClient) {
+                alert('Fatal Error: Supabase client is not configured.');
+                return;
+            }
+
+            const { data: { session } } = await window.supabaseClient.auth.getSession();
+            if (!session) {
+                window.location.href = '/admin/login';
+                return;
+            }
+
+            currentAdmin = session.user;
+
+            // Fetch profile and check roles
+            try {
+                const { data: profile, error } = await window.supabaseClient
+                    .from('admin_profiles')
+                    .select('*')
+                    .eq('id', currentAdmin.id)
+                    .maybeSingle();
+
+                if (error || !profile || profile.status !== 'ACTIVE') {
+                    console.error('Unauthorized dashboard load attempt. Profile:', profile);
+                    await window.supabaseClient.auth.signOut();
+                    window.location.href = '/admin/login';
+                    return;
+                }
+
+                currentAdminProfile = profile;
+
+                // Setup header badges
+                document.getElementById('adminEmailBadge').innerText = profile.email;
+                document.getElementById('adminRoleBadge').innerText = profile.role;
+
+                // Enforce Super Admin UI features
+                if (profile.role === 'SUPER_ADMIN') {
+                    document.getElementById('adminMgmtNavItem').style.display = 'block';
+                }
+
+                // Initial dashboard statistics fetch
+                await updateDashboardStats();
+                await loadRecentCertificates();
+
+                // Hide page loader
+                document.getElementById('pageLoader').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('pageLoader').style.display = 'none';
+                }, 500);
+
+            } catch (err) {
+                console.error(err);
+                window.location.href = '/admin/login';
+            }
+        });
+
+        // Tab Switch logic
+        async function switchTab(tabId, btnElement) {
+            hideAlert();
+
+            // Toggle sidebar active button
+            document.querySelectorAll('.nav-item-btn').forEach(btn => btn.classList.remove('active'));
+            if (btnElement) btnElement.classList.add('active');
+
+            // Close mobile menu
+            document.getElementById('sidebarMenu').classList.remove('open');
+
+            // Hide all tab panels
+            document.querySelectorAll('.tab-content-panel').forEach(panel => panel.classList.remove('active'));
+
+            // Show active panel
+            const panel = document.getElementById('tab-' + tabId);
+            if (panel) panel.classList.add('active');
+
+            // Load data dynamically
+            if (tabId === 'overview') {
+                await updateDashboardStats();
+                await loadRecentCertificates();
+            } else if (tabId === 'students') {
+                document.getElementById('studentSearchQuery').value = '';
+                await loadStudents();
+            } else if (tabId === 'certificates') {
+                document.getElementById('certSearchQuery').value = '';
+                await loadCertificates();
+            } else if (tabId === 'admin-mgmt') {
+                if (currentAdminProfile?.role === 'SUPER_ADMIN') {
+                    await loadAdminProfiles();
+                }
+            }
+        }
+
+        // Toggle mobile sidebar
+        function toggleMobileMenu() {
+            document.getElementById('sidebarMenu').classList.toggle('open');
+        }
+
+        // Debounce helper
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Alert helper
+        function showDashboardAlert(msg, type = 'success') {
+            const alertBox = document.getElementById('dashboardAlert');
+            alertBox.className = 'alert-box ' + type;
+            alertBox.innerHTML = type === 'success' 
+                ? `<i class="fa-solid fa-circle-check"></i> <span>${msg}</span>` 
+                : `<i class="fa-solid fa-triangle-exclamation"></i> <span>${msg}</span>`;
+            alertBox.style.display = 'flex';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function hideAlert() {
+            document.getElementById('dashboardAlert').style.display = 'none';
+        }
+
+        // ==========================================
+        // DATA LOADERS & STATISTICS
+        // ==========================================
+
+        async function updateDashboardStats() {
+            try {
+                // Fetch student counts
+                const { count: studentCount, error: err1 } = await window.supabaseClient
+                    .from('students')
+                    .select('*', { count: 'exact', head: true });
+
+                // Fetch certificate counts
+                const { data: certs, error: err2 } = await window.supabaseClient
+                    .from('certificates')
+                    .select('status');
+
+                if (err1 || err2) throw err1 || err2;
+
+                const totalCertificates = certs.length;
+                const activeCerts = certs.filter(c => c.status === 'ACTIVE').length;
+                const revokedCerts = totalCertificates - activeCerts;
+
+                document.getElementById('statTotalStudents').innerText = studentCount || 0;
+                document.getElementById('statTotalCertificates').innerText = totalCertificates || 0;
+                document.getElementById('statActiveCertificates').innerText = activeCerts || 0;
+                document.getElementById('statRevokedCertificates').innerText = revokedCerts || 0;
+            } catch (err) {
+                console.error('Stats load error:', err);
+            }
+        }
+
+        async function loadRecentCertificates() {
+            try {
+                const { data, error } = await window.supabaseClient
+                    .from('certificates')
+                    .select('*')
+                    .order('created_at', { ascending: false })
+                    .limit(5);
+
+                if (error) throw error;
+
+                const tbody = document.getElementById('recentCertificatesTable');
+                if (!data || data.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">No records found</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = data.map(c => `
+                    <tr>
+                        <td><strong>${c.certificate_id}</strong></td>
+                        <td>${c.student_id}</td>
+                        <td>${c.course}</td>
+                        <td>${new Date(c.issue_date).toLocaleDateString()}</td>
+                        <td><span class="status-badge ${c.status === 'ACTIVE' ? 'badge-active' : 'badge-revoked'}">${c.status}</span></td>
+                    </tr>
+                `).join('');
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        async function loadStudents() {
+            const query = document.getElementById('studentSearchQuery').value.trim();
+            const tbody = document.getElementById('studentsTableBody');
+
+            try {
+                let dbQuery = window.supabaseClient.from('students').select('*');
+
+                if (query) {
+                    dbQuery = dbQuery.or(`student_id.ilike.%${query}%,full_name.ilike.%${query}%,course.ilike.%${query}%`);
+                }
+
+                const { data, error } = await dbQuery.order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                if (!data || data.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">No students matching criteria</td></tr>`;
+                    return;
+                }
+
+                const isSuper = currentAdminProfile?.role === 'SUPER_ADMIN';
+
+                tbody.innerHTML = data.map(s => `
+                    <tr>
+                        <td><strong>${s.student_id}</strong></td>
+                        <td>${s.full_name}</td>
+                        <td>${s.email}</td>
+                        <td>${s.course}</td>
+                        <td>${s.batch}</td>
+                        <td>
+                            <button class="btn-table-action" title="Edit Student" onclick="editStudent('${s.id}')"><i class="fa-solid fa-pen-to-square"></i></button>
+                            ${isSuper ? `<button class="btn-table-action delete" title="Delete Student" onclick="deleteStudent('${s.student_id}')"><i class="fa-solid fa-trash"></i></button>` : ''}
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (err) {
+                console.error(err);
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #EF4444;">Error loading student records.</td></tr>`;
+            }
+        }
+
+        async function loadCertificates() {
+            const query = document.getElementById('certSearchQuery').value.trim();
+            const tbody = document.getElementById('certificatesTableBody');
+
+            try {
+                let dbQuery = window.supabaseClient.from('certificates').select('*');
+
+                if (query) {
+                    dbQuery = dbQuery.or(`certificate_id.ilike.%${query}%,student_id.ilike.%${query}%`);
+                }
+
+                const { data, error } = await dbQuery.order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                if (!data || data.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">No certificates found</td></tr>`;
+                    return;
+                }
+
+                const isSuper = currentAdminProfile?.role === 'SUPER_ADMIN';
+
+                tbody.innerHTML = data.map(c => {
+                    const is_active = c.status === 'ACTIVE';
+                    const { data: urlData } = window.supabaseClient.storage.from('certificates').getPublicUrl(c.certificate_file_path);
+                    const publicUrl = urlData?.publicUrl || '#';
+
+                    // ADMIN can revoke, but cannot reactivate (SUPER_ADMIN only).
+                    let statusBtn = '';
+                    if (is_active) {
+                        statusBtn = `<button class="btn-table-action revoke" title="Revoke Certificate" onclick="toggleCertificateStatus('${c.certificate_id}', 'REVOKED')"><i class="fa-solid fa-ban"></i></button>`;
+                    } else if (isSuper) {
+                        statusBtn = `<button class="btn-table-action reactivate" title="Reactivate Certificate" onclick="toggleCertificateStatus('${c.certificate_id}', 'ACTIVE')"><i class="fa-solid fa-circle-check"></i></button>`;
+                    }
+
+                    return `
+                        <tr>
+                            <td><strong>${c.certificate_id}</strong></td>
+                            <td>${c.student_id}</td>
+                            <td>${c.course}</td>
+                            <td>${new Date(c.issue_date).toLocaleDateString()}</td>
+                            <td><span class="status-badge ${is_active ? 'badge-active' : 'badge-revoked'}">${c.status}</span></td>
+                            <td>
+                                <a href="${publicUrl}" target="_blank" class="btn-table-action" title="View PDF"><i class="fa-solid fa-eye"></i></a>
+                                ${statusBtn}
+                                ${isSuper ? `<button class="btn-table-action delete" title="Delete Certificate" onclick="deleteCertificate('${c.certificate_id}', '${c.certificate_file_path}')"><i class="fa-solid fa-trash"></i></button>` : ''}
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            } catch (err) {
+                console.error(err);
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #EF4444;">Error loading certificate records.</td></tr>`;
+            }
+        }
+
+        async function loadAdminProfiles() {
+            const tbody = document.getElementById('adminsTableBody');
+            try {
+                const { data, error } = await window.supabaseClient
+                    .from('admin_profiles')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                tbody.innerHTML = data.map(adm => {
+                    const isSelf = adm.email === currentAdmin.email;
+                    let actionButtons = '';
+                    
+                    if (!isSelf) {
+                        const nextStatus = adm.status === 'ACTIVE' ? 'DISABLED' : 'ACTIVE';
+                        const toggleIcon = adm.status === 'ACTIVE' ? 'fa-user-slash' : 'fa-user-check';
+                        const toggleTitle = adm.status === 'ACTIVE' ? 'Disable Admin' : 'Enable Admin';
+                        
+                        actionButtons = `
+                            <button class="btn-table-action" title="${toggleTitle}" onclick="updateAdminStatus('${adm.email}', '${nextStatus}')"><i class="fa-solid ${toggleIcon}"></i></button>
+                            <button class="btn-table-action delete" title="Remove Admin" onclick="removeAdmin('${adm.email}')"><i class="fa-solid fa-user-minus"></i></button>
+                            <button class="btn-table-action" title="Invite / Send Reset Link" onclick="inviteAdmin('${adm.email}')"><i class="fa-solid fa-paper-plane"></i></button>
+                        `;
+                    } else {
+                        actionButtons = `<span style="font-size:0.8rem; color:var(--primary); font-weight:600;">(Current User)</span>`;
+                    }
+
+                    return `
+                        <tr>
+                            <td><strong>${adm.email}</strong></td>
+                            <td><span class="status-badge" style="background:rgba(255,255,255,0.05); color:white;">${adm.role}</span></td>
+                            <td><span class="status-badge ${adm.status === 'ACTIVE' ? 'badge-active' : (adm.status === 'PENDING' ? 'badge-disabled' : 'badge-revoked')}">${adm.status}</span></td>
+                            <td>${new Date(adm.created_at).toLocaleDateString()}</td>
+                            <td>${actionButtons}</td>
+                        </tr>
+                    `;
+                }).join('');
+            } catch (err) {
+                console.error(err);
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #EF4444;">Error fetching administrator profiles.</td></tr>`;
+            }
+        }
+
+
+        // ==========================================
+        // FORMS SUBMISSION LOGIC
+        // ==========================================
+
+        async function handleAddStudent(event) {
+            event.preventDefault();
+            hideAlert();
+
+            const fullName = document.getElementById('studFullName').value.trim();
+            const studentId = document.getElementById('studID').value.trim();
+            const email = document.getElementById('studEmail').value.trim();
+            const course = document.getElementById('studCourse').value.trim();
+            const batch = document.getElementById('studBatch').value.trim();
+            const enrollDate = document.getElementById('studEnrollDate').value;
+
+            const btn = document.getElementById('addStudentBtn');
+            btn.disabled = true;
+
+            try {
+                // Check duplicate student ID first to output clear error
+                const { data: duplicate } = await window.supabaseClient
+                    .from('students')
+                    .select('student_id')
+                    .eq('student_id', studentId)
+                    .maybeSingle();
+
+                if (duplicate) {
+                    showDashboardAlert(`Registration failed: Student ID "${studentId}" is already in use.`, 'error');
+                    btn.disabled = false;
+                    return;
+                }
+
+                const { error } = await window.supabaseClient
+                    .from('students')
+                    .insert({
+                        student_id: studentId,
+                        full_name: fullName,
+                        email: email,
+                        course: course,
+                        batch: batch,
+                        created_at: new Date(enrollDate).toISOString()
+                    });
+
+                if (error) throw error;
+
+                showDashboardAlert(`Student "${fullName}" (ID: ${studentId}) registered successfully!`);
+                document.getElementById('addStudentForm').reset();
+            } catch (err) {
+                console.error(err);
+                showDashboardAlert(`Error registering student: ${err.message}`, 'error');
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        // Student ID Lookup autofill
+        async function handleStudentLookup() {
+            const studentId = document.getElementById('certStudentID').value.trim();
+            if (!studentId) return;
+
+            try {
+                const { data: student, error } = await window.supabaseClient
+                    .from('students')
+                    .select('full_name, course')
+                    .eq('student_id', studentId)
+                    .maybeSingle();
+
+                if (error) throw error;
+
+                if (student) {
+                    document.getElementById('certStudentName').value = student.full_name;
+                    document.getElementById('certCourse').value = student.course;
+                } else {
+                    document.getElementById('certStudentName').value = '';
+                    document.getElementById('certCourse').value = '';
+                    alert(`Warning: No student found with ID "${studentId}". Please register the student first.`);
+                }
+            } catch (err) {
+                console.error('Student lookup error:', err);
+            }
+        }
+
+        async function handleAddCertificate(event) {
+            event.preventDefault();
+            hideAlert();
+
+            const studentId = document.getElementById('certStudentID').value.trim();
+            const certId = document.getElementById('certID').value.trim();
+            const course = document.getElementById('certCourse').value.trim();
+            const issueDate = document.getElementById('certIssueDate').value;
+            const pdfFile = document.getElementById('certPdfFile').files[0];
+            const status = document.getElementById('certStatus').value;
+
+            const btn = document.getElementById('addCertificateBtn');
+            btn.disabled = true;
+
+            try {
+                // Verify student exists first
+                const { data: student } = await window.supabaseClient
+                    .from('students')
+                    .select('student_id')
+                    .eq('student_id', studentId)
+                    .maybeSingle();
+
+                if (!student) {
+                    showDashboardAlert(`Cannot issue certificate: Student ID "${studentId}" does not exist.`, 'error');
+                    btn.disabled = false;
+                    return;
+                }
+
+                // Check duplicate certificate ID
+                const { data: duplicate } = await window.supabaseClient
+                    .from('certificates')
+                    .select('certificate_id')
+                    .eq('certificate_id', certId)
+                    .maybeSingle();
+
+                if (duplicate) {
+                    showDashboardAlert(`Cannot issue certificate: Certificate ID "${certId}" already exists.`, 'error');
+                    btn.disabled = false;
+                    return;
+                }
+
+                // Upload PDF file to Supabase Storage
+                // Path format: public/certificates/[certId]_[timestamp].pdf
+                const fileExt = pdfFile.name.split('.').pop();
+                const storagePath = `${certId}_${Date.now()}.${fileExt}`;
+
+                const { data: uploadData, error: uploadErr } = await window.supabaseClient.storage
+                    .from('certificates')
+                    .upload(storagePath, pdfFile, {
+                        cacheControl: '3600',
+                        upsert: false
+                    });
+
+                if (uploadErr) throw uploadErr;
+
+                // Save to database
+                const { error } = await window.supabaseClient
+                    .from('certificates')
+                    .insert({
+                        certificate_id: certId,
+                        student_id: studentId,
+                        course: course,
+                        issue_date: issueDate,
+                        certificate_file_path: storagePath,
+                        status: status
+                    });
+
+                if (error) {
+                    // Cleanup uploaded file from storage on database insert failure
+                    await window.supabaseClient.storage.from('certificates').remove([storagePath]);
+                    throw error;
+                }
+
+                showDashboardAlert(`Certificate "${certId}" successfully issued to Student "${studentId}"!`);
+                document.getElementById('addCertificateForm').reset();
+            } catch (err) {
+                console.error(err);
+                showDashboardAlert(`Error issuing certificate: ${err.message}`, 'error');
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        async function handleAddAdmin(event) {
+            event.preventDefault();
+            hideAlert();
+
+            const email = document.getElementById('adminEmail').value.trim();
+            const role = document.getElementById('adminRole').value;
+            const btn = document.getElementById('addAdminBtn');
+
+            btn.disabled = true;
+
+            try {
+                const { error } = await window.supabaseClient
+                    .from('admin_profiles')
+                    .insert({
+                        email: email,
+                        role: role,
+                        status: 'PENDING'
+                    });
+
+                if (error) throw error;
+
+                showDashboardAlert(`Successfully pre-authorized "${email}" as an ${role}!`);
+                document.getElementById('addAdminForm').reset();
+                await loadAdminProfiles();
+            } catch (err) {
+                console.error(err);
+                showDashboardAlert(`Error pre-authorizing administrator: ${err.message}`, 'error');
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        // ==========================================
+        // ACTION TRIGGERS (UPDATE / DELETE)
+        // ==========================================
+
+        async function toggleCertificateStatus(certId, status) {
+            hideAlert();
+
+            if (!confirm(`Are you sure you want to set Certificate "${certId}" to ${status}?`)) return;
+
+            try {
+                const { error } = await window.supabaseClient
+                    .from('certificates')
+                    .update({ status: status, updated_at: new Date().toISOString() })
+                    .eq('certificate_id', certId);
+
+                if (error) throw error;
+
+                showDashboardAlert(`Certificate "${certId}" successfully marked as ${status}.`);
+                await loadCertificates();
+            } catch (err) {
+                console.error(err);
+                showDashboardAlert(`Error updating certificate status: ${err.message}`, 'error');
+            }
+        }
+
+        async function deleteCertificate(certId, storagePath) {
+            hideAlert();
+            if (currentAdminProfile?.role !== 'SUPER_ADMIN') return;
+
+            if (!confirm(`[CAUTION] Are you sure you want to permanently DELETE Certificate "${certId}"? This will delete the record and the stored PDF file.`)) return;
+
+            try {
+                // Delete from DB
+                const { error: dbErr } = await window.supabaseClient
+                    .from('certificates')
+                    .delete()
+                    .eq('certificate_id', certId);
+
+                if (dbErr) throw dbErr;
+
+                // Delete from Storage
+                await window.supabaseClient.storage.from('certificates').remove([storagePath]);
+
+                showDashboardAlert(`Certificate "${certId}" successfully deleted.`);
+                await loadCertificates();
+            } catch (err) {
+                console.error(err);
+                showDashboardAlert(`Error deleting certificate: ${err.message}`, 'error');
+            }
+        }
+
+        async function editStudent(id) {
+            // Trivial edit: for standard production use cases, we prompt values
+            const fullName = prompt('Enter new Full Name:');
+            if (fullName === null) return;
+            const course = prompt('Enter new Course / Program:');
+            if (course === null) return;
+            const batch = prompt('Enter new Batch:');
+            if (batch === null) return;
+
+            try {
+                const { error } = await window.supabaseClient
+                    .from('students')
+                    .update({
+                        full_name: fullName || undefined,
+                        course: course || undefined,
+                        batch: batch || undefined,
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq('id', id);
+
+                if (error) throw error;
+
+                showDashboardAlert('Student record updated successfully.');
+                await loadStudents();
+            } catch (err) {
+                alert(`Error updating student: ${err.message}`);
+            }
+        }
+
+        async function deleteStudent(studentId) {
+            hideAlert();
+            if (currentAdminProfile?.role !== 'SUPER_ADMIN') return;
+
+            if (!confirm(`[CAUTION] Are you sure you want to DELETE student "${studentId}"? This will delete all their certificates automatically due to database cascade.`)) return;
+
+            try {
+                const { error } = await window.supabaseClient
+                    .from('students')
+                    .delete()
+                    .eq('student_id', studentId);
+
+                if (error) throw error;
+
+                showDashboardAlert(`Student ID "${studentId}" and associated certificates deleted.`);
+                await loadStudents();
+            } catch (err) {
+                console.error(err);
+                showDashboardAlert(`Error deleting student: ${err.message}`, 'error');
+            }
+        }
+
+        async function updateAdminStatus(email, status) {
+            hideAlert();
+            if (currentAdminProfile?.role !== 'SUPER_ADMIN') return;
+
+            try {
+                const { error } = await window.supabaseClient
+                    .from('admin_profiles')
+                    .update({ status: status, updated_at: new Date().toISOString() })
+                    .eq('email', email);
+
+                if (error) throw error;
+
+                showDashboardAlert(`Admin "${email}" status successfully updated to "${status}".`);
+                await loadAdminProfiles();
+            } catch (err) {
+                console.error(err);
+                showDashboardAlert(`Error updating admin status: ${err.message}`, 'error');
+            }
+        }
+
+        async function removeAdmin(email) {
+            hideAlert();
+            if (currentAdminProfile?.role !== 'SUPER_ADMIN') return;
+
+            if (!confirm(`Are you sure you want to remove administrator status for "${email}"? They will lose access instantly.`)) return;
+
+            try {
+                const { error } = await window.supabaseClient
+                    .from('admin_profiles')
+                    .delete()
+                    .eq('email', email);
+
+                if (error) throw error;
+
+                showDashboardAlert(`Administrator privileges removed for "${email}".`);
+                await loadAdminProfiles();
+            } catch (err) {
+                console.error(err);
+                showDashboardAlert(`Error removing admin privileges: ${err.message}`, 'error');
+            }
+        }
+
+        async function inviteAdmin(email) {
+            hideAlert();
+            if (currentAdminProfile?.role !== 'SUPER_ADMIN') return;
+
+            try {
+                // Triggers Supabase password reset flow (serves as invite link)
+                const { error } = await window.supabaseClient.auth.resetPasswordForEmail(email, {
+                    redirectTo: window.location.origin + '/admin/login'
+                });
+
+                if (error) throw error;
+
+                showDashboardAlert(`Invitation/reset email successfully sent to "${email}".`);
+            } catch (err) {
+                console.error(err);
+                showDashboardAlert(`Failed to send email to "${email}": ${err.message}`, 'error');
+            }
+        }
+
+        async function handleChangePassword(event) {
+            event.preventDefault();
+            hideAlert();
+
+            const newPass = document.getElementById('newPassword').value;
+            const confirmPass = document.getElementById('confirmNewPassword').value;
+            const btn = document.getElementById('changePassBtn');
+
+            if (newPass !== confirmPass) {
+                showDashboardAlert('Passwords do not match.', 'error');
+                return;
+            }
+
+            btn.disabled = true;
+
+            try {
+                const { error } = await window.supabaseClient.auth.updateUser({
+                    password: newPass
+                });
+
+                if (error) throw error;
+
+                showDashboardAlert('Password updated successfully!');
+                document.getElementById('changePasswordForm').reset();
+            } catch (err) {
+                console.error(err);
+                showDashboardAlert(`Error updating password: ${err.message}`, 'error');
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        async function handleLogout() {
+            if (!window.supabaseClient) return;
+            await window.supabaseClient.auth.signOut();
+            window.location.href = '/admin/login';
+        }
+    </script>
+</body>
+</html>

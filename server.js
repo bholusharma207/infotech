@@ -19,12 +19,26 @@ const MIME_TYPES = {
     '.webp': 'image/webp'
 };
 
+// Run build.js to generate config.js on server startup
+try {
+    require('./build');
+} catch (e) {
+    console.error('Error running build.js:', e);
+}
+
 const server = http.createServer((req, res) => {
     let decodedUrl = req.url;
     try {
         decodedUrl = decodeURIComponent(req.url.split('?')[0]);
     } catch (e) {
         decodedUrl = req.url.split('?')[0];
+    }
+
+    // Custom rewrites to match vercel.json
+    if (decodedUrl === '/admin/login') {
+        decodedUrl = '/pages/admin-login.html';
+    } else if (decodedUrl === '/admin/dashboard') {
+        decodedUrl = '/pages/admin-dashboard.html';
     }
 
     let relativePath = decodedUrl === '/' ? 'index.html' : decodedUrl;
