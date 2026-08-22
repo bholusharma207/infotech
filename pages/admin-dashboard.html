@@ -1106,7 +1106,7 @@
             try {
                 const { data, error } = await window.supabaseClient
                     .from('certificates')
-                    .select('*, students(full_name)')
+                    .select('*')
                     .order('created_at', { ascending: false })
                     .limit(5);
 
@@ -1121,7 +1121,7 @@
                 tbody.innerHTML = data.map(c => `
                     <tr>
                         <td><strong>${c.certificate_id}</strong></td>
-                        <td>${c.students?.full_name || 'N/A'}</td>
+                        <td>${c.student_name || 'N/A'}</td>
                         <td>${c.course}</td>
                         <td>${new Date(c.issue_date).toLocaleDateString()}</td>
                         <td><span class="status-badge ${c.status === 'ACTIVE' ? 'badge-active' : 'badge-revoked'}">${c.status}</span></td>
@@ -1178,7 +1178,7 @@
             const tbody = document.getElementById('certificatesTableBody');
 
             try {
-                let dbQuery = window.supabaseClient.from('certificates').select('*, students(full_name)');
+                let dbQuery = window.supabaseClient.from('certificates').select('*');
 
                 const { data, error } = await dbQuery.order('created_at', { ascending: false });
 
@@ -1190,7 +1190,7 @@
                     filteredData = filteredData.filter(c => {
                         const certIdMatch = c.certificate_id?.toLowerCase().includes(q);
                         const courseMatch = c.course?.toLowerCase().includes(q);
-                        const nameMatch = c.students?.full_name?.toLowerCase().includes(q);
+                        const nameMatch = c.student_name?.toLowerCase().includes(q);
                         return certIdMatch || courseMatch || nameMatch;
                     });
                 }
@@ -1218,7 +1218,7 @@
                     return `
                         <tr>
                             <td><strong>${c.certificate_id}</strong></td>
-                            <td>${c.students?.full_name || 'N/A'}</td>
+                            <td>${c.student_name || 'N/A'}</td>
                             <td>${c.course}</td>
                             <td>${new Date(c.issue_date).toLocaleDateString()}</td>
                             <td><span class="status-badge ${is_active ? 'badge-active' : 'badge-revoked'}">${c.status}</span></td>
