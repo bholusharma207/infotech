@@ -25,10 +25,10 @@ CREATE INDEX IF NOT EXISTS idx_students_student_id ON public.students(student_id
 CREATE TABLE IF NOT EXISTS public.certificates (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     certificate_id TEXT UNIQUE NOT NULL,
-    student_id TEXT REFERENCES public.students(student_id) ON DELETE CASCADE NOT NULL,
+    student_name TEXT NOT NULL,
     course TEXT NOT NULL,
     issue_date DATE NOT NULL,
-    certificate_file_path TEXT NOT NULL,
+    pdf_url TEXT NOT NULL,
     status TEXT DEFAULT 'ACTIVE' CHECK (status IN ('ACTIVE', 'REVOKED')) NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
@@ -36,7 +36,6 @@ CREATE TABLE IF NOT EXISTS public.certificates (
 
 -- Indices for certificates
 CREATE INDEX IF NOT EXISTS idx_certificates_certificate_id ON public.certificates(certificate_id);
-CREATE INDEX IF NOT EXISTS idx_certificates_student_id ON public.certificates(student_id);
 
 -- 3. Create admin_profiles table
 -- Note: id refers to auth.users(id). It can be NULL for pre-authorized admins who haven't signed up yet.
@@ -125,26 +124,23 @@ CREATE POLICY "Super Admins can manage admin profiles" ON public.admin_profiles
 CREATE OR REPLACE FUNCTION public.verify_certificate(p_search_query text)
 RETURNS TABLE (
   certificate_id TEXT,
-  student_id TEXT,
   student_name TEXT,
   course TEXT,
   issue_date DATE,
-  certificate_file_path TEXT,
+  pdf_url TEXT,
   status TEXT
 ) SECURITY DEFINER AS $$
 BEGIN
   RETURN QUERY
   SELECT 
     c.certificate_id,
-    c.student_id,
-    s.full_name as student_name,
+    c.student_name,
     c.course,
     c.issue_date,
-    c.certificate_file_path,
+    c.pdf_url,
     c.status
   FROM public.certificates c
-  JOIN public.students s ON c.student_id = s.student_id
-  WHERE c.certificate_id = p_search_query OR c.student_id = p_search_query;
+  WHERE c.certificate_id = p_search_query OR LOWER(c.student_name) = LOWER(p_search_query);
 END;
 $$ LANGUAGE plpgsql;
 

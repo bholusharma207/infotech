@@ -1204,7 +1204,7 @@
 
                 tbody.innerHTML = filteredData.map(c => {
                     const is_active = c.status === 'ACTIVE';
-                    const { data: urlData } = window.supabaseClient.storage.from('certificates').getPublicUrl(c.certificate_file_path);
+                    const { data: urlData } = window.supabaseClient.storage.from('certificates').getPublicUrl(c.pdf_url);
                     const publicUrl = urlData?.publicUrl || '#';
 
                     // ADMIN can revoke, but cannot reactivate (SUPER_ADMIN only).
@@ -1224,9 +1224,9 @@
                             <td><span class="status-badge ${is_active ? 'badge-active' : 'badge-revoked'}">${c.status}</span></td>
                             <td>
                                 <a href="${publicUrl}" target="_blank" class="btn-table-action" title="View PDF"><i class="fa-solid fa-eye"></i></a>
-                                <button class="btn-table-action" title="Edit Certificate" onclick="openEditCertificateModal('${c.id}', '${c.certificate_id}', '${c.course.replace(/'/g, "\\'")}', '${c.issue_date}', '${c.status}', '${c.certificate_file_path}')"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button class="btn-table-action" title="Edit Certificate" onclick="openEditCertificateModal('${c.id}', '${c.certificate_id}', '${c.course.replace(/'/g, "\\'")}', '${c.issue_date}', '${c.status}', '${c.pdf_url}')"><i class="fa-solid fa-pen-to-square"></i></button>
                                 ${statusBtn}
-                                ${isSuper ? `<button class="btn-table-action delete" title="Delete Certificate" onclick="deleteCertificate('${c.certificate_id}', '${c.certificate_file_path}')"><i class="fa-solid fa-trash"></i></button>` : ''}
+                                ${isSuper ? `<button class="btn-table-action delete" title="Delete Certificate" onclick="deleteCertificate('${c.certificate_id}', '${c.pdf_url}')"><i class="fa-solid fa-trash"></i></button>` : ''}
                             </td>
                         </tr>
                     `;
@@ -1387,7 +1387,7 @@
                         student_name: studentName,
                         course: course,
                         issue_date: issueDate,
-                        certificate_file_path: storagePath,
+                        pdf_url: storagePath,
                         status: status
                     });
 
@@ -1723,7 +1723,7 @@
                         course: course,
                         issue_date: issueDate,
                         status: status,
-                        certificate_file_path: filePath,
+                        pdf_url: filePath,
                         updated_at: new Date().toISOString()
                     })
                     .eq('id', id);
