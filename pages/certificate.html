@@ -634,7 +634,7 @@
                 if (is_active) {
                     actions.style.display = 'flex';
                     // Generate public URL from storage path
-                    const { data: urlData } = window.supabaseClient.storage.from('certificates').getPublicUrl(cert.pdf_url);
+                    const { data: urlData } = window.supabaseClient.storage.from('certificates').getPublicUrl(cert.certificate_file_path);
                     const publicUrl = urlData?.publicUrl || '';
                     
                     viewBtn.href = publicUrl;

@@ -16,27 +16,14 @@ DROP INDEX IF EXISTS public.idx_certificates_student_id;
 -- 5. Drop student_id column from certificates table
 ALTER TABLE public.certificates DROP COLUMN IF EXISTS student_id;
 
--- 6. Rename certificate_file_path to pdf_url if it exists
-DO $$
-BEGIN
-  IF EXISTS (
-    SELECT 1 FROM information_schema.columns 
-    WHERE table_schema = 'public' 
-      AND table_name = 'certificates' 
-      AND column_name = 'certificate_file_path'
-  ) THEN
-    ALTER TABLE public.certificates RENAME COLUMN certificate_file_path TO pdf_url;
-  END IF;
-END $$;
-
--- 7. Update public verification search function RPC
+-- 6. Update public verification search function RPC
 CREATE OR REPLACE FUNCTION public.verify_certificate(p_search_query text)
 RETURNS TABLE (
   certificate_id TEXT,
   student_name TEXT,
   course TEXT,
   issue_date DATE,
-  pdf_url TEXT,
+  certificate_file_path TEXT,
   status TEXT
 ) SECURITY DEFINER AS $$
 BEGIN
@@ -46,12 +33,12 @@ BEGIN
     c.student_name,
     c.course,
     c.issue_date,
-    c.pdf_url,
+    c.certificate_file_path,
     c.status
   FROM public.certificates c
   WHERE c.certificate_id = p_search_query OR LOWER(c.student_name) = LOWER(p_search_query);
 END;
 $$ LANGUAGE plpgsql;
 
--- 8. Notify PostgREST to reload schema
+-- 7. Notify PostgREST to reload schema
 NOTIFY pgrst, 'reload schema';

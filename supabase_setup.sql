@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS public.certificates (
     student_name TEXT NOT NULL,
     course TEXT NOT NULL,
     issue_date DATE NOT NULL,
-    pdf_url TEXT NOT NULL,
+    certificate_file_path TEXT NOT NULL,
     status TEXT DEFAULT 'ACTIVE' CHECK (status IN ('ACTIVE', 'REVOKED')) NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
@@ -127,7 +127,7 @@ RETURNS TABLE (
   student_name TEXT,
   course TEXT,
   issue_date DATE,
-  pdf_url TEXT,
+  certificate_file_path TEXT,
   status TEXT
 ) SECURITY DEFINER AS $$
 BEGIN
@@ -137,7 +137,7 @@ BEGIN
     c.student_name,
     c.course,
     c.issue_date,
-    c.pdf_url,
+    c.certificate_file_path,
     c.status
   FROM public.certificates c
   WHERE c.certificate_id = p_search_query OR LOWER(c.student_name) = LOWER(p_search_query);
