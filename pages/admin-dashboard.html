@@ -1360,17 +1360,15 @@
 
                 // Check if student exists by full_name, else auto-register
                 let studentId = '';
-                const { data: existingStudent, error: lookupErr } = await window.supabaseClient
+                const { data: existingStudents, error: lookupErr } = await window.supabaseClient
                     .from('students')
                     .select('student_id')
-                    .eq('full_name', studentName)
-                    .limit(1)
-                    .maybeSingle();
+                    .eq('full_name', studentName);
 
                 if (lookupErr) throw lookupErr;
 
-                if (existingStudent) {
-                    studentId = existingStudent.student_id;
+                if (existingStudents && existingStudents.length > 0) {
+                    studentId = existingStudents[0].student_id;
                 } else {
                     studentId = 'STU-' + Date.now();
                     const { error: insertStudentErr } = await window.supabaseClient
@@ -1419,9 +1417,10 @@
 
                 showDashboardAlert(`Certificate "${certId}" successfully issued to Student "${studentName}"!`);
                 document.getElementById('addCertificateForm').reset();
+                await loadCertificates();
             } catch (err) {
                 console.error(err);
-                showDashboardAlert(`Error issuing certificate: ${err.message}`, 'error');
+                showDashboardAlert(`Error issuing certificate: ${err.message || JSON.stringify(err)}`, 'error');
             } finally {
                 btn.disabled = false;
             }
