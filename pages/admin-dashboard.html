@@ -816,12 +816,8 @@
                     <form id="addCertificateForm" onsubmit="handleAddCertificate(event)">
                         <div class="form-grid">
                             <div class="dashboard-form-group">
-                                <label for="certStudentID">Student ID *</label>
-                                <input type="text" id="certStudentID" class="form-input" placeholder="Enter Student ID (Autofills details)" required onchange="handleStudentLookup()">
-                            </div>
-                            <div class="dashboard-form-group">
                                 <label for="certStudentName">Student Name *</label>
-                                <input type="text" id="certStudentName" class="form-input" placeholder="Verified Name" required readonly>
+                                <input type="text" id="certStudentName" class="form-input" placeholder="Enter Student Name" required>
                             </div>
                             <div class="dashboard-form-group">
                                 <label for="certID">Certificate ID (Unique) *</label>
@@ -829,7 +825,7 @@
                             </div>
                             <div class="dashboard-form-group">
                                 <label for="certCourse">Course / Program *</label>
-                                <input type="text" id="certCourse" class="form-input" placeholder="Verified Course" required readonly>
+                                <input type="text" id="certCourse" class="form-input" placeholder="Enter Course / Program" required>
                             </div>
                             <div class="dashboard-form-group">
                                 <label for="certIssueDate">Issue Date *</label>
@@ -1334,38 +1330,11 @@
             }
         }
 
-        // Student ID Lookup autofill
-        async function handleStudentLookup() {
-            const studentId = document.getElementById('certStudentID').value.trim();
-            if (!studentId) return;
-
-            try {
-                const { data: student, error } = await window.supabaseClient
-                    .from('students')
-                    .select('full_name, course')
-                    .eq('student_id', studentId)
-                    .maybeSingle();
-
-                if (error) throw error;
-
-                if (student) {
-                    document.getElementById('certStudentName').value = student.full_name;
-                    document.getElementById('certCourse').value = student.course;
-                } else {
-                    document.getElementById('certStudentName').value = '';
-                    document.getElementById('certCourse').value = '';
-                    alert(`Warning: No student found with ID "${studentId}". Please register the student first.`);
-                }
-            } catch (err) {
-                console.error('Student lookup error:', err);
-            }
-        }
-
         async function handleAddCertificate(event) {
             event.preventDefault();
             hideAlert();
 
-            const studentId = document.getElementById('certStudentID').value.trim();
+            const studentName = document.getElementById('certStudentName').value.trim();
             const certId = document.getElementById('certID').value.trim();
             const course = document.getElementById('certCourse').value.trim();
             const issueDate = document.getElementById('certIssueDate').value;
@@ -1376,20 +1345,7 @@
             btn.disabled = true;
 
             try {
-                // Verify student exists first
-                const { data: student } = await window.supabaseClient
-                    .from('students')
-                    .select('student_id')
-                    .eq('student_id', studentId)
-                    .maybeSingle();
-
-                if (!student) {
-                    showDashboardAlert(`Cannot issue certificate: Student ID "${studentId}" does not exist.`, 'error');
-                    btn.disabled = false;
-                    return;
-                }
-
-                // Check duplicate certificate ID
+                // Check duplicate certificate ID first
                 const { data: duplicate } = await window.supabaseClient
                     .from('certificates')
                     .select('certificate_id')
@@ -1400,6 +1356,33 @@
                     showDashboardAlert(`Cannot issue certificate: Certificate ID "${certId}" already exists.`, 'error');
                     btn.disabled = false;
                     return;
+                }
+
+                // Check if student exists by full_name, else auto-register
+                let studentId = '';
+                const { data: existingStudent, error: lookupErr } = await window.supabaseClient
+                    .from('students')
+                    .select('student_id')
+                    .eq('full_name', studentName)
+                    .limit(1)
+                    .maybeSingle();
+
+                if (lookupErr) throw lookupErr;
+
+                if (existingStudent) {
+                    studentId = existingStudent.student_id;
+                } else {
+                    studentId = 'STU-' + Date.now();
+                    const { error: insertStudentErr } = await window.supabaseClient
+                        .from('students')
+                        .insert({
+                            student_id: studentId,
+                            full_name: studentName,
+                            email: 'auto-generated@pointeritinfo.org',
+                            course: course,
+                            batch: 'Auto-Generated'
+                        });
+                    if (insertStudentErr) throw insertStudentErr;
                 }
 
                 // Upload PDF file to Supabase Storage
@@ -1434,7 +1417,7 @@
                     throw error;
                 }
 
-                showDashboardAlert(`Certificate "${certId}" successfully issued to Student "${studentId}"!`);
+                showDashboardAlert(`Certificate "${certId}" successfully issued to Student "${studentName}"!`);
                 document.getElementById('addCertificateForm').reset();
             } catch (err) {
                 console.error(err);
