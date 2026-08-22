@@ -1365,31 +1365,6 @@
                     return;
                 }
 
-                // Check if student exists by full_name, else auto-register
-                let studentId = '';
-                const { data: existingStudents, error: lookupErr } = await window.supabaseClient
-                    .from('students')
-                    .select('student_id')
-                    .eq('full_name', studentName);
-
-                if (lookupErr) throw lookupErr;
-
-                if (existingStudents && existingStudents.length > 0) {
-                    studentId = existingStudents[0].student_id;
-                } else {
-                    studentId = 'STU-' + Date.now();
-                    const { error: insertStudentErr } = await window.supabaseClient
-                        .from('students')
-                        .insert({
-                            student_id: studentId,
-                            full_name: studentName,
-                            email: 'auto-generated@pointeritinfo.org',
-                            course: course,
-                            batch: 'Auto-Generated'
-                        });
-                    if (insertStudentErr) throw insertStudentErr;
-                }
-
                 // Upload PDF file to Supabase Storage
                 // Path format: public/certificates/[certId]_[timestamp].pdf
                 const fileExt = pdfFile.name.split('.').pop();
@@ -1409,7 +1384,7 @@
                     .from('certificates')
                     .insert({
                         certificate_id: certId,
-                        student_id: studentId,
+                        student_name: studentName,
                         course: course,
                         issue_date: issueDate,
                         certificate_file_path: storagePath,

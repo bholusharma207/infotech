@@ -610,7 +610,7 @@
                 
                 // Populate fields
                 document.getElementById('resStudentName').innerText = cert.student_name;
-                document.getElementById('resStudentID').innerText = cert.student_id;
+                document.getElementById('resStudentID').innerText = cert.student_id || 'N/A';
                 document.getElementById('resCourse').innerText = cert.course;
                 document.getElementById('resCertID').innerText = cert.certificate_id;
                 
