@@ -739,7 +739,7 @@
                 </div>
 
                 <div class="search-bar-container">
-                    <input type="text" id="certSearchQuery" class="search-input" placeholder="Search by Certificate ID or Student ID..." oninput="debounce(loadCertificates, 300)()">
+                    <input type="text" id="certSearchQuery" class="search-input" placeholder="Search by Certificate ID or Student Name..." oninput="debounce(loadCertificates, 300)()">
                 </div>
 
                 <div class="content-card">
@@ -748,7 +748,7 @@
                             <thead>
                                 <tr>
                                     <th>Certificate ID</th>
-                                    <th>Student ID</th>
+                                    <th>Student Name</th>
                                     <th>Course</th>
                                     <th>Issue Date</th>
                                     <th>Status</th>
@@ -1178,24 +1178,31 @@
             const tbody = document.getElementById('certificatesTableBody');
 
             try {
-                let dbQuery = window.supabaseClient.from('certificates').select('*');
-
-                if (query) {
-                    dbQuery = dbQuery.or(`certificate_id.ilike.%${query}%,student_id.ilike.%${query}%`);
-                }
+                let dbQuery = window.supabaseClient.from('certificates').select('*, students(full_name)');
 
                 const { data, error } = await dbQuery.order('created_at', { ascending: false });
 
                 if (error) throw error;
 
-                if (!data || data.length === 0) {
+                let filteredData = data || [];
+                if (query) {
+                    const q = query.toLowerCase();
+                    filteredData = filteredData.filter(c => {
+                        const certIdMatch = c.certificate_id?.toLowerCase().includes(q);
+                        const courseMatch = c.course?.toLowerCase().includes(q);
+                        const nameMatch = c.students?.full_name?.toLowerCase().includes(q);
+                        return certIdMatch || courseMatch || nameMatch;
+                    });
+                }
+
+                if (!filteredData || filteredData.length === 0) {
                     tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">No certificates found</td></tr>`;
                     return;
                 }
 
                 const isSuper = currentAdminProfile?.role === 'SUPER_ADMIN';
 
-                tbody.innerHTML = data.map(c => {
+                tbody.innerHTML = filteredData.map(c => {
                     const is_active = c.status === 'ACTIVE';
                     const { data: urlData } = window.supabaseClient.storage.from('certificates').getPublicUrl(c.certificate_file_path);
                     const publicUrl = urlData?.publicUrl || '#';
@@ -1211,7 +1218,7 @@
                     return `
                         <tr>
                             <td><strong>${c.certificate_id}</strong></td>
-                            <td>${c.student_id}</td>
+                            <td>${c.students?.full_name || 'N/A'}</td>
                             <td>${c.course}</td>
                             <td>${new Date(c.issue_date).toLocaleDateString()}</td>
                             <td><span class="status-badge ${is_active ? 'badge-active' : 'badge-revoked'}">${c.status}</span></td>
