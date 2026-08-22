@@ -455,10 +455,6 @@
                     </a>
                 </div>
             </div>
-
-            <div class="fade-up" style="text-align: center; transition-delay: 0.2s;">
-                <img src="../images/certificate_illustration.png" loading="lazy" alt="Digital Certificate Illustration" class="cert-hero-badge-img">
-            </div>
         </div>
     </section>
 
@@ -480,11 +476,11 @@
                     </div>
                     <div class="input-group-custom" style="margin-bottom: 1.25rem;">
                         <i class="fa-solid fa-user"></i>
-                        <input type="text" id="studentNameInput" class="input-field-custom" placeholder="Enter Student Name" required>
+                        <input type="text" id="studentNameInput" class="input-field-custom" placeholder="Enter your Surname" required>
                     </div>
 
                     <button type="submit" class="btn-view-cert">
-                        <i class="fa-solid fa-magnifying-glass"></i> VERIFY / SEARCH CERTIFICATE
+                        <i class="fa-solid fa-magnifying-glass"></i> VERIFY AND SEARCH CERTIFICATE
                     </button>
                 </form>
 
@@ -595,11 +591,22 @@
                     return;
                 }
 
-                // If not found, OR if student_name does not match the input
-                const match = (data && data.length > 0) ? data.find(c => c.student_name.trim().toLowerCase() === studentName.toLowerCase() && c.certificate_id.trim() === certId) : null;
+                // If not found, OR if student_name does not match the input (supporting full name OR surname)
+                const match = (data && data.length > 0) ? data.find(c => {
+                    if (c.certificate_id.trim() !== certId) return false;
+                    
+                    const normalize = (name) => name.trim().toLowerCase().replace(/\s+/g, ' ');
+                    const entered = normalize(studentName);
+                    const stored = normalize(c.student_name);
+                    
+                    const storedWords = stored.split(' ');
+                    const storedSurname = storedWords[storedWords.length - 1];
+                    
+                    return (stored === entered) || (storedSurname === entered);
+                }) : null;
 
                 if (!match) {
-                    errorContainer.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Certificate not found. Please check your Certificate Number and Student Name.';
+                    errorContainer.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Certificate not found. Please check your Certificate ID and Surname and try again.';
                     errorContainer.style.display = 'flex';
                     return;
                 }
