@@ -40,5 +40,11 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- 7. Notify PostgREST to reload schema
+-- 8. Enable public SELECT policy on certificates table
+DROP POLICY IF EXISTS "Public can view certificates" ON public.certificates;
+DROP POLICY IF EXISTS "Public can verify certificates" ON public.certificates;
+CREATE POLICY "Public can verify certificates" ON public.certificates
+    FOR SELECT TO anon, authenticated USING (true);
+
+-- 9. Notify PostgREST to reload schema
 NOTIFY pgrst, 'reload schema';

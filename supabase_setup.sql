@@ -101,6 +101,11 @@ CREATE POLICY "Super Admins can delete students" ON public.students
 CREATE POLICY "Admins can view certificates" ON public.certificates
     FOR SELECT TO authenticated USING (public.is_active_admin());
 
+DROP POLICY IF EXISTS "Public can view certificates" ON public.certificates;
+DROP POLICY IF EXISTS "Public can verify certificates" ON public.certificates;
+CREATE POLICY "Public can verify certificates" ON public.certificates
+    FOR SELECT TO anon, authenticated USING (true);
+
 CREATE POLICY "Admins can insert certificates" ON public.certificates
     FOR INSERT TO authenticated WITH CHECK (public.is_active_admin());
 

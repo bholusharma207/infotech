@@ -569,40 +569,34 @@
             }
 
             try {
-                // Call Supabase RPC verify_certificate using certId as the search query
-                const { data, error } = await window.supabaseClient.rpc('verify_certificate', { p_search_query: certId });
+                // Query public.certificates directly
+                const { data: cert, error } = await window.supabaseClient
+                    .from('certificates')
+                    .select('*')
+                    .eq('certificate_id', certId.trim())
+                    .ilike('student_name', `%${studentName.trim()}%`)
+                    .maybeSingle();
 
                 loadingContainer.style.display = 'none';
 
                 if (error) {
                     console.error('Search error:', error);
-                    errorContainer.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Error querying database. Please try again.';
+                    console.error({
+                        message: error?.message,
+                        code: error?.code,
+                        details: error?.details,
+                        hint: error?.hint
+                    });
+                    errorContainer.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Error querying database: ${error.message || error} (Code: ${error.code || 'N/A'}). ${error.details ? '<br>Details: ' + error.details : ''} ${error.hint ? '<br>Hint: ' + error.hint : ''}`;
                     errorContainer.style.display = 'flex';
                     return;
                 }
 
-                // If not found, OR if student_name does not match the input (supporting full name OR surname)
-                const match = (data && data.length > 0) ? data.find(c => {
-                    if (c.certificate_id.trim() !== certId) return false;
-                    
-                    const normalize = (name) => name.trim().toLowerCase().replace(/\s+/g, ' ');
-                    const entered = normalize(studentName);
-                    const stored = normalize(c.student_name);
-                    
-                    const storedWords = stored.split(' ');
-                    const storedSurname = storedWords[storedWords.length - 1];
-                    
-                    return (stored === entered) || (storedSurname === entered);
-                }) : null;
-
-                if (!match) {
+                if (!cert) {
                     errorContainer.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Certificate not found. Please check your Certificate ID and Surname and try again.';
                     errorContainer.style.display = 'flex';
                     return;
                 }
-
-                // Found certificate (valid match)
-                const cert = match;
                 
                 // Populate fields
                 document.getElementById('resStudentName').innerText = cert.student_name;
@@ -633,9 +627,15 @@
 
                 if (is_active) {
                     actions.style.display = 'flex';
-                    // Generate public URL from storage path
-                    const { data: urlData } = window.supabaseClient.storage.from('certificates').getPublicUrl(cert.certificate_file_path);
-                    const publicUrl = urlData?.publicUrl || '';
+                    
+                    // Use pdf_url if available, else generate public URL from storage path
+                    let publicUrl = '';
+                    if (cert.pdf_url) {
+                        publicUrl = cert.pdf_url;
+                    } else if (cert.certificate_file_path) {
+                        const { data: urlData } = window.supabaseClient.storage.from('certificates').getPublicUrl(cert.certificate_file_path);
+                        publicUrl = urlData?.publicUrl || '';
+                    }
                     
                     viewBtn.href = publicUrl;
                     downloadBtn.href = publicUrl;
